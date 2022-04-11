@@ -1,2 +1,0 @@
-com/theantimony/googleplacespicker/BuildConfig.java
- com.theantimony.googleplacespicker.BuildConfig
