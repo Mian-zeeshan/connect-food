@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">738550336424-ubge6oc2624d7rv61in6erqons7h8qpk.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">738550336424</string>
+    <string name="google_api_key" translatable="false">AIzaSyCoVD4CO9qc03af4Irnb38qtjo1nCh52vc</string>
+    <string name="google_app_id" translatable="false">1:738550336424:android:0228de3091e994cbb06b9d</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCoVD4CO9qc03af4Irnb38qtjo1nCh52vc</string>
+    <string name="google_storage_bucket" translatable="false">electronics-demo-38010.appspot.com</string>
+    <string name="project_id" translatable="false">electronics-demo-38010</string>
+</resources>

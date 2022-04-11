@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "738550336424",
+    "project_id": "electronics-demo-38010",
+    "storage_bucket": "electronics-demo-38010.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738550336424:android:0228de3091e994cbb06b9d",
+        "android_client_info": {
+          "package_name": "com.connectsol.electronics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738550336424-ubge6oc2624d7rv61in6erqons7h8qpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoVD4CO9qc03af4Irnb38qtjo1nCh52vc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738550336424-ubge6oc2624d7rv61in6erqons7h8qpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
