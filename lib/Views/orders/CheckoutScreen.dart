@@ -186,9 +186,12 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                           var grandValue = 0.0;
                           for(var p in cartController.myCart.products){
                             mProducts.add(p);
-                            totalValue += ((isRetailer ? p.discountedPriceW??0 : p.discountedPrice??0.0)) * p.selectedQuantity;
-                            grandValue += (isRetailer ? p.wholeSale : p.salesRate) * p.selectedQuantity;
-                            print("DELIVERY PRICE ::: ${p.deliveryPrice}");
+                            var addonPrices = 0;
+                            for(var a in p.selectedAddons){
+                              addonPrices = addonPrices + (int.parse(a.adonPrice) * a.quantity);
+                            }
+                            totalValue += ((isRetailer ? p.discountedPriceW??0 : p.discountedPrice??0.0)) * p.selectedQuantity + addonPrices;
+                            grandValue += (isRetailer ? p.wholeSale : p.salesRate) * p.selectedQuantity + addonPrices;
                           }
                           cartController.myCart.totalBill = grandValue;
                           cartController.myCart.discountedBill = totalValue;
@@ -343,7 +346,16 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                                                                               fontWeight: FontWeight.w600),
                                                                         ),
                                                                       ),
-                                                                      Text("QTY: ${mProducts[j].selectedQuantity}" , style: utils.xSmallLabelStyle(blackColor),)
+                                                                      Text("QTY: ${mProducts[j].selectedQuantity}" , style: utils.xSmallLabelStyle(blackColor),),
+                                                                      if(mProducts[j].selectedAddons.length > 0) RichText(text: TextSpan(
+                                                                        children: [
+                                                                          for(var l = 0 ; l < mProducts[j].selectedAddons.length; l++)
+                                                                            TextSpan(
+                                                                              text: "${mProducts[j].selectedAddons[l].adonDescription}x${mProducts[j].selectedAddons[l].quantity}${l < mProducts[j].selectedAddons.length - 1 ? ",":""} ",
+                                                                              style: utils.xSmallLabelStyle(blackColor)
+                                                                            )
+                                                                        ]
+                                                                      ))
                                                                     ],
                                                                   ),
                                                                 ],

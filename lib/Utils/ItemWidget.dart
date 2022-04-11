@@ -252,7 +252,10 @@ class _ItemWidget extends State<ItemWidget> {
                   onTap: () async {
                     if(item.code != "0") {
                       if(userController.user != null){
-                        await utils.showCartBottom(context, item, (count){
+                        await utils.showCartBottom(context, item, (count, List<ProductAdons> adons, PSizes? productSized, PColors? productColors){
+                          item.selectedSizes = productSized;
+                          item.selectedColors = productColors;
+                          item.selectedAddons = adons;
                           item.selectedQuantity = count;
                           cartController.addToCart(item);
                           Get.snackbar("Success", "Added to bag.");

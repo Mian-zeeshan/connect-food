@@ -36,6 +36,9 @@ class ItemModel {
   List<PColors> colors = [];
   List<PSizes> sizes = [];
   List<ProductAdons> addons = [];
+  PColors? selectedColors;
+  PSizes? selectedSizes;
+  List<ProductAdons> selectedAddons = [];
   bool isNewArrival = false;
   bool isTopDeal = false;
   double rating = 0;
@@ -137,6 +140,8 @@ class ItemModel {
     typeName = json['TypeName'];
     styleName = json['StyleName'];
     description = json['description'];
+    selectedSizes = json['selectedSizes'];
+    selectedColors = json['selectedColors'];
     if(json['discountedPrice'] != null)
       discountedPrice = double.parse(json['discountedPrice'].toString());
 
@@ -210,6 +215,13 @@ class ItemModel {
       });
     }
 
+    if (json['selectedAddons'] != null) {
+      selectedAddons = [];
+      json['selectedAddons'].forEach((v) {
+        selectedAddons.add(new ProductAdons.fromJson(v));
+      });
+    }
+
     double discountedP = 0;
     double discountedPW = 0;
     if(disCont! && discountType == "%"){
@@ -260,11 +272,14 @@ class ItemModel {
     data['isTopDeal'] = this.isTopDeal;
     data['isNewArrival'] = this.isNewArrival;
     data['totalStock'] = this.totalStock;
+    data['selectedColors'] = this.selectedColors;
+    data['selectedSizes'] = this.selectedSizes;
     data['Stock'] = this.stock.map((v) => v.toJson()).toList();
     data['specs'] = this.specs.map((v) => v.toJson()).toList();
     data['colors'] = this.colors.map((v) => v.toJson()).toList();
     data['sizes'] = this.sizes.map((v) => v.toJson()).toList();
     data['addons'] = this.addons.map((v) => v.toJson()).toList();
+    data['selectedAddons'] = this.selectedAddons.map((v) => v.toJson()).toList();
     data['deliveryPrice'] = this.deliveryPrice;
     data['deliveryApplyItem'] = this.deliveryApplyItem;
     data['freeDeliveryItems'] = this.freeDeliveryItems;
@@ -372,18 +387,22 @@ class PColors {
 class ProductAdons {
   String adonDescription =  "";
   String adonPrice = "";
+  int quantity = 1;
 
   ProductAdons({required this.adonDescription, required this.adonPrice});
 
   ProductAdons.fromJson(Map<String, dynamic> json) {
     adonDescription = json['adon_description'];
     adonPrice = json['adon_price'];
+    if(json["quantity"] != null)
+      quantity = json['quantity'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['adon_description'] = this.adonDescription;
     data['adon_price'] = this.adonPrice;
+    data['quantity'] = this.quantity;
     return data;
   }
 }

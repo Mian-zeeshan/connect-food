@@ -154,8 +154,12 @@ class CartController extends GetxController{
     myCart.discountedBill = 0;
     myCart.totalItems = 0;
     for(var item in myCart.products) {
-      myCart.totalBill = myCart.totalBill + ((isRetailer ? item.salesRate : item.wholeSale) * item.selectedQuantity);
-      myCart.discountedBill = myCart.discountedBill + ((isRetailer ? item.discountedPriceW??0 : item.discountedPrice??0) * item.selectedQuantity);
+      var addonPrices = 0;
+      for(var a in item.selectedAddons){
+        addonPrices = addonPrices + (int.parse(a.adonPrice) * a.quantity);
+      }
+      myCart.totalBill = myCart.totalBill + ((isRetailer ? item.salesRate : item.wholeSale) * item.selectedQuantity) + addonPrices;
+      myCart.discountedBill = myCart.discountedBill + ((isRetailer ? item.discountedPriceW??0 : item.discountedPrice??0) * item.selectedQuantity) + addonPrices;
       myCart.totalItems = myCart.totalItems + item.selectedQuantity;
     }
     update(["0"]);
@@ -369,5 +373,24 @@ class CartController extends GetxController{
       "cartItem" : cItem
     };
     return data;
+  }
+
+  void updateAddons(i, j, quantity) async {
+    myCart.createdAt = DateTime.now().millisecondsSinceEpoch;
+    myCart.products[i].selectedAddons[j].quantity = quantity;
+
+    if(quantity == 0){
+      myCart.products[i].selectedAddons.removeAt(j);
+    }
+
+    for(var i = 0; i < cartModelList.cartModelList.length; i++){
+      if(cartModelList.cartModelList[i].cartId == myCart.cartId){
+        cartModelList.cartModelList.removeAt(i);
+        cartModelList.cartModelList.add(myCart);
+        break;
+      }
+    }
+    await box.write(allCarts,cartModelList.toJson());
+    updateBill();
   }
 }

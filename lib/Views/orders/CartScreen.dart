@@ -7,14 +7,20 @@ import 'package:connectsaleorder/Utils/AppUtils.dart';
 import 'package:connectsaleorder/Views/orders/OrdersFragment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../GetXController/ItemController.dart';
+import '../../Utils/ItemWidget.dart';
+import '../../Utils/ItemWidgetStyle2.dart';
+import '../../Utils/ItemWidgetStyle3.dart';
+import '../../Utils/ItemWidgetStyle4.dart';
+
 class CartScreen extends StatefulWidget{
   @override
   _CartScreen createState() => _CartScreen();
-
 }
 
 class _CartScreen extends State<CartScreen>{
@@ -218,10 +224,97 @@ class _CartScreen extends State<CartScreen>{
                                                 )),
                                               ],
                                             ),
+                                            if(products[i].selectedAddons.length > 0) Container(
+                                                width: Get.width,
+                                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(0),
+                                                    color: whiteColor
+                                                ),
+                                                child: Wrap(
+                                                  children: [
+                                                    Container(
+                                                      width: Get.width,
+                                                      child: Text("Addons" , style: utils.labelStyle(blackColor),),
+                                                    ),
+                                                    for(var j = 0 ; j  < products[i].selectedAddons.length; j++)
+                                                      Container(
+                                                        width: Get.width,
+                                                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: [
+                                                                Expanded(child: Text("${products[i].selectedAddons[j].adonDescription}",style: utils.boldSmallLabelStyle(blackColor))),
+                                                                SizedBox(width: 12,),
+                                                                Text(utils.getFormattedPrice(products[i].selectedAddons[j].adonPrice), style: utils.smallLabelStyle(blackColor),),
+                                                                SizedBox(width: 12,),
+                                                                Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                  children: [
+                                                                    IconButton(
+                                                                        onPressed: (){
+                                                                          cartController.updateAddons(i ,j, products[i].selectedAddons[j].quantity-1);
+                                                                        }, icon: Icon(products[i].selectedAddons[j].quantity == 1 ? CupertinoIcons.delete:CupertinoIcons.minus_circled , size: 20, color: products[i].selectedAddons[j].quantity > 1 ? blackColor : blackColor.withOpacity(0.5),)
+                                                                    ),
+                                                                    Text("${products[i].selectedAddons[j].quantity}", style: utils.smallLabelStyle(blackColor),),
+                                                                    IconButton(
+                                                                        onPressed: (){
+                                                                          cartController.updateAddons(i ,j, products[i].selectedAddons[j].quantity+1);
+                                                                        }, icon: Icon(CupertinoIcons.add_circled , size: 20, color: blackColor,)
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Container(
+                                                              width: Get.width,
+                                                              height: 1,
+                                                              color: grayColor,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                  ],
+                                                )
+                                            ),
+
                                           ],
                                         ),
                                       )
                                   ),
+                                SizedBox(height: 12.h,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(width: 12,),
+                                    Text("Recommendation", style: utils.boldLabelStyle(blackColor),)
+                                  ],
+                                ),
+                                SizedBox(height: 8.h,),
+                                Container(
+                                  width: Get.width,
+                                  child: GetBuilder<ItemController>(id: "0" , builder: (itemController){
+                                    return SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          for(var item in itemController.itemModelsTopDeals)
+                                            Container(
+                                              child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                                            )
+                                        ],
+                                      ),
+                                    );
+                                  },),
+                                ),
                               ],
                             )),
                             Container(

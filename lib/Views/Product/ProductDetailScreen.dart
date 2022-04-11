@@ -385,6 +385,43 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                         ],
                                       ),
                                     ),
+                                if(itemModel.addons.length > 0) SizedBox(height: 10,),
+                                if(itemModel.addons.length > 0) Text(
+                                    "Addons",
+                                    style: utils.boldLabelStyle(blackColor)
+                                ),
+                                if(itemModel.addons.length > 0) SizedBox(height: 4,),
+                                if(itemModel.addons.length > 0)
+                                  for(var  i = 0 ; i < itemModel.addons.length; i++)
+                                    Container(
+                                      padding: EdgeInsets.symmetric(vertical: 2),
+                                      child: Column(
+                                        children: [
+                                          IntrinsicHeight(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Expanded(child: Text("${itemModel.addons[i].adonDescription}" , style: utils.xBoldSmallLabelStyle(blackColor),)),
+                                                SizedBox(width: 6,),
+                                                Container(
+                                                  width: 0.5,
+                                                  color: grayColor,
+                                                ),
+                                                SizedBox(width: 6,),
+                                                Expanded(child: Text("${utils.getFormattedPrice(itemModel.addons[i].adonPrice)}" , style: utils.xSmallLabelStyle(blackColor),)),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 4,),
+                                          Container(
+                                            width: Get.width,
+                                            height: 0.5,
+                                            color: grayColor,
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                 SizedBox(height: 10,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -554,7 +591,10 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                               child: GestureDetector(
                                 onTap: () async {
                                   if(userController.user != null){
-                                    await utils.showCartBottom(context, itemModel, (count){
+                                    await utils.showCartBottom(context, itemModel, (count, List<ProductAdons> adons, PSizes? productSized, PColors? productColors){
+                                      itemModel.selectedSizes = productSized;
+                                      itemModel.selectedColors = productColors;
+                                      itemModel.selectedAddons = adons;
                                       itemModel.selectedQuantity = count;
                                       cartController.addToCart(itemModel);
                                       Get.snackbar("Success", "Added to bag.");
@@ -699,7 +739,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
               ),
               Container(
                 width: Get.width,
-                padding: EdgeInsets.only(left: 12, right: checkAdminController.isAdmin == "1" ? 4 : 12, top: checkAdminController.isAdmin == "1" ? 30 : 40, bottom: checkAdminController.isAdmin == "1" ? 6 : 20),
+                padding: EdgeInsets.only(left: 12, right: checkAdminController.isAdmin == "1" ? 4 : 12, top: checkAdminController.isAdmin == "1" ? 50 : 50, bottom: checkAdminController.isAdmin == "1" ? 6 : 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                   color: checkAdminController.system.mainColor.withOpacity(opacity),

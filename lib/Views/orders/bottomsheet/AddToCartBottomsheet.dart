@@ -26,6 +26,7 @@ class _AddToCartBottom extends State<AddToCartBottom>{
   var count = 1;
   var selectedColor = 0;
   var selectedSize = 0;
+  List<ProductAdons> selectedAddOns = [];
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +84,94 @@ class _AddToCartBottom extends State<AddToCartBottom>{
                           border: Border.all(color: checkAdminController.system.mainColor, width: 1)
                       ),
                       child: Text("${widget.itemModel.colors[i].color}", style: utils.smallLabelStyle(selectedColor == i ? whiteColor : checkAdminController.system.mainColor),),
+                    ),
+                  )
+              ],
+            )
+          ),
+          if(widget.itemModel.addons.length > 0) Container(
+            width: Get.width,
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0),
+                  color: whiteColor
+              ),
+            child: Wrap(
+              children: [
+                Container(
+                  width: Get.width,
+                  child: Text("Addons" , style: utils.labelStyle(blackColor),),
+                ),
+                for(var i = 0 ; i  < widget.itemModel.addons.length; i++)
+                  Container(
+                    width: Get.width,
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(child: Text("${widget.itemModel.addons[i].adonDescription}",style: utils.boldSmallLabelStyle(blackColor))),
+                            SizedBox(width: 12,),
+                            Text(utils.getFormattedPrice(widget.itemModel.addons[i].adonPrice), style: utils.smallLabelStyle(blackColor),),
+                            SizedBox(width: 12,),
+                            IconButton(onPressed: (){
+                              addToAddons(widget.itemModel.addons[i]);
+                            }, icon: Icon(CupertinoIcons.add_circled, color: checkAdminController.system.mainColor, size: 20,))
+                          ],
+                        ),
+                        Container(
+                          width: Get.width,
+                          height: 1,
+                          color: grayColor,
+                        )
+                      ],
+                    ),
+                  )
+              ],
+            )
+          ),
+
+          if(selectedAddOns.length > 0) Container(
+            width: Get.width,
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0),
+                  color: whiteColor
+              ),
+            child: Wrap(
+              children: [
+                Container(
+                  width: Get.width,
+                  child: Text("Your Addons" , style: utils.labelStyle(blackColor),),
+                ),
+                SizedBox(height: 8,),
+                for(var i = 0 ; i  < selectedAddOns.length; i++)
+                  InkWell(
+                    onTap: (){
+                      selectedAddOns.removeAt(i);
+                      setState(() {
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      margin: EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(200),
+                        color: grayColor
+                      ),
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        alignment: WrapAlignment.start,
+                        children: [
+                          Text("${selectedAddOns[i].adonDescription}x${selectedAddOns[i].quantity}", style: utils.xSmallLabelStyle(blackColor),),
+                          SizedBox(width: 4,),
+                          Icon(CupertinoIcons.xmark_octagon_fill, color: checkAdminController.system.mainColor, size: 16,)
+                        ],
+                      ),
                     ),
                   )
               ],
@@ -188,7 +277,7 @@ class _AddToCartBottom extends State<AddToCartBottom>{
                  child: utils.button(checkAdminController.system.mainColor, "Add to cart", whiteColor, checkAdminController.system.mainColor, 1.0, (){
                    if(widget.itemModel.totalStock > 0){
                      Navigator.pop(context);
-                     return widget.onAdd(count);
+                     return widget.onAdd(count, selectedAddOns, widget.itemModel.sizes.length > 0 ? widget.itemModel.sizes[selectedSize] : null, widget.itemModel.colors.length > 0 ? widget.itemModel.colors[selectedColor] : null);
                    }else{
                      Get.snackbar("Error", "Sorry no stock available at this time. please contact us in case of any query");
                    }
@@ -209,6 +298,26 @@ class _AddToCartBottom extends State<AddToCartBottom>{
         ],
       ),
     );
+  }
+
+  addToAddons(ProductAdons adons){
+    var isExist = false;
+    var position = 0;
+    for(var i = 0 ; i < selectedAddOns.length; i++){
+      if(selectedAddOns[i].adonDescription == adons.adonDescription){
+        isExist = true;
+        position = i;
+      }
+    }
+
+    if(isExist){
+      selectedAddOns[position].quantity = selectedAddOns[position].quantity + 1;
+    }else{
+      adons.quantity = 1;
+      selectedAddOns.add(adons);
+    }
+    setState(() {
+    });
   }
 
 }

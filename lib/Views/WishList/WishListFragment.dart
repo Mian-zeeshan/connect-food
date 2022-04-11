@@ -241,7 +241,7 @@ class _WishListFragment extends State<WishListFragment> {
                                                             .toLowerCase())
                                                     ? checkAdminController
                                                                 .system
-                                                                .itemGridStyle
+                                                                .itemListStyle
                                                                 .code ==
                                                             "001"
                                                         ? ItemListWidget(favController
@@ -256,11 +256,11 @@ class _WishListFragment extends State<WishListFragment> {
                                                                 .products[i])
                                                             : checkAdminController
                                                                         .system
-                                                                        .itemGridStyle
+                                                                        .itemListStyle
                                                                         .code ==
                                                                     "003"
                                                                 ? ItemListWidget3(favController.myFav.products[i])
-                                                                : checkAdminController.system.itemGridStyle.code == "004"
+                                                                : checkAdminController.system.itemListStyle.code == "004"
                                                                     ? ItemListWidget4(favController.myFav.products[i])
                                                                     : ItemListWidget(favController.myFav.products[i])
                                                     : Container()
