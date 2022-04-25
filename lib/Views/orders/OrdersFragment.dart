@@ -750,7 +750,7 @@ class _OrderFragment extends State<OrderFragment> {
   }
 
   showFilterBottom(BuildContext context, OrderController orderController) {
-    var status = ["Placed" , "Preparing" , "Shipping", "Shipped","Canceled" , "All"];
+    var status = ["All","Placed" , "Preparing" , "Shipping", "Shipped","Canceled"];
     var icons = [CupertinoIcons.cart , CupertinoIcons.hand_raised_fill , CupertinoIcons.bus, CupertinoIcons.check_mark_circled_solid,CupertinoIcons.xmark , CupertinoIcons.circle];
     showCupertinoModalBottomSheet(
       context: context,
@@ -808,7 +808,7 @@ class _OrderFragment extends State<OrderFragment> {
                                     Icon(icons[i] , size: 24, color: blackColor.withOpacity(0.9),),
                                     SizedBox(width: 10,),
                                     Expanded(child: Text(status[i],style: utils.labelStyle(blackColor.withOpacity(0.9)),)),
-                                    if(i == orderController.selectedFilter) Icon(CupertinoIcons.checkmark_alt, size: 24, color: blackColor.withOpacity(0.6),),
+                                    if(i == 0 ? orderController.selectedFilter == 5 : i == orderController.selectedFilter+1) Icon(CupertinoIcons.checkmark_alt, size: 24, color: blackColor.withOpacity(0.6),),
                                   ],
                                 ),
                               ),

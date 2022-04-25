@@ -31,10 +31,10 @@ class OrderController extends GetxController{
   }
 
   setFilter(int filter){
-    if(filter == 4){
-      this.selectedFilter = -1;
+    if(filter == 0){
+      this.selectedFilter = 5;
     }else{
-      this.selectedFilter = filter;
+      this.selectedFilter = filter-1;
     }
     filterOrder();
     if(user.type == 0){
@@ -173,7 +173,6 @@ class OrderController extends GetxController{
   }
 
   void filterOrderAdmin() {
-    print("ADMIN FILTERS");
     ordersAdmin = [];
     print(ordersAllAdmin.length);
     for(var order in ordersAllAdmin){

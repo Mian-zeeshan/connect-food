@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/ChatController.dart';
+import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
 import 'package:connectsaleorder/Models/AddressModel.dart';
 import 'package:connectsaleorder/Models/RetailerModel.dart';
 import 'package:connectsaleorder/Models/UserModel.dart';
@@ -14,6 +15,7 @@ class UserController extends GetxController{
   UserModel? currentSeller;
   List<UserModel> retailers = [];
   List<UserModel> allRetailers = [];
+  CheckAdminController checkAdminController = Get.find();
   var box = GetStorage();
   int type = 0;
   String? area;
@@ -66,11 +68,14 @@ class UserController extends GetxController{
     reference
         .child(usersRef)
         .child(user!.uid)
-    .onValue.listen((event) {
+    .onValue.listen((event) async {
       if(event.snapshot.exists){
         user = UserModel.fromJson(jsonDecode(jsonEncode(event.snapshot.value)));
         print("USERMODEL ${user!.toJson().toString()}");
         box.write(currentUser, user!.toJson());
+        if(user!.type == 0){
+          checkAdminController.updateAdmin("1");
+        }
         for(var i = 0 ; i < user!.addressList.length; i++){
           if(user!.addressList[i].id == user!.defaultAddressId){
             user!.addressList[i].selected = true;

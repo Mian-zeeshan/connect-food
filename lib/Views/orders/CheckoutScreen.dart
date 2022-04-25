@@ -254,6 +254,9 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                             totalValue += ((isRetailer ? p.discountedPriceW??0 : p.discountedPrice??0.0)) * p.selectedQuantity + addonPrices;
                             grandValue += (isRetailer ? p.wholeSale : p.salesRate) * p.selectedQuantity + addonPrices;
                           }
+                          if(mProducts.length <= 0){
+                            Get.back();
+                          }
                           cartController.myCart.totalBill = grandValue;
                           cartController.myCart.discountedBill = totalValue;
                           return Column(
