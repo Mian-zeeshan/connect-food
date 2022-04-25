@@ -12,6 +12,7 @@ class CouponController extends GetxController{
   CouponModel? selectedCoupon;
   var box = GetStorage();
   List<CouponModel> coupons = [];
+  var loadingCoupon = false;
 
   @override
   void onInit() {
@@ -43,9 +44,9 @@ class CouponController extends GetxController{
         event.snapshot.value.forEach((key,value){
           coupons.add(CouponModel.fromJson(jsonDecode(jsonEncode(value))));
         });
-        update(["0"]);
-        notifyChildrens();
       }
+      update(["0"]);
+      notifyChildrens();
     });
   }
 
@@ -62,5 +63,39 @@ class CouponController extends GetxController{
     couponModel.couponId = reference.key;
     await reference.set(couponModel.toJson());
     return;
+  }
+
+  CouponModel getCoupon(String code) {
+    loadingCoupon = true;
+    update(["0"]);
+    notifyChildrens();
+    return coupons.firstWhere((element) => element.code == code);
+  }
+
+  void setSelectedCoupon(CouponModel? co) {
+    selectedCoupon = co;
+    update(["0"]);
+    notifyChildrens();
+  }
+
+  void stopLoading() {
+    loadingCoupon = false;
+    update(["0"]);
+    notifyChildrens();
+  }
+
+  void removeCoupon(String couponId) async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    await reference
+        .child(couponRef)
+        .child(couponId)
+        .remove();
+    update(["0"]);
+    notifyChildrens();
   }
 }

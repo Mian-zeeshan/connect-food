@@ -65,7 +65,6 @@ class ChatController extends GetxController{
   void deleteChat() {
     DateTime dateTime = DateTime.now().subtract(Duration(days: 15));
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
-    
     if(!GetPlatform.isWeb) {
       database.setPersistenceEnabled(true);
       database.setPersistenceCacheSizeBytes(10000000);

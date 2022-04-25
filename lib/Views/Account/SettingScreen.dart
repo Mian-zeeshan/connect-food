@@ -5,12 +5,15 @@ import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/GetXController/locale_controller.dart';
 import 'package:connectsaleorder/Models/SystemSettingModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
+import 'package:connectsaleorder/Views/Coupon/ManageCouponPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:timelines/timelines.dart';
+
+import '../Address/BranchList.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -528,13 +531,11 @@ class _SettingScreen extends State<SettingScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      Get.toNamed(mainAuth);
                                       await box.remove(currentUser);
                                       checkAdminController.updateAdmin("0");
-                                      FirebaseAuth.instance.signOut();
-                                      userController.removeUser();
-                                      drawerCustomController.setDrawer(
-                                          "home", 0);
+                                      await FirebaseAuth.instance.signOut();
+                                      await Get.delete<UserController>();
+                                      await Get.offAllNamed(mainAuth);
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
@@ -575,6 +576,153 @@ class _SettingScreen extends State<SettingScreen> {
                             if (selectedIndex == 1)
                               Column(
                                 children: [
+                                  if (userController.user!.type == 0)
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.table,
+                                            color: blackColor,
+                                            size: 24,
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Expanded(
+                                              child: Text(
+                                                "Dine-In",
+                                                style: utils.labelStyle(blackColor),
+                                              )),
+                                          Transform.scale(
+                                            scale: 0.8,
+                                            child: CupertinoSwitch(
+                                                activeColor:
+                                                checkAdminController
+                                                    .system.mainColor,
+                                                value: checkAdminController
+                                                    .system.dineIn,
+                                                onChanged: (value) async {
+                                                  checkAdminController.updateDine(value);
+                                                }),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0)
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(manageOrderRoute);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.bag,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                                  "Manage Orders",
+                                                  style:
+                                                  utils.labelStyle(blackColor),
+                                                )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(adminSupportRoute);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons
+                                                  .bubble_left_bubble_right,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                                  "Support Chat",
+                                                  style:
+                                                  utils.labelStyle(blackColor),
+                                                )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
                                   if (userController.user!.type == 0 &&
                                       checkAdminController.isAdmin == "1")
                                     GestureDetector(
@@ -601,6 +749,55 @@ class _SettingScreen extends State<SettingScreen> {
                                             Expanded(
                                                 child: Text(
                                               "System Configuration",
+                                              style:
+                                                  utils.labelStyle(blackColor),
+                                            )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(()=> BranchList());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.pin,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Branches",
                                               style:
                                                   utils.labelStyle(blackColor),
                                             )),
@@ -677,56 +874,6 @@ class _SettingScreen extends State<SettingScreen> {
                                       checkAdminController.isAdmin == "1")
                                     GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(adminSupportRoute);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons
-                                                  .bubble_left_bubble_right,
-                                              color: blackColor,
-                                              size: 24,
-                                            ),
-                                            SizedBox(
-                                              width: 12,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              "Support Chat",
-                                              style:
-                                                  utils.labelStyle(blackColor),
-                                            )),
-                                            Icon(
-                                              CupertinoIcons.forward,
-                                              color: blackColor,
-                                              size: 24,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  if (userController.user!.type == 0 &&
-                                      checkAdminController.isAdmin == "1")
-                                    Container(
-                                      width: Get.width,
-                                      height: 1,
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 6),
-                                      color: checkAdminController
-                                          .system.mainColor
-                                          .withOpacity(0.3),
-                                    ),
-                                  if (userController.user!.type == 0 &&
-                                      checkAdminController.isAdmin == "1")
-                                    GestureDetector(
-                                      onTap: () {
                                         Get.toNamed(configureCountryRoute);
                                       },
                                       child: Container(
@@ -749,55 +896,6 @@ class _SettingScreen extends State<SettingScreen> {
                                             Expanded(
                                                 child: Text(
                                               "Manage Address",
-                                              style:
-                                                  utils.labelStyle(blackColor),
-                                            )),
-                                            Icon(
-                                              CupertinoIcons.forward,
-                                              color: blackColor,
-                                              size: 24,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  if (userController.user!.type == 0 &&
-                                      checkAdminController.isAdmin == "1")
-                                    Container(
-                                      width: Get.width,
-                                      height: 1,
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 6),
-                                      color: checkAdminController
-                                          .system.mainColor
-                                          .withOpacity(0.3),
-                                    ),
-                                  if (userController.user!.type == 0 &&
-                                      checkAdminController.isAdmin == "1")
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(manageOrderRoute);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons.bag,
-                                              color: blackColor,
-                                              size: 24,
-                                            ),
-                                            SizedBox(
-                                              width: 12,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              "Manage Orders",
                                               style:
                                                   utils.labelStyle(blackColor),
                                             )),
@@ -1071,7 +1169,7 @@ class _SettingScreen extends State<SettingScreen> {
                                       checkAdminController.isAdmin == "1")
                                     GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(addCouponRoute);
+                                        Get.to(ManageCouponPage());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -1083,7 +1181,7 @@ class _SettingScreen extends State<SettingScreen> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Icon(
-                                              CupertinoIcons.plus_circled,
+                                              CupertinoIcons.tag,
                                               color: blackColor,
                                               size: 24,
                                             ),
@@ -1092,7 +1190,7 @@ class _SettingScreen extends State<SettingScreen> {
                                             ),
                                             Expanded(
                                                 child: Text(
-                                              "Add Coupons",
+                                              "Coupons",
                                               style:
                                                   utils.labelStyle(blackColor),
                                             )),

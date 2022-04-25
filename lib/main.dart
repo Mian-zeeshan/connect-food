@@ -37,6 +37,7 @@ import 'package:connectsaleorder/Views/Product/PdfScreen.dart';
 import 'package:connectsaleorder/Views/Product/ProductDetailScreen.dart';
 import 'package:connectsaleorder/Views/Account/ProfileScreen.dart';
 import 'package:connectsaleorder/Views/Account/SystemConfigScreen.dart';
+import 'package:connectsaleorder/Views/orders/OrderTypeScreen.dart';
 import 'package:connectsaleorder/Views/retailer/RegisterRetailerScreen.dart';
 import 'package:connectsaleorder/Views/retailer/RetailerDetailScreen.dart';
 import 'package:connectsaleorder/Views/retailer/RetailersScreen.dart';
@@ -192,6 +193,23 @@ _configureAbnApp() async {
   return app;
 }
 
+//Mithas
+//Package Command "flutter pub run change_app_package_name:main com.connectsol.foodecom"
+// _configureAbnApp() async {
+//   FirebaseOptions abnOptions = FirebaseOptions(
+//       databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
+//       apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
+//       messagingSenderId: "739510084525",
+//       projectId: "mithas-fa138",
+//       appId: "1:739510084525:android:0a7dca33de0996e833b724"
+//   );
+//   FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
+//   database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
+//   databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
+//   appName = "Mithas";
+//   return app;
+// }
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -260,6 +278,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: retailerDetailRoute, page: () => RetailerDetailScreen(),),
           GetPage(name: addCouponRoute, page: () => AddCoupons(),),
           GetPage(name: couponListRoute, page: () => CouponListPage(),),
+          GetPage(name: orderTypeRoute, page: () => OrderTypeScreen(),),
         ],
         initialRoute: splashRoute,
         title: appName,

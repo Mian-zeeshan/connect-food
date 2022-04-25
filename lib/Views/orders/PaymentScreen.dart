@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'OrderSuccessScreen.dart';
 
 class PaymentScreen extends StatefulWidget{
   CartModel postOrderModel;
@@ -173,6 +172,13 @@ class _PaymentScreen extends State<PaymentScreen>{
               ),
               SizedBox(height: 6,),
               GetBuilder<CouponController>(id: "0",builder: (couponController){
+                if(couponController.selectedCoupon != null){
+                  if(couponController.selectedCoupon!.discountType == "%"){
+                    widget.postOrderModel.couponValue = (widget.postOrderModel.discountedBill * (couponController.selectedCoupon!.value/100)).toPrecision(2);
+                  }else{
+                    widget.postOrderModel.couponValue = couponController.selectedCoupon!.value > widget.postOrderModel.discountedBill ? widget.postOrderModel.discountedBill : couponController.selectedCoupon!.value.toDouble();
+                  }
+                }
                 return Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -182,7 +188,9 @@ class _PaymentScreen extends State<PaymentScreen>{
                       InkWell(
                         onTap: (){
                           if(couponController.selectedCoupon == null){
-                            Get.toNamed(couponListRoute);
+                            Get.toNamed(couponListRoute, arguments: widget.postOrderModel);
+                          }else{
+                            couponController.setSelectedCoupon(null);
                           }
                         },
                         child: Container(
@@ -233,15 +241,37 @@ class _PaymentScreen extends State<PaymentScreen>{
                           Text("${utils.getFormattedPrice(widget.postOrderModel.deliveryPrice.toDouble())}" , style: utils.smallLabelStyle(blackColor.withOpacity(0.6)),),
                         ],
                       ),
-                      SizedBox(height: 4,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text("Total" , style: utils.boldLabelStyle(checkAdminController.system.mainColor),),
-                          Text("${utils.getFormattedPrice((widget.postOrderModel.discountedBill+widget.postOrderModel.deliveryPrice).toDouble())}" , style: utils.boldLabelStyle(checkAdminController.system.mainColor),),
-                        ],
-                      )
+                      GetBuilder<CouponController>(id: "0", builder: (couponController){
+                        if(couponController.selectedCoupon != null){
+                          if(couponController.selectedCoupon!.discountType == "%"){
+                            widget.postOrderModel.couponValue = (widget.postOrderModel.discountedBill * (couponController.selectedCoupon!.value/100)).toPrecision(2);
+                          }else{
+                            widget.postOrderModel.couponValue = couponController.selectedCoupon!.value > widget.postOrderModel.discountedBill ? widget.postOrderModel.discountedBill : couponController.selectedCoupon!.value.toDouble();
+                          }
+                        }
+                        return Column(
+                          children: [
+                            if(widget.postOrderModel.couponValue > 0) SizedBox(height: 4,),
+                            if(widget.postOrderModel.couponValue > 0) Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Coupon Saved" , style: utils.smallLabelStyle(blackColor.withOpacity(0.6)),),
+                                Text("${utils.getFormattedPrice(widget.postOrderModel.couponValue)}" , style: utils.smallLabelStyle(blackColor.withOpacity(0.6)),),
+                              ],
+                            ),
+                            SizedBox(height: 4,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Total" , style: utils.boldLabelStyle(checkAdminController.system.mainColor),),
+                                Text("${utils.getFormattedPrice((widget.postOrderModel.discountedBill+widget.postOrderModel.deliveryPrice).toDouble() - widget.postOrderModel.couponValue)}" , style: utils.boldLabelStyle(checkAdminController.system.mainColor),),
+                              ],
+                            )
+                          ],
+                        );
+                      }),
                     ],
                   )
               )
@@ -265,5 +295,7 @@ class _PaymentScreen extends State<PaymentScreen>{
     EasyLoading.dismiss();
     Get.toNamed(orderSuccessRoute, arguments: widget.postOrderModel);
     cartController.emptyCart();
+    CouponController couponController = Get.find();
+    couponController.setSelectedCoupon(null);
   }
 }

@@ -55,6 +55,15 @@ class _AddAddressPage extends State<AddAddressPage>{
     }else{
       countriesModels.add(adminController.system.defaultCountry!);
       countriesFilterModels.add(adminController.system.defaultCountry!);
+      if(countriesModels.length == 1){
+        selectedCountry = countriesModels[0];
+        selectedState = countriesModels[0].states.length > 0 ? countriesModels[0].states[0] : null;
+        if(selectedState != null) {
+          selectedCity = countriesModels[0].states[0].cities.length > 0
+              ? countriesModels[0].states[0].cities[0]
+              : null;
+        }
+      }
       if(type == 1){
         if(selectedAddress != null) {
           nameController.text = selectedAddress!.fullName;
@@ -170,7 +179,7 @@ class _AddAddressPage extends State<AddAddressPage>{
                     children: [
                       IconButton(onPressed: ()=> Navigator.pop(context), icon: Icon(CupertinoIcons.arrow_left , color: blackColor, size: 24,)),
                       SizedBox(width: 12,),
-                      Expanded(child: Text("Add Address" , style: utils.headingStyle(blackColor),)),
+                      Expanded(child: Text(type != 2 ? "Add Address" : "Add Branch" , style: utils.headingStyle(blackColor),)),
                     ],
                   ),
                 ),
@@ -309,44 +318,44 @@ class _AddAddressPage extends State<AddAddressPage>{
                           ),
                         ),
                         SizedBox(height: 12,),
-                        GestureDetector(
-                          onTap: () async {
-                            _place = await Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen()));
-                            setData();
-                            },
-                          child: Container(
-                            width: Get.size.width,
-                            padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 12),
-                            decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: blackColor.withOpacity(0.4) , width: 1)
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(width: 10,),
-                                Expanded(child: Text(
-                                  _place != null ? "${_place!.address}":"Select Address From Map",
-                                  style: utils.labelStyle(blackColor),
-                                )),
-                                Icon(CupertinoIcons.chevron_down , color: blackColor, size: 20,)
-                              ],
-                            ),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     _place = await Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen()));
+                        //     setData();
+                        //     },
+                        //   child: Container(
+                        //     width: Get.size.width,
+                        //     padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 12),
+                        //     decoration: BoxDecoration(
+                        //         color: whiteColor,
+                        //         borderRadius: BorderRadius.circular(8),
+                        //         border: Border.all(color: blackColor.withOpacity(0.4) , width: 1)
+                        //     ),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.start,
+                        //       crossAxisAlignment: CrossAxisAlignment.center,
+                        //       children: [
+                        //         SizedBox(width: 10,),
+                        //         Expanded(child: Text(
+                        //           _place != null ? "${_place!.address}":"Select Address From Map",
+                        //           style: utils.labelStyle(blackColor),
+                        //         )),
+                        //         Icon(CupertinoIcons.chevron_down , color: blackColor, size: 20,)
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         form("Address", "Address", addressController),
-                        SizedBox(height: 20,),
-                        Container(
+                        if(type != 2) SizedBox(height: 20,),
+                        if(type != 2) Container(
                           width: Get.width,
                           height: 1,
                           color: grayColor,
                         ),
-                        SizedBox(height: 20,),
-                        Text("Select a label for effective delivery" , style: utils.smallLabelStyle(blackColor),),
-                        SizedBox(height: 10,),
-                        Row(
+                        if(type != 2) SizedBox(height: 20,),
+                        if(type != 2) Text("Select a label for effective delivery" , style: utils.smallLabelStyle(blackColor),),
+                        if(type != 2) SizedBox(height: 10,),
+                        if(type != 2) Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -399,14 +408,14 @@ class _AddAddressPage extends State<AddAddressPage>{
                             )
                           ],
                         ),
-                        SizedBox(height: 20,),
-                        Container(
+                        if(type != 2) SizedBox(height: 20,),
+                        if(type != 2) Container(
                           width: Get.width,
                           height: 1,
                           color: grayColor,
                         ),
-                        SizedBox(height: 6,),
-                        Row(
+                        if(type != 2) SizedBox(height: 6,),
+                        if(type != 2) Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -426,8 +435,8 @@ class _AddAddressPage extends State<AddAddressPage>{
                             ),
                           ],
                         ),
-                        SizedBox(height: 6,),
-                        Container(
+                        if(type != 2) SizedBox(height: 6,),
+                        if(type != 2) Container(
                           width: Get.width,
                           height: 1,
                           color: grayColor,
@@ -440,8 +449,8 @@ class _AddAddressPage extends State<AddAddressPage>{
                               gradient: LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
-                                  colors: [checkAController.system.mainColor, checkAController.system.mainColor])),
-                          height: 30,
+                                  colors: [checkAController.system.mainColor, checkAController.system.mainColor])
+                          ),
                           child: TextButton(
                             onPressed: () async {
                               if(nameController.text.isEmpty){
@@ -465,15 +474,19 @@ class _AddAddressPage extends State<AddAddressPage>{
                               }else if(addressController.text.isEmpty){
                                 Get.snackbar("Opps", "Address is required");
                                 return;
-                              }else if(selected == -1){
+                              }else if(selected == -1 && type != 2){
                                 Get.snackbar("Opps", "Select Label First!");
                                 return;
                               }
                                 AddressModel aModel = AddressModel(
                                     id: type == 0 ? "${DateTime
                                         .now()
+                                        .millisecondsSinceEpoch}" : type == 2 ?  "${DateTime
+                                        .now()
                                         .millisecondsSinceEpoch}" : selectedAddress!.id,
                                     createdAt: type == 0 ? DateTime
+                                        .now()
+                                        .millisecondsSinceEpoch : type == 2 ? DateTime
                                         .now()
                                         .millisecondsSinceEpoch : selectedAddress!.createdAt,
                                     area: selectedArea!.name,
@@ -487,7 +500,11 @@ class _AddAddressPage extends State<AddAddressPage>{
                                     city: selectedCity!.name,
                                     country: selectedCountry!.name,
                                     address: addressController.text.toString());
-                                addAddress(aModel);
+                                if(type != 2) {
+                                  addAddress(aModel);
+                                }else{
+                                  addBranch(aModel);
+                                }
                             },
                             child: Text(
                               'Save',
@@ -893,6 +910,25 @@ class _AddAddressPage extends State<AddAddressPage>{
           .child(userController.user!.uid)
           .update({"defaultAddressId" : aModel.id});
     }
+    EasyLoading.dismiss();
+    Navigator.pop(context);
+  }
+
+  void addBranch(AddressModel aModel) async {
+
+    EasyLoading.show(status: "Loading...");
+    CheckAdminController checkAdminController = Get.find();
+    checkAdminController.system.branches.add(aModel);
+
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    database.setPersistenceEnabled(true);
+    database.setPersistenceCacheSizeBytes(10000000);
+    DatabaseReference reference = database.reference();
+    await reference
+        .child(systemRef)
+        .update(checkAdminController.system.toJsonBranches());
+
     EasyLoading.dismiss();
     Navigator.pop(context);
   }

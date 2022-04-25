@@ -9,28 +9,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../AppConstants/Constants.dart';
 import '../../Models/CouponModel.dart';
 
-class CouponListPage extends StatefulWidget{
+class ManageCouponPage extends StatefulWidget{
   @override
-  _CouponListPage createState() => _CouponListPage();
+  _ManageCouponPage createState() => _ManageCouponPage();
 }
 
-class _CouponListPage extends State<CouponListPage>{
+class _ManageCouponPage extends State<ManageCouponPage>{
 
   CheckAdminController checkAdminController = Get.find();
   UserController userController = Get.find();
   var utils = AppUtils();
-  var searchController = TextEditingController();
-  CartModel cartModel = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: GestureDetector(
+        onTap: (){
+          Get.toNamed(addCouponRoute);
+        },
+        child: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: checkAdminController.system.mainColor
+          ),
+          child: Center(
+            child: Icon(CupertinoIcons.add, color: whiteColor, size: 24,),
+          ),
+        ),
+      ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0),
         child: AppBar(
@@ -66,53 +82,6 @@ class _CouponListPage extends State<CouponListPage>{
               ),
             ),
             SizedBox(height: 12,),
-            GetBuilder<CouponController>(id: "0",builder: (couponController){
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(child: utils.textField(Colors.transparent, null, null, null, blackColor, blackColor, "Coupon Code", blackColor.withOpacity(0.5), blackColor.withOpacity(0.7), 2.0, Get.width, false, searchController),),
-                    SizedBox(width: 12,),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: checkAdminController.system.mainColor
-                      ),
-                      child: TextButton(
-                        onPressed: (){
-                          CouponModel coupon = couponController.getCoupon(searchController.text.toString());
-                          if(coupon.validFrom <= DateTime.now().millisecondsSinceEpoch){
-                            if(coupon.validBefore >= DateTime.now().millisecondsSinceEpoch){
-                              if(cartModel.discountedBill >= double.parse(coupon.maxOrderPrice.toString())){
-                                couponController.setSelectedCoupon(coupon);
-                                Get.back();
-                              }else{
-                                Get.snackbar("Error", "Order value should be greater than ${coupon.maxOrderPrice}");
-                              }
-                            }else{
-                              Get.snackbar("Error", "Coupon is expired.");
-                            }
-                          }else{
-                            Get.snackbar("Error", "Coupon is not available yet.");
-                          }
-                          couponController.stopLoading();
-                        },
-                        child: couponController.loadingCoupon ? CircularProgressIndicator(color: whiteColor,) :Text("Apply", style: utils.smallLabelStyle(whiteColor),),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }),
-            SizedBox(height: 8,),
-            Container(
-              width: Get.width,
-              height: 0.9,
-              color: grayColor,
-              margin: EdgeInsets.symmetric(horizontal: 12),
-            ),
             Expanded(child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: SingleChildScrollView(
@@ -125,7 +94,34 @@ class _CouponListPage extends State<CouponListPage>{
                       Text("All Coupons", style: utils.boldLabelStyle(blackColor),),
                       SizedBox(height: 12,),
                       for(var i = 0; i < couponController.coupons.length; i++)
-                        couponCard(couponController.coupons[i])
+                        SwipeActionCell(
+                            key: ObjectKey(couponController.coupons[i].couponId),///this key is necessary
+                            trailingActions: <SwipeAction>[
+                              SwipeAction(
+                                  backgroundRadius: 12,
+                                  widthSpace: 80,
+                                  title: "Delete",
+                                  onTap: (CompletionHandler handler) async {
+                                    couponController.removeCoupon(couponController.coupons[i].couponId);
+                                  },
+                                  color: Colors.red),
+                            ],
+                            child: couponCard(couponController.coupons[i])
+                        ),
+
+                      if(couponController.coupons.length <= 0) Container(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Lottie.asset('Assets/lottie/searchempty.json'),
+                              Text(
+                                "No Coupon Available",
+                                style: utils
+                                    .labelStyle(blackColor.withOpacity(0.5)),
+                              ),
+                            ]),
+                      )
                     ],
                   );
                 },),
@@ -140,6 +136,7 @@ class _CouponListPage extends State<CouponListPage>{
   couponCard(CouponModel couponModel) {
     const Color primaryColor = Color(0xffcbf3f0);
     const Color secondaryColor = Color(0xff368f8b);
+    CouponController couponController = Get.find();
 
     return Container(
       margin: EdgeInsets.only(bottom: 12),
@@ -182,21 +179,19 @@ class _CouponListPage extends State<CouponListPage>{
               Divider(color: Colors.white54, height: 0),
               Expanded(
                 child: Center(
-                  child: InkWell(
-                    onTap: (){
-                      Clipboard.setData(ClipboardData(text: "${couponModel.code}")).then((value){
-                        utils.snackBar(context, message: "Copied");
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: whiteColor
+                    child: InkWell(
+                      onTap: (){
+                        couponController.removeCoupon(couponModel.couponId);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: whiteColor
+                        ),
+                        child: Text("Delete", style: utils.boldSmallLabelStyle(secondaryColor),),
                       ),
-                      child: Text("Copy", style: utils.boldSmallLabelStyle(secondaryColor),),
-                    ),
-                  )
+                    )
                 ),
               ),
             ],

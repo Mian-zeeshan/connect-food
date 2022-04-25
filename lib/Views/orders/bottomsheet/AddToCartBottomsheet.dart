@@ -223,7 +223,7 @@ class _AddToCartBottom extends State<AddToCartBottom>{
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(child: Text(widget.itemModel.totalStock > 0 ? "Available Stock: ${widget.itemModel.totalStock}" : "No stock available.", style: utils.boldSmallLabelStyle(checkAdminController.system.mainColor),)),
+                Expanded(child: Container()/*Text(widget.itemModel.totalStock > 0 ? "Available Stock: ${widget.itemModel.totalStock}" : "No stock available.", style: utils.boldSmallLabelStyle(checkAdminController.system.mainColor),)*/),
                 SizedBox(width: 8,),
                 if(widget.itemModel.totalStock > 0) Row(
                   mainAxisAlignment: MainAxisAlignment.end,

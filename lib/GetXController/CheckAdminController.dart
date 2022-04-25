@@ -192,4 +192,20 @@ class CheckAdminController extends GetxController{
     return true;
   }
 
+  void updateDine(bool dineIn) async {
+    system.dineIn = dineIn;
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    await reference
+        .child(systemRef)
+        .update(system.toJson());
+    update(["0"]);
+    notifyChildrens();
+  }
+
 }

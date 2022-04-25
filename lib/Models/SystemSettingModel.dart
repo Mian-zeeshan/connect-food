@@ -2,10 +2,13 @@ import 'dart:ui';
 
 import 'package:connectsaleorder/Models/CountriesModel.dart';
 
+import 'AddressModel.dart';
+
 class SystemSettingModel {
   List<Languages> languages = [];
   Languages itemGridStyle = Languages(code: "001" , name: "default");
   Languages itemListStyle = Languages(code: "001" , name: "default");
+  List<AddressModel> branches = [];
   CountriesModel? defaultCountry;
   int maxDeliveryPrice = 100;
   BottomNavigationChecks bottomNavigationChecks = BottomNavigationChecks(isCart: false, isCategories: true, isDeals: true, isFavorite: false, isOrders: false, isProducts: true , bottomStyle: 0);
@@ -13,6 +16,7 @@ class SystemSettingModel {
   String companyLogo = "https://connect-sol.com/wp-content/uploads/2019/10/logo-1-1.png";
   String color = "";
   int categoryView = 0;
+  bool dineIn = false;
 
   SystemSettingModel(
       {required this.languages,
@@ -48,6 +52,18 @@ class SystemSettingModel {
       color = "Color(0xFF6e9040)";
     }
 
+    if(json["dineIn"] != null) {
+      dineIn = json["dineIn"];
+    }
+
+
+    if(json["branches"] != null){
+      branches = [];
+      json["branches"].forEach((v){
+        branches.add(AddressModel.fromJson(v));
+      });
+    }
+
     String valueString = color.split('(0x')[1].split(')')[0]; // kind of hacky..
     int value = int.parse(valueString, radix: 16);
     mainColor = new Color(value);
@@ -78,8 +94,18 @@ class SystemSettingModel {
     data["companyLogo"] = companyLogo;
     data["categoryView"] = categoryView;
     data["maxDeliveryPrice"] = maxDeliveryPrice;
+    data["dineIn"] = dineIn;
+    data['branches'] = this.branches.map((v) => v.toJson()).toList();
     return data;
   }
+
+
+  Map<String, dynamic> toJsonBranches() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['branches'] = this.branches.map((v) => v.toJson()).toList();
+    return data;
+  }
+
 }
 
 class Languages {

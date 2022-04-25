@@ -556,4 +556,30 @@ class AppUtils{
     );
   }
 
+  Widget tabStyle(index, String name, color) {
+    return Visibility(
+      child: Container(
+        decoration: BoxDecoration(
+            color: index ? color
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+                color: index
+                    ? color
+                    : Colors.transparent)),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(name,
+                style: labelStyle(index
+                    ? whiteColor
+                    : blackColor.withOpacity(0.5))
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }

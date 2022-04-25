@@ -73,6 +73,7 @@ final retailersRoute = "/retailers";
 final retailerDetailRoute = "/retailerDetail";
 final addCouponRoute = "/addCoupon";
 final couponListRoute = "/couponsPage";
+final orderTypeRoute = "/orderType";
 
 //daabase references
 var databaseUrl = "https://haya-collections-default-rtdb.firebaseio.com/";

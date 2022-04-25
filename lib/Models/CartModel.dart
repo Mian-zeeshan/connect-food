@@ -1,3 +1,4 @@
+import 'package:connectsaleorder/Models/AddressModel.dart';
 import 'package:connectsaleorder/Models/CustomerModel.dart';
 
 import 'ItemModel.dart';
@@ -19,6 +20,9 @@ class CartModel {
   int status = 0;
   bool? isRetailer = false;
   double deliveryPrice = 0;
+  int orderType = 1;
+  double couponValue = 0;
+  AddressModel? branch;
 
   CartModel(
       {required this.userId,
@@ -35,6 +39,8 @@ class CartModel {
       isRetailer = json['isRetailer'];
     if(json['customer'] != null)
       customer = CustomerModel.fromJson(json['customer']);
+    if(json['branch'] != null)
+      branch = AddressModel.fromJson(json['branch']);
     if(json['status'] != null)
       status = json['status'];
     totalBill = json['totalBill'].toDouble();
@@ -46,6 +52,11 @@ class CartModel {
     paymentMethod = json['paymentMethod'];
     isDraft = json['isDraft'];
     isSync = json['isSync'];
+    if(json["orderType"] != null)
+    orderType = json['orderType'];
+
+    if(json["couponValue"] != null)
+      couponValue = json['couponValue'].toDouble();
     deliveryPrice = (json["deliveryPrice"]??0).toDouble();
     if (json['products'] != null) {
       products = [];
@@ -63,6 +74,8 @@ class CartModel {
     data['isRetailer'] = this.isRetailer;
     if(this.customer != null)
     data['customer'] = this.customer!.toJson();
+    if(this.branch != null)
+    data['branch'] = this.branch!.toJson();
     data['totalBill'] = this.totalBill;
     data['discountedBill'] = this.discountedBill;
     data['total_Items'] = this.totalItems;
@@ -73,6 +86,8 @@ class CartModel {
     data['isDraft'] = this.isDraft;
     data["deliveryPrice"] = this.deliveryPrice;
     data['isSync'] = this.isSync;
+    data['orderType'] = this.orderType;
+    data['couponValue'] = this.couponValue;
     data['products'] = this.products.map((v) => v.toJson()).toList();
     return data;
   }

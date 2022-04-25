@@ -38,6 +38,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
             SizedBox(height: 10,),
             Text("Shipping Detail" , style: utils.boldLabelStyle(blackColor),),
             SizedBox(height: 6,),
+            tableItem("Order For" , widget.cartModel.orderType == 0 ? "Dine-In" : "Home-Delivery"),
             tableItem("Name" , widget.cartModel.customer!.name),
             tableItem("Retailer" , widget.cartModel.isRetailer??false ? "Yes" : "No"),
             tableItem("Phone" , widget.cartModel.customer!.phone),
@@ -82,7 +83,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
                             RichText(text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: widget.cartModel.products[i].disCont??false? "${(widget.cartModel.products[i].discountVal??0).toInt()}${widget.cartModel.products[i].discountType == "%" ? "%" : ""} OFF " :"",
+                                  text: (widget.cartModel.products[i].disCont??false) && (widget.cartModel.products[i].discountVal??0).toInt() > 0 ? "${(widget.cartModel.products[i].discountVal??0).toInt()}${widget.cartModel.products[i].discountType == "%" ? "%" : ""} OFF " :"",
                                   style: utils.smallLabelStyle(blackColor)
                                 ),
                                 TextSpan(
@@ -96,6 +97,15 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
                               ]
                             )),
                             Text("Quantity : ${widget.cartModel.products[i].selectedQuantity}" , style: utils.smallLabelStyle(blackColor),),
+                            if(widget.cartModel.products[i].selectedAddons.length > 0) RichText(text: TextSpan(
+                                children: [
+                                  for(var l = 0 ; l < widget.cartModel.products[i].selectedAddons.length; l++)
+                                    TextSpan(
+                                        text: "${widget.cartModel.products[i].selectedAddons[l].adonDescription}x${widget.cartModel.products[i].selectedAddons[l].quantity}${l < widget.cartModel.products[i].selectedAddons.length - 1 ? ",":""} ",
+                                        style: utils.xSmallLabelStyle(blackColor)
+                                    )
+                                ]
+                            ))
                           ],
                         )),
                       ],
@@ -109,7 +119,8 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
             tableItemBold("Delivery" , "${utils.getFormattedPrice(widget.cartModel.deliveryPrice)}"),
             tableItemBold("Saving" , "${utils.getFormattedPrice(widget.cartModel.totalBill - (widget.cartModel.discountedBill))}"),
             tableItemBold("Tax" , "${utils.getFormattedPrice((widget.cartModel.totalBill * 5)/100)}" ),
-            tableItemBold("Total" , "${utils.getFormattedPrice(widget.cartModel.discountedBill+widget.cartModel.deliveryPrice)}"),
+            if(widget.cartModel.couponValue > 0) tableItemBold("Coupon Saved" , "${utils.getFormattedPrice(widget.cartModel.couponValue)}"),
+            tableItemBold("Total" , "${utils.getFormattedPrice(widget.cartModel.discountedBill+widget.cartModel.deliveryPrice-widget.cartModel.couponValue)}"),
           ],
         ),
       ),

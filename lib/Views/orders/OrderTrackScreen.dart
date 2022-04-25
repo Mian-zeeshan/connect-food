@@ -45,13 +45,13 @@ class _OrderTrackScreen extends State<OrderTrackScreen>{
               _DeliveryMessage("", "Your Order is preparing and packing.")
             ]: []));
         deliveryProcesses.add(_DeliveryProcess(
-            "Shipping", orderModel!.status >= 2 ? "Done" : "Shipping",
+            "On the way", orderModel!.status >= 2 ? "Done" : "On the way",
              messages: orderModel!.status >= 2 ? [
               _DeliveryMessage(
-                  "", "Your Order is in shipping and will reach to you soon")
+                  "", "Your Order is on the way and will reach to you soon")
             ]: []));
         deliveryProcesses.add(_DeliveryProcess(
-            "Shipped", orderModel!.status >= 3 ? "Done" : "Shipped", messages: orderModel!.status >= 3 ? [
+            "Delivered", orderModel!.status >= 3 ? "Done" : "Delivered", messages: orderModel!.status >= 3 ? [
           _DeliveryMessage(
               "", "Your order is at your door kindly receive your order.")
         ]: []));

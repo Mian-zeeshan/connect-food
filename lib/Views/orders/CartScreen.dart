@@ -333,7 +333,11 @@ class _CartScreen extends State<CartScreen>{
                                     ],
                                   )),
                                   utils.button(checkAdminController.system.mainColor, "Proceed to checkout", whiteColor, checkAdminController.system.mainColor, 1.0, (){
-                                    Get.toNamed(checkoutRoute);
+                                    if(checkAdminController.system.dineIn) {
+                                      Get.toNamed(orderTypeRoute);
+                                    }else{
+                                      Get.toNamed(checkoutRoute, arguments: 1);
+                                    }
                                   })
                                 ],
                               ),

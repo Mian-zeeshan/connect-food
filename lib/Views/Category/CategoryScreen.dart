@@ -99,6 +99,7 @@ class _CategoryScreen extends State<CategoryScreen>{
                             scrollDirection: Axis.vertical,
                             children: [
                               SizedBox(height: 12,),
+                              Text("Categories" , style: utils.boldLabelStyle(blackColor),),
                               for(var i = 0; i < lengthCategories; i++)
                                 GestureDetector(
                                   onTap: (){
@@ -167,6 +168,8 @@ class _CategoryScreen extends State<CategoryScreen>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 12,),
+                                Text("Sub Categories" , style: utils.boldLabelStyle(blackColor),),
+                                SizedBox(height: 6,),
                                 GetBuilder<SubCategoryController>(id: "0" , builder: (subCategoryController){
                                   lengthSubCategories = subCategoryController.subCategories.length > lengthSubCategories ? lengthSubCategories : subCategoryController.subCategories.length;
                                   totalSubCategories = subCategoryController.subCategories.length;
