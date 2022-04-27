@@ -2,6 +2,7 @@
 //Colors
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
 final whiteColor = Color(0xFFFFFFFF);
@@ -111,3 +112,4 @@ final isAdminGlobal = "isAdminGlobal";
 
 FirebaseAuth? auth;
 FirebaseDatabase? database;
+FirebaseStorage? storage;

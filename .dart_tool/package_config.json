@@ -440,6 +440,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "image_crop",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_crop-0.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "image_picker",
       "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.8.4+1",
       "packageUri": "lib/",
@@ -812,7 +818,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-04-08T09:14:12.167485Z",
+  "generated": "2022-04-26T05:20:03.662670Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }

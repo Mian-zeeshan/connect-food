@@ -21,6 +21,7 @@ class ItemController extends GetxController{
   List<ItemModel> itemModelsNewArrival = [];
   List<ItemModel> itemModelsTopDeals = [];
   List<ItemModel> itemModelsRecentView = [];
+  List<ItemModel> sizedProducts = [];
   var isLoadingSearch = false;
   RecentViewItemsModel recentViewItemsModel = RecentViewItemsModel(recentItems: []);
 
@@ -68,23 +69,27 @@ class ItemController extends GetxController{
         event.snapshot.value.forEach((key,value) async {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          int stock = itemModel.totalStock;
-          for(var item in itemModel.stock){
-            stock += item.stock.toInt();
+          if(itemModel.parentId == null) {
+            int stock = itemModel.totalStock;
+            for (var item in itemModel.stock) {
+              stock += item.stock.toInt();
+            }
+            itemModel.totalStock = stock;
+            double discountedPrice = 0;
+            double discountedPriceW = 0;
+            if (itemModel.discountType == "%") {
+              discountedPrice = itemModel.salesRate -
+                  ((itemModel.salesRate * itemModel.discountVal!) / 100);
+              discountedPriceW = (itemModel.wholeSale) -
+                  (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+            } else {
+              discountedPrice = itemModel.salesRate - itemModel.discountVal!;
+              discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
+            }
+            itemModel.discountedPrice = discountedPrice;
+            itemModel.discountedPriceW = discountedPriceW;
+            itemModelsNewArrival.add(itemModel);
           }
-          itemModel.totalStock = stock;
-          double discountedPrice = 0;
-          double discountedPriceW = 0;
-          if(itemModel.discountType == "%"){
-            discountedPrice = itemModel.salesRate - ((itemModel.salesRate * itemModel.discountVal!)/100);
-            discountedPriceW = (itemModel.wholeSale) - (((itemModel.wholeSale) * itemModel.discountVal!)/100);
-          }else{
-            discountedPrice = itemModel.salesRate - itemModel.discountVal!;
-            discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
-          }
-          itemModel.discountedPrice = discountedPrice;
-          itemModel.discountedPriceW = discountedPriceW;
-          itemModelsNewArrival.add(itemModel);
         });
       }
 
@@ -119,26 +124,29 @@ class ItemController extends GetxController{
         event.value.forEach((key,value) async {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          if(itemModel.code != startAtCode) {
-            int stock = itemModel.totalStock;
-            for (var item in itemModel.stock) {
-              stock += item.stock.toInt();
+          if(itemModel.parentId == null) {
+            if (itemModel.code != startAtCode) {
+              int stock = itemModel.totalStock;
+              for (var item in itemModel.stock) {
+                stock += item.stock.toInt();
+              }
+              itemModel.totalStock = stock;
+              double discountedPrice = 0;
+              double discountedPriceW = 0;
+              if (itemModel.discountType == "%") {
+                discountedPrice = itemModel.salesRate -
+                    ((itemModel.salesRate * itemModel.discountVal!) / 100);
+                discountedPriceW = (itemModel.wholeSale) -
+                    (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+              } else {
+                discountedPrice = itemModel.salesRate - itemModel.discountVal!;
+                discountedPriceW =
+                    (itemModel.wholeSale) - itemModel.discountVal!;
+              }
+              itemModel.discountedPrice = discountedPrice;
+              itemModel.discountedPriceW = discountedPriceW;
+              itemModelsAll.add(itemModel);
             }
-            itemModel.totalStock = stock;
-            double discountedPrice = 0;
-            double discountedPriceW = 0;
-            if (itemModel.discountType == "%") {
-              discountedPrice = itemModel.salesRate -
-                  ((itemModel.salesRate * itemModel.discountVal!) / 100);
-              discountedPriceW = (itemModel.wholeSale) -
-                  (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
-            } else {
-              discountedPrice = itemModel.salesRate - itemModel.discountVal!;
-              discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
-            }
-            itemModel.discountedPrice = discountedPrice;
-            itemModel.discountedPriceW = discountedPriceW;
-            itemModelsAll.add(itemModel);
           }
         });
       }
@@ -170,23 +178,27 @@ class ItemController extends GetxController{
         event.snapshot.value.forEach((key,value) async {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          int stock = itemModel.totalStock;
-          for(var item in itemModel.stock){
-            stock += item.stock.toInt();
+          if(itemModel.parentId == null) {
+            int stock = itemModel.totalStock;
+            for (var item in itemModel.stock) {
+              stock += item.stock.toInt();
+            }
+            itemModel.totalStock = stock;
+            double discountedPrice = 0;
+            double discountedPriceW = 0;
+            if (itemModel.discountType == "%") {
+              discountedPrice = itemModel.salesRate -
+                  ((itemModel.salesRate * itemModel.discountVal!) / 100);
+              discountedPriceW = (itemModel.wholeSale) -
+                  (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+            } else {
+              discountedPrice = itemModel.salesRate - itemModel.discountVal!;
+              discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
+            }
+            itemModel.discountedPrice = discountedPrice;
+            itemModel.discountedPriceW = discountedPriceW;
+            itemModelsSearch.add(itemModel);
           }
-          itemModel.totalStock = stock;
-          double discountedPrice = 0;
-          double discountedPriceW = 0;
-          if(itemModel.discountType == "%"){
-            discountedPrice = itemModel.salesRate - ((itemModel.salesRate * itemModel.discountVal!)/100);
-            discountedPriceW = (itemModel.wholeSale) - (((itemModel.wholeSale) * itemModel.discountVal!)/100);
-          }else{
-            discountedPrice = itemModel.salesRate - itemModel.discountVal!;
-            discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
-          }
-          itemModel.discountedPrice = discountedPrice;
-          itemModel.discountedPriceW = discountedPriceW;
-          itemModelsSearch.add(itemModel);
         });
       }
       isLoadingSearch = false;
@@ -227,23 +239,27 @@ class ItemController extends GetxController{
         event.snapshot.value.forEach((key,value) {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          int stock = itemModel.totalStock;
-          for(var item in itemModel.stock){
-            stock += item.stock.toInt();
+          if(itemModel.parentId == null) {
+            int stock = itemModel.totalStock;
+            for (var item in itemModel.stock) {
+              stock += item.stock.toInt();
+            }
+            itemModel.totalStock = stock;
+            double discountedPrice = 0;
+            double discountedPriceW = 0;
+            if (itemModel.discountType == "%") {
+              discountedPrice = itemModel.salesRate -
+                  ((itemModel.salesRate * itemModel.discountVal!) / 100);
+              discountedPriceW = (itemModel.wholeSale) -
+                  (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+            } else {
+              discountedPrice = itemModel.salesRate - itemModel.discountVal!;
+              discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
+            }
+            itemModel.discountedPrice = discountedPrice;
+            itemModel.discountedPriceW = discountedPriceW;
+            itemModelsTopDeals.add(itemModel);
           }
-          itemModel.totalStock = stock;
-          double discountedPrice = 0;
-          double discountedPriceW = 0;
-          if(itemModel.discountType == "%"){
-            discountedPrice = itemModel.salesRate - ((itemModel.salesRate * itemModel.discountVal!)/100);
-            discountedPriceW = (itemModel.wholeSale) - (((itemModel.wholeSale) * itemModel.discountVal!)/100);
-          }else{
-            discountedPrice = itemModel.salesRate - itemModel.discountVal!;
-            discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
-          }
-          itemModel.discountedPrice = discountedPrice;
-          itemModel.discountedPriceW = discountedPriceW;
-          itemModelsTopDeals.add(itemModel);
         });
       }
 
@@ -285,23 +301,29 @@ class ItemController extends GetxController{
             event.snapshot.value.forEach((key,value) {
               ItemModel itemModel = ItemModel.fromJson(
                   jsonDecode(jsonEncode(value)));
-              int stock = itemModel.totalStock;
-              for(var item in itemModel.stock){
-                stock += item.stock.toInt();
+              if(itemModel.parentId == null) {
+                int stock = itemModel.totalStock;
+                for (var item in itemModel.stock) {
+                  stock += item.stock.toInt();
+                }
+                itemModel.totalStock = stock;
+                double discountedPrice = 0;
+                double discountedPriceW = 0;
+                if (itemModel.discountType == "%") {
+                  discountedPrice = itemModel.salesRate -
+                      ((itemModel.salesRate * itemModel.discountVal!) / 100);
+                  discountedPriceW = (itemModel.wholeSale) -
+                      (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+                } else {
+                  discountedPrice =
+                      itemModel.salesRate - itemModel.discountVal!;
+                  discountedPriceW =
+                      (itemModel.wholeSale) - itemModel.discountVal!;
+                }
+                itemModel.discountedPrice = discountedPrice;
+                itemModel.discountedPriceW = discountedPriceW;
+                itemModels.add(itemModel);
               }
-              itemModel.totalStock = stock;
-              double discountedPrice = 0;
-              double discountedPriceW = 0;
-              if(itemModel.discountType == "%"){
-                discountedPrice = itemModel.salesRate - ((itemModel.salesRate * itemModel.discountVal!)/100);
-                discountedPriceW = (itemModel.wholeSale) - (((itemModel.wholeSale) * itemModel.discountVal!)/100);
-              }else{
-                discountedPrice = itemModel.salesRate - itemModel.discountVal!;
-                discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
-              }
-              itemModel.discountedPrice = discountedPrice;
-              itemModel.discountedPriceW = discountedPriceW;
-              itemModels.add(itemModel);
             });
         }
         itemModelsFilter = itemModels;
@@ -342,6 +364,8 @@ class ItemController extends GetxController{
             });
           }
         }
+
+        print("LAST ITEM ${lastItem!.code}");
         update(["0"]);
         notifyChildrens();
       });
@@ -409,30 +433,35 @@ class ItemController extends GetxController{
           if (event.snapshot.exists) {
             var modelItem = ItemModel.fromJson(
                 jsonDecode(jsonEncode(event.snapshot.value)));
-            print("RECENT REVIEW ${modelItem.toJson().toString()}");
-            int stock = modelItem.totalStock;
-            for(var item in modelItem.stock){
-              stock += item.stock.toInt();
-            }
-            modelItem.totalStock = stock;
-            double discountedPrice = 0;
-            double discountedPriceW = 0;
-            if(modelItem.discountType == "%"){
-              discountedPrice = modelItem.salesRate - ((modelItem.salesRate * modelItem.discountVal!)/100);
-              discountedPriceW = (modelItem.wholeSale) - (((modelItem.wholeSale) * modelItem.discountVal!)/100);
-            }else{
-              discountedPrice = modelItem.salesRate - modelItem.discountVal!;
-              discountedPriceW = (modelItem.wholeSale) - modelItem.discountVal!;
-            }
-            modelItem.discountedPrice = discountedPrice;
-            modelItem.discountedPriceW = discountedPriceW;
-            for(var i = 0 ; i < itemModelsRecentView.length; i++){
-              if(modelItem.code == itemModelsRecentView[i].code){
-                itemModelsRecentView.removeAt(i);
-                break;
+            if(modelItem.parentId == null) {
+              print("RECENT REVIEW ${modelItem.toJson().toString()}");
+              int stock = modelItem.totalStock;
+              for (var item in modelItem.stock) {
+                stock += item.stock.toInt();
               }
+              modelItem.totalStock = stock;
+              double discountedPrice = 0;
+              double discountedPriceW = 0;
+              if (modelItem.discountType == "%") {
+                discountedPrice = modelItem.salesRate -
+                    ((modelItem.salesRate * modelItem.discountVal!) / 100);
+                discountedPriceW = (modelItem.wholeSale) -
+                    (((modelItem.wholeSale) * modelItem.discountVal!) / 100);
+              } else {
+                discountedPrice = modelItem.salesRate - modelItem.discountVal!;
+                discountedPriceW =
+                    (modelItem.wholeSale) - modelItem.discountVal!;
+              }
+              modelItem.discountedPrice = discountedPrice;
+              modelItem.discountedPriceW = discountedPriceW;
+              for (var i = 0; i < itemModelsRecentView.length; i++) {
+                if (modelItem.code == itemModelsRecentView[i].code) {
+                  itemModelsRecentView.removeAt(i);
+                  break;
+                }
+              }
+              itemModelsRecentView.add(modelItem);
             }
-            itemModelsRecentView.add(modelItem);
           }
           update(["0"]);
           notifyChildrens();
@@ -497,4 +526,50 @@ class ItemController extends GetxController{
     notifyChildrens();
   }
 
+  getRelatedProducts(code) async {
+    sizedProducts = [];
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+
+    reference
+        .child(itemRef)
+        .orderByChild("parentId")
+        .equalTo(code)
+        .onValue.listen((event) {
+      sizedProducts = [];
+      if (event.snapshot.exists) {
+        event.snapshot.value.forEach((key,value) {
+          print(key);
+          ItemModel itemModel = ItemModel.fromJson(
+              jsonDecode(jsonEncode(value)));
+          int stock = itemModel.totalStock;
+          for (var item in itemModel.stock) {
+            stock += item.stock.toInt();
+          }
+          itemModel.totalStock = stock;
+          double discountedPrice = 0;
+          double discountedPriceW = 0;
+          if (itemModel.discountType == "%") {
+            discountedPrice = itemModel.salesRate -
+                ((itemModel.salesRate * itemModel.discountVal!) / 100);
+            discountedPriceW = (itemModel.wholeSale) -
+                (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+          } else {
+            discountedPrice = itemModel.salesRate - itemModel.discountVal!;
+            discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
+          }
+          itemModel.discountedPrice = discountedPrice;
+          itemModel.discountedPriceW = discountedPriceW;
+          sizedProducts.add(itemModel);
+        });
+      }
+      update(["0"]);
+      notifyChildrens();
+    });
+  }
 }

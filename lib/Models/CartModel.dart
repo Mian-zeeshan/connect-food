@@ -16,6 +16,7 @@ class CartModel {
   CustomerModel? customer;
   int amountPaid = 0;
   String? paymentMethod;
+  String? instructions;
   bool isSync = false;
   int status = 0;
   bool? isRetailer = false;
@@ -51,6 +52,7 @@ class CartModel {
     amountPaid = json['amountPaid'];
     paymentMethod = json['paymentMethod'];
     isDraft = json['isDraft'];
+    instructions = json['instructions'];
     isSync = json['isSync'];
     if(json["orderType"] != null)
     orderType = json['orderType'];
@@ -85,6 +87,7 @@ class CartModel {
     data['paymentMethod'] = this.paymentMethod;
     data['isDraft'] = this.isDraft;
     data["deliveryPrice"] = this.deliveryPrice;
+    data["instructions"] = this.instructions;
     data['isSync'] = this.isSync;
     data['orderType'] = this.orderType;
     data['couponValue'] = this.couponValue;

@@ -44,6 +44,7 @@ import 'package:connectsaleorder/Views/retailer/RetailersScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -90,7 +91,7 @@ void main() async {
         storageBucket: "sales-orders-374ef.appspot.com",
         messagingSenderId: "306941672152",
         appId: "1:306941672152:web:59eb72337bb3c8acae75ad",
-        measurementId: "G-DDTLMXHZ5V"
+        measurementId: "G-DDTLMXHZ5V",
     ),
   );
   }else{
@@ -98,7 +99,7 @@ void main() async {
   }
   FirebaseApp app = await _configureAbnApp();
   auth = await FirebaseAuth.instanceFor(app: app);
-
+  storage = FirebaseStorage.instanceFor(app: app);
   await GetStorage.init();
   Get.put(LocaleController());
   Get.put(ItemController());
@@ -184,7 +185,8 @@ _configureAbnApp() async {
       apiKey: "AIzaSyAu0slv7W4-MVjr19sBGA2eLtn_2kvubSs",
       messagingSenderId: "1059382918533",
       projectId: "connect-foods-2a2d2",
-      appId: "1:1059382918533:android:68dd14317d443c242a58ec"
+      appId: "1:1059382918533:android:68dd14317d443c242a58ec",
+      storageBucket: "gs://connect-foods-2a2d2.appspot.com",
   );
   FirebaseApp app = await Firebase.initializeApp(name: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/", options: abnOptions);
   database = FirebaseDatabase(databaseURL: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/");

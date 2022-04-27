@@ -16,6 +16,7 @@ geolocator_apple=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.or
 geolocator_web=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_web-2.1.2/
 google_maps_flutter=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-2.1.1/
 google_places_picker=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/google_places_picker-3.0.2/
+image_crop=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_crop-0.4.0/
 image_picker=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.8.4+1/
 image_picker_for_web=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_for_web-2.1.4/
 path_provider=/Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.4/

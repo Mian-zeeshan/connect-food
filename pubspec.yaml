@@ -74,6 +74,7 @@ dependencies:
   url_launcher: ^6.0.20
   coupon_uikit: ^0.0.1
   platform: ^3.1.0
+  image_crop: ^0.4.0
 
 
 

@@ -69,7 +69,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
     itemListStyle.add(Languages(code: "002", name: "Style 1"));
     itemListStyle.add(Languages(code: "003", name: "Style 2"));
     itemListStyle.add(Languages(code: "004", name: "Style 3"));
-    itemModel = ItemModel(code: "0", name: "Samsung Galaxy S21", type: "0", salesRate: 99999, style: "0", mUnit: "1Kg", images: ["https://www.apple.com/newsroom/images/product/iphone/standard/Apple_new-iphone-se-white_04152020_big.jpg"], purchaseRate: 129999, stock: [], deliveryApplyItem: 2, deliveryPrice: 50, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0);
+    itemModel = ItemModel(code: "0", name: "Samsung Galaxy S21", type: "0", salesRate: 99999, style: "0", mUnit: "1Kg", images: ["https://www.apple.com/newsroom/images/product/iphone/standard/Apple_new-iphone-se-white_04152020_big.jpg"], purchaseRate: 129999, stock: [], deliveryApplyItem: 2, deliveryPrice: 50, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
     itemModel.totalStock = 99;
     itemModel.disCont = true;
     itemModel.discountType = "%";

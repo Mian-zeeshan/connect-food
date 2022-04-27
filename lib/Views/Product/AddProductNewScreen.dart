@@ -16,7 +16,6 @@ import 'package:connectsaleorder/Utils/AppUtils.dart';
 import 'package:connectsaleorder/Views/Category/AddBrandScreen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -37,7 +36,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   CheckAdminController checkAdminController = Get.find();
   var activeStep = 0;
   var utils = AppUtils();
-  ItemModel addProductModel = Get.arguments??ItemModel(code: "", name: "", type: "", salesRate: 0, style: "", mUnit: "", images: [], purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0);
+  ItemModel addProductModel = Get.arguments??ItemModel(code: "", name: "", type: "", salesRate: 0, style: "", mUnit: "", images: [], purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
   CategoryModel? selectedCategoryItem;
   BrandModel? selectedBrand;
   SubCategoryModel? selectedSubCategoryItem;
@@ -46,13 +45,11 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   List<PColors> pColors = [];
   List<PSizes> pSizes = [];
   List<PColors> pColorsDefault = [];
-  List<PSizes> pSizesDefault = [];
   PColors? selectedPColor;
   PSizes? selectedPSize;
   List<File> _productImages = [];
   List<PlatformFile> _productImagesWeb = [];
   var discountTypes = ["Percent (%)" , "Flat"];
-  FirebaseStorage _storage = FirebaseStorage.instance;
 
   ImagePicker _picker = ImagePicker();
   var isNewArrival = false;
@@ -63,6 +60,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   var wholeSalePriceController = TextEditingController();
   var discPriceController = TextEditingController();
   var stockController = TextEditingController();
+
   /*
   todo implement later
   var skuController = TextEditingController();
@@ -70,6 +68,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   var tagsController = TextEditingController();
   var brandController = TextEditingController();
   */
+
   var ingredientController = TextEditingController();
   var unitController = TextEditingController();
   var sDescriptionController = TextEditingController();
@@ -83,16 +82,20 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   var psDescriptionController = TextEditingController();
   var aNameController = TextEditingController();
   var aPriceController = TextEditingController();
+  var sNameController = TextEditingController();
+  var sPriceController = TextEditingController();
+  var sWPriceController = TextEditingController();
   var isExist = false;
   int selectedDiscount = 0;
   CategoryController _categoryController = Get.find();
   SubCategoryController _subCategoryController = Get.find();
+  ItemController __itemController = Get.find();
   var shortDLength = 0;
   var longDLength = 0;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    __itemController.getLastItems();
     _categoryController.getCategories();
     pColorsDefault.add(PColors(color: "Black", colorId: "000000"));
     pColorsDefault.add(PColors(color: "white", colorId: "ffffff"));
@@ -100,11 +103,6 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
     pColorsDefault.add(PColors(color: "blue", colorId: "00ff00"));
     pColorsDefault.add(PColors(color: "green", colorId: "0000ff"));
 
-    pSizesDefault.add(PSizes(size: "Small", sizeId: "0"));
-    pSizesDefault.add(PSizes(size: "Medium", sizeId: "1"));
-    pSizesDefault.add(PSizes(size: "Large", sizeId: "2"));
-    pSizesDefault.add(PSizes(size: "Extra Large", sizeId: "3"));
-    pSizesDefault.add(PSizes(size: "Extra Small", sizeId: "4"));
 
     if(addProductModel.code != ""){
       nameController.text = addProductModel.name;
@@ -127,7 +125,6 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
       pMinDeliveryController.text = addProductModel.minDeliveryTime != 0 ? addProductModel.minDeliveryTime.toString() : "";
       specs = addProductModel.specs;
       pColors = addProductModel.colors;
-      pSizes = addProductModel.sizes;
       addons = addProductModel.addons;
       isNewArrival = addProductModel.isNewArrival;
       isTopDeal = addProductModel.isTopDeal;
@@ -672,6 +669,149 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                if(addProductModel.parentId == null) Text("Product Size" , style: utils.boldSmallLabelStyle(blackColor),),
+                                if(addProductModel.parentId == null) SizedBox(height: 10,),
+                                if(addProductModel.parentId == null) form("Size Name", sNameController, enable: addProductModel.parentId == null),
+                                if(addProductModel.parentId == null) SizedBox(height: 12,),
+                                if(addProductModel.parentId == null) form("Sales Price", sPriceController, isNumber : true, enable: addProductModel.parentId == null),
+                                if(addProductModel.parentId == null) SizedBox(height: 12,),
+                                if(addProductModel.parentId == null) form("Wholesales Price", sWPriceController, isNumber : true, enable: addProductModel.parentId == null),
+                                if(addProductModel.parentId == null) SizedBox(height: 12,),
+                                if(addProductModel.parentId == null) utils.button(checkAdminController.system.mainColor, "Add", whiteColor,checkAdminController.system.mainColor,1.0, (){
+                                  if(addProductModel.parentId == null) {
+                                    if (sNameController.text.isEmpty) {
+                                      utils.snackBar(
+                                          context, message: "Name is required");
+                                      return;
+                                    } else if (sPriceController.text.isEmpty) {
+                                      utils.snackBar(context,
+                                          message: "Price is required");
+                                      return;
+                                    }
+
+                                    if (sWPriceController.text.isEmpty) {
+                                      sWPriceController.text =
+                                          sPriceController.text;
+                                    }
+                                    pSizes.add(PSizes(
+                                        size: sNameController.text.toString(),
+                                        price: sPriceController.text.toString(),
+                                        wPrice: sWPriceController.text
+                                            .toString(),
+                                        sizeId: "${DateTime
+                                            .now()
+                                            .millisecondsSinceEpoch}"));
+                                    sNameController.clear();
+                                    sPriceController.clear();
+                                    sWPriceController.clear();
+                                    setData();
+                                  }else{
+                                    Get.snackbar("Error", "Edit Parent product to add more sizes");
+                                  }
+                                }),
+                                SizedBox(height: 12,),
+                                Container(
+                                  width: Get.width,
+                                  height: 0.5,
+                                  color: blackColor,
+                                ),
+                                Expanded(child: SingleChildScrollView(
+                                  child: Wrap(
+                                    children: [
+                                      if(pSizes.length > 0 || addProductModel.sizes.length > 0) Container(
+                                        width: Get.width,
+                                        padding: EdgeInsets.symmetric(horizontal: 2, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                                flex: 1,
+                                                child: Text("Name" , style: utils.boldSmallLabelStyle(blackColor),)),
+                                            Expanded(
+                                                flex: 1,
+                                                child: Text("Sale Rate" , style: utils.boldSmallLabelStyle(blackColor),)),
+                                            Expanded(
+                                                flex: 1,
+                                                child: Text("Whole Sale" , style: utils.boldSmallLabelStyle(blackColor),)),
+                                            SizedBox(width: 6,),
+                                            InkWell(
+                                                onTap : (){
+                                                },
+                                                child: Icon(CupertinoIcons.xmark_circle, color: Colors.transparent, size: 24,)
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      for(var i = 0 ; i < addProductModel.sizes.length; i++)
+                                        Container(
+                                          width: Get.width,
+                                          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 8),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text("${addProductModel.sizes[i].size}" , style: utils.boldSmallLabelStyle(blackColor),)),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text("${addProductModel.sizes[i].price}" , style: utils.xSmallLabelStyle(blackColor),)),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text("${addProductModel.sizes[i].wPrice}" , style: utils.xSmallLabelStyle(blackColor),)),
+                                              SizedBox(width: 6,),
+                                              if(addProductModel.parentId == null) InkWell(
+                                                  onTap : (){
+                                                    pSizes.removeAt(i);
+                                                    setData();
+                                                  },
+                                                  child: Icon(CupertinoIcons.xmark_circle, color: blackColor, size: 24,)
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      for(var i = 0 ; i < pSizes.length; i++)
+                                        Container(
+                                          width: Get.width,
+                                          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 8),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text("${pSizes[i].size}" , style: utils.boldSmallLabelStyle(blackColor),)),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text("${pSizes[i].price}" , style: utils.xSmallLabelStyle(blackColor),)),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text("${pSizes[i].wPrice}" , style: utils.xSmallLabelStyle(blackColor),)),
+                                              SizedBox(width: 6,),
+                                              if(addProductModel.parentId == null) InkWell(
+                                                  onTap : (){
+                                                    pSizes.removeAt(i);
+                                                    setData();
+                                                  },
+                                                  child: Icon(CupertinoIcons.xmark_circle, color: blackColor, size: 24,)
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                    ],
+                                  ),
+                                ))
+                              ],
+                            ),
+                          )
+                          /*Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            width: Get.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
                                 Text("Product Sizes" , style: utils.boldSmallLabelStyle(blackColor),),
                                 SizedBox(height: 10,),
                                 InkWell(
@@ -733,7 +873,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                 ))
                               ],
                             ),
-                          ) :
+                          )*/ :
                           activeStep == 7 ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 12),
                             width: Get.width,
@@ -1035,7 +1175,6 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                       FocusScope.of(context).unfocus();
                                     }
                                     else if(activeStep == 6){
-                                      addProductModel.sizes = pSizes;
                                       activeStep++;
                                       FocusScope.of(context).unfocus();
                                     }else if(activeStep == 7){
@@ -1087,7 +1226,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
         });
   }
 
-  Widget form(String hints, TextEditingController controller,{onChange,isMultiline,isNumber}) {
+  Widget form(String hints, TextEditingController controller,{onChange,isMultiline,isNumber, enable}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       decoration: BoxDecoration(
@@ -1095,6 +1234,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
           border: Border.all(color: blackColor , width: 0.5)
       ),
       child: TextField(
+        enabled: enable,
         controller: controller,
         maxLines: isMultiline != null ? 8 : 1,
         keyboardType: isNumber != null ? TextInputType.number : TextInputType.text,
@@ -1341,65 +1481,6 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                       ],
                     );
                   },):
-                  type == 3 ? GetBuilder<CategoryController>(id: "0", builder: (categoryController){
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 12,),
-                        for(var i = 0 ; i < pSizesDefault.length; i++)
-                          pSizesDefault[i].size.toLowerCase().contains(searchText.toLowerCase()) ?
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16 , vertical: 5),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap :(){
-                                    selectedPSize = PSizes(size: pSizesDefault[i].size, sizeId: pSizesDefault[i].sizeId.toString());
-                                    setState((){});
-                                    setData();
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(color: checkAdminController.system.mainColor , width: 2)
-                                        ),
-                                        child: Center(
-                                          child: Container(
-                                            width: 8,
-                                            height: 8,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: selectedPSize != null && selectedPSize!.sizeId == pSizesDefault[i].sizeId.toString() ? checkAdminController.system.mainColor : Colors.transparent
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 12,),
-                                      Expanded(child: Text("${pSizesDefault[i].size}" , style: utils.boldLabelStyle(blackColor),))
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                  width: Get.width,
-                                  height: 1,
-                                  color: blackColor.withOpacity(0.3),
-                                ),
-                              ],
-                            ),
-                          ) : Container()
-                      ],
-                    );
-                  },) :
                   type == 4 ?GetBuilder<BrandController>(id: "0", builder: (brandController){
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -1538,7 +1619,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
     var random = DateTime.now();
     //Create a reference to the location you want to upload to in firebase
     firebase_storage.Reference reference =
-    _storage.ref().child("images/$random.JPG");
+    storage!.ref().child("images/$random.JPG");
     //Upload the file to firebase
     firebase_storage.UploadTask uploadTask = reference.putFile(file);
     var downUrl = await (await uploadTask).ref.getDownloadURL();
@@ -1550,7 +1631,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   Future<String> uploadPicWeb(PlatformFile file) async {
     var random = DateTime.now();
     firebase_storage.Reference reference =
-    _storage.ref().child("images/$random.JPG");
+    storage!.ref().child("images/$random.JPG");
     //Upload the file to firebase
     var downUrl = "";
     if (GetPlatform.isWeb) {
@@ -1566,9 +1647,10 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
 
 
   void addProduct() async {
-    EasyLoading.show(status: "Adding product...");
+    EasyLoading.show(status: "Saving product...");
     ItemController productController = Get.find();
-    if(addProductModel.code == "") {
+    var productName = addProductModel.name;
+    if(Get.arguments == null) {
       var code = productController.lastItem == null ? 1 : int.parse(
           productController.lastItem!.code) + 1;
       var child = code < 10 ? "0000000$code" : code < 100
@@ -1579,6 +1661,8 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
           : "$code";
 
       addProductModel.code = child;
+      addProductModel.sizes = pSizes;
+      var parentId = child;
 
       FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
       
@@ -1587,26 +1671,91 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
         database.setPersistenceCacheSizeBytes(10000000);
       }
       DatabaseReference reference = database.reference();
-      reference.child(itemRef).child("$child").set(
-          addProductModel.toJson());
+      await reference.child(itemRef).child("$child").set(addProductModel.toJson());
+      productController.lastItem = addProductModel;
+
+      for(var i = 0 ; i < addProductModel.sizes.length; i++){
+        addProductModel.name = productName+"-"+addProductModel.sizes[i].size;
+        addProductModel.salesRate = double.parse(addProductModel.sizes[i].price);
+        addProductModel.wholeSale = double.parse(addProductModel.sizes[i].wPrice);
+        addProductModel.parentId = parentId;
+
+        var code = productController.lastItem == null ? 1 : int.parse(
+            productController.lastItem!.code) + 1;
+        var child = code < 10 ? "0000000$code" : code < 100
+            ? "000000$code"
+            : code < 1000 ? "00000$code" : code < 10000 ? "0000$code" : code <
+            100000 ? "000$code" : code < 1000000 ? "00$code" : code < 10000000
+            ? "0$code"
+            : "$code";
+
+        addProductModel.code = child;
+
+        FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+        if(!GetPlatform.isWeb) {
+          database.setPersistenceEnabled(true);
+          database.setPersistenceCacheSizeBytes(10000000);
+        }
+        DatabaseReference reference = database.reference();
+        await reference.child(itemRef).child("$child").set(addProductModel.toJson());
+        productController.lastItem = addProductModel;
+      }
+      Get.back();
+      EasyLoading.dismiss();
+      Get.snackbar("Success", "Product Saved");
     }
     else{
+      for(var i = 0; i < pSizes.length; i++){
+        addProductModel.sizes.add(pSizes[i]);
+      }
+      var parentId = addProductModel.parentId == null ? addProductModel.code : addProductModel.parentId;
+
+
+
       FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
-      
+
       if(!GetPlatform.isWeb) {
         database.setPersistenceEnabled(true);
         database.setPersistenceCacheSizeBytes(10000000);
       }
       DatabaseReference reference = database.reference();
-      reference.child(itemRef).child("${addProductModel.code}").update(
+      await reference.child(itemRef).child("${addProductModel.code}").update(
           addProductModel.toJson());
+
+      for(var i = 0 ; i < pSizes.length; i++){
+        addProductModel.name = productName+"-"+pSizes[i].size;
+        addProductModel.salesRate = double.parse(pSizes[i].price);
+        addProductModel.wholeSale = double.parse(pSizes[i].wPrice);
+        addProductModel.parentId = parentId;
+
+        var code = productController.lastItem == null ? 1 : int.parse(
+            productController.lastItem!.code) + 1;
+        var child = code < 10 ? "0000000$code" : code < 100
+            ? "000000$code"
+            : code < 1000 ? "00000$code" : code < 10000 ? "0000$code" : code <
+            100000 ? "000$code" : code < 1000000 ? "00$code" : code < 10000000
+            ? "0$code"
+            : "$code";
+
+        addProductModel.code = child;
+
+        FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+        if(!GetPlatform.isWeb) {
+          database.setPersistenceEnabled(true);
+          database.setPersistenceCacheSizeBytes(10000000);
+        }
+        DatabaseReference reference = database.reference();
+        await reference.child(itemRef).child("$child").set(addProductModel.toJson());
+        productController.lastItem = addProductModel;
+      }
+
+      Get.back();
+      EasyLoading.dismiss();
+      Get.snackbar("Success", "Product Saved");
     }
     EasyLoading.dismiss();
-    Get.snackbar("Success", addProductModel.code == "" ? "Product added" : "Product updated!");
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      timer.cancel();
-      Get.back();
-    });
   }
 
 }

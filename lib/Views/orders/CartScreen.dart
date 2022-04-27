@@ -179,15 +179,7 @@ class _CartScreen extends State<CartScreen>{
                                                       ],
                                                     ),
                                                     SizedBox(height: 5,),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      children: [
-                                                        if(products[i].discountVal != null && products[i].discountVal! > 0) Text("${utils.getFormattedPrice(isRetailer ? products[i].wholeSale : products[i].salesRate)}" , style: utils.smallLabelStyleSlash(blackColor.withOpacity(0.5)),),
-                                                        SizedBox(width: 5,),
-                                                        Expanded(child: Text("${utils.getFormattedPrice(isRetailer ? products[i].discountedPriceW : products[i].discountedPrice)}" , style: utils.smallLabelStyle(blackColor.withOpacity(0.9)),)),
-                                                      ],
-                                                    ),
+                                                    pricesWidget(products[i]),
                                                     SizedBox(height: 5,),
                                                     Row(
                                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -486,6 +478,18 @@ class _CartScreen extends State<CartScreen>{
           );
         },
       ),
+    );
+  }
+
+  pricesWidget(ItemModel products){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        if(products.discountVal != null && products.discountVal! > 0) Text("${utils.getFormattedPrice(isRetailer ? (products.selectedSizes != null ? products.wholeSale : products.wholeSale) : products.salesRate)}" , style: utils.smallLabelStyleSlash(blackColor.withOpacity(0.5)),),
+        SizedBox(width: 5,),
+        Expanded(child: Text("${utils.getFormattedPrice((isRetailer ? products.discountedPriceW : products.discountedPrice)??0)}" , style: utils.smallLabelStyle(blackColor.withOpacity(0.9)),)),
+      ],
     );
   }
 

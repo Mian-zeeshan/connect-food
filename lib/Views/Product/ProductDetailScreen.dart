@@ -44,6 +44,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
   CheckAdminController checkAdminController = Get.find();
   late ChatController chatController;
   var index = 0;
+  var selectedSize = 0;
   var selectedQuantity = 1;
   Map<String,dynamic> cartInfo = {};
   var inCart = false;
@@ -59,6 +60,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    itemController.getRelatedProducts(itemModel.code);
     isRetailer = userController.user != null ? userController.user!.isRetailer? userController.user!.retailerModel!.approved ? true : false :false : false;
     cartInfo = cartController.checkInCart(itemModel);
     inCart = cartInfo["inCart"];
@@ -111,7 +113,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
               Container(
                 width: Get.width,
                 height: Get.height,
-                child: GetBuilder<ItemController>(id: "0",builder: (__itemController){
+                child: GetBuilder<ItemController>(id: "0",builder: (itemController){
                   return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,7 +325,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     if((isRetailer ? itemModel.wholeSale : itemModel.salesRate) != (isRetailer ? itemModel.discountedPriceW : itemModel.discountedPrice))  Text(
-                                        "${utils.getFormattedPrice(isRetailer ? itemModel.wholeSale : itemModel.salesRate)}",
+                                        "${utils.getFormattedPrice(isRetailer ? itemModel.discountedPriceW : itemModel.salesRate)}",
                                         style: utils.boldLabelStyleSlash(blackColor.withOpacity(0.5))
                                     ),
                                     SizedBox(width: 12,),
@@ -333,6 +335,33 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: 4,),
+                                GetBuilder<ItemController>(id: "0", builder: (iController){
+                                  return iController.sizedProducts.length > 0 ? Wrap(
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    children: [
+                                      for(var i = 0 ; i  < iController.sizedProducts.length; i++)
+                                        GestureDetector(
+                                          onTap: (){
+                                            setState(() {
+                                              itemModel = iController.sizedProducts[i];
+                                              selectedSize = i;
+                                            });
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(horizontal: 3),
+                                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: selectedSize == i ? checkAdminController.system.mainColor : Colors.transparent,
+                                                border: Border.all(color: checkAdminController.system.mainColor, width: 2)
+                                            ),
+                                            child: Text("${iController.sizedProducts[i].name.substring(iController.sizedProducts[i].name.indexOf("-")+1)}", style: utils.smallLabelStyle(selectedSize == i ? whiteColor : checkAdminController.system.mainColor),),
+                                          ),
+                                        )
+                                    ],
+                                  )  : Container();
+                                },),
                                 SizedBox(height: 4,),
                                 Text(
                                     "${itemModel.shortDescription??""}",

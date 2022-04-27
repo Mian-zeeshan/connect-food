@@ -48,6 +48,7 @@ class ItemModel {
   int freeDeliveryItems = -1;
   int minDeliveryTime = 0;
   int maxDeliveryTime = 0;
+  String? parentId;
 
   ItemModel(
       {required this.code,
@@ -80,7 +81,8 @@ class ItemModel {
         required this.freeDeliveryItems,
         required this.minDeliveryTime,
         required this.maxDeliveryTime,
-        required this.stock});
+        required this.stock,
+        required this.parentId});
 
   ItemModel.fromJson(Map<String, dynamic> json) {
     code = json['Code'];
@@ -142,6 +144,7 @@ class ItemModel {
     description = json['description'];
     selectedSizes = json['selectedSizes'];
     selectedColors = json['selectedColors'];
+    parentId = json['parentId'];
     if(json['discountedPrice'] != null)
       discountedPrice = double.parse(json['discountedPrice'].toString());
 
@@ -285,6 +288,7 @@ class ItemModel {
     data['freeDeliveryItems'] = this.freeDeliveryItems;
     data['minDeliveryTime'] = this.minDeliveryTime;
     data['maxDeliveryTime'] = this.maxDeliveryTime;
+    data['parentId'] = this.parentId;
 
     return data;
   }
@@ -347,17 +351,25 @@ class Specs {
 
 class PSizes {
   String size = "";
+  String price = "0";
+  String wPrice = "0";
   String sizeId = "";
 
-  PSizes({required this.size, required this.sizeId});
+  PSizes({required this.size, required this.sizeId, required this.price,required this.wPrice,});
 
   PSizes.fromJson(Map<String, dynamic> json) {
+    if(json["price"] != null)
+      price = json['price'];
+    if(json["wPrice"] != null)
+      wPrice = json['wPrice'];
     size = json['size'];
     sizeId = json['size_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['wPrice'] = this.wPrice;
+    data['price'] = this.price;
     data['size'] = this.size;
     data['size_id'] = this.sizeId;
     return data;

@@ -405,7 +405,7 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                                                                             ),
                                                                             Text(
                                                                               utils.getFormattedPrice(
-                                                                                  double.parse("${(isRetailer ? mProducts[j].wholeSale : mProducts[j].salesRate) + addons[j]}")),
+                                                                                  double.parse("${(isRetailer ? mProducts[j].wholeSale : mProducts[j].salesRate)}")),
                                                                               style: TextStyle(
                                                                                   fontSize: 8,
                                                                                   color: blackColor.withOpacity(0.6),
@@ -418,7 +418,7 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                                                                       FittedBox(
                                                                         child: AutoSizeText(
                                                                           utils.getFormattedPrice(
-                                                                              double.parse("${(isRetailer ? mProducts[j].discountedPriceW??0 : mProducts[j].discountedPrice??0) + addons[j]}")),
+                                                                              double.parse("${(isRetailer ? mProducts[j].discountedPriceW??0 : mProducts[j].discountedPrice??0)}")),
                                                                           minFontSize: 10,
                                                                           style: TextStyle(
                                                                               fontSize: 10,
@@ -455,7 +455,13 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                                                                             TextSpan(
                                                                               text: "${mProducts[j].selectedAddons[l].adonDescription}x${mProducts[j].selectedAddons[l].quantity}${l < mProducts[j].selectedAddons.length - 1 ? ",":""} ",
                                                                               style: utils.xSmallLabelStyle(blackColor)
+                                                                            ),
+
+                                                                          TextSpan(
+                                                                              text: " = ${utils.getFormattedPrice(addons[j])}",
+                                                                              style: utils.xSmallLabelStyle(checkAdminController.system.mainColor)
                                                                             )
+
                                                                         ]
                                                                       ))
                                                                     ],

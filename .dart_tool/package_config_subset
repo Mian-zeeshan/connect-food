@@ -1,7 +1,7 @@
 connectsaleorder
 2.12
-file:///Users/arslan/Documents/AndroidStudioProjects/electronics/
-file:///Users/arslan/Documents/AndroidStudioProjects/electronics/lib/
+file:///Users/arslan/Documents/AndroidStudioProjects/connectfood/
+file:///Users/arslan/Documents/AndroidStudioProjects/connectfood/lib/
 animated_widgets
 2.12
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/animated_widgets-1.1.0/
@@ -278,6 +278,10 @@ image
 2.12
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image-3.0.8/
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image-3.0.8/lib/
+image_crop
+2.12
+file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_crop-0.4.0/
+file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_crop-0.4.0/lib/
 image_picker
 2.12
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.8.4+1/

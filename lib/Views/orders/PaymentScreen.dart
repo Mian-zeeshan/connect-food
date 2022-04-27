@@ -26,6 +26,7 @@ class _PaymentScreen extends State<PaymentScreen>{
   var isUsePoints = false;
   CheckAdminController checkAdminController = Get.find();
   CartController cartController = Get.find();
+  var insController = TextEditingController();
   
   @override
   Widget build(BuildContext context) {
@@ -76,6 +77,8 @@ class _PaymentScreen extends State<PaymentScreen>{
                           ),
                           child: Text("Choose the payment method you want to proceed with." , style: utils.xSmallLabelStyle(checkAdminController.system.mainColor),)
                       ),
+                      SizedBox(height: 12,),
+                      utils.textField(whiteColor, null, null, null, null, blackColor, "Instructions", blackColor.withOpacity(0.5), blackColor.withOpacity(0.5), 1.0, Get.width-20, false, insController, multiline: true),
                       SizedBox(height: 12,),
                       Text("Recommended method(s)" , style: utils.smallLabelStyle(blackColor.withOpacity(0.5)),),
                       SizedBox(height: 8,),
@@ -285,6 +288,8 @@ class _PaymentScreen extends State<PaymentScreen>{
   void placeOrder(type) async {
     EasyLoading.show(status: "Placing Order...");
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+    if(insController.text.isNotEmpty)
+      widget.postOrderModel.instructions = insController.text.toString();
     
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);

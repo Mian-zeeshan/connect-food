@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:image_crop/image_crop.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -24,11 +25,13 @@ class AddSubCategoryScreen extends StatefulWidget{
 
 class _AddSubCategoryScreen extends State<AddSubCategoryScreen>{
   var utils = AppUtils();
+  final cropKey = GlobalKey<CropState>();
   var searchController = TextEditingController();
   var nameController = TextEditingController();
   var nameTwoController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   File? _image;
+  File? _simage;
   FirebaseStorage _storage = FirebaseStorage.instance;
   var selectedImage;
   CheckAdminController checkAdminController = Get.find();
@@ -39,10 +42,121 @@ class _AddSubCategoryScreen extends State<AddSubCategoryScreen>{
     var image =
     await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
-    setState(() {
-      _image = File(image!.path);
-    });
+    if(image != null) {
+      setState(() {
+        _image = File(image.path);
+      });
+      showCropDialog();
+    }
   }
+
+
+  showCropDialog() async {
+    await Get.dialog(
+        _buildCroppingImage(),
+        barrierDismissible: false);
+  }
+
+  Widget _buildCroppingImage() {
+    return Container(
+      width: Get.width,
+      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: whiteColor
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Crop.file(
+              File(_simage!.path),
+              key: cropKey,
+              aspectRatio: 1/1,
+              scale: 1,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+            alignment: AlignmentDirectional.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(width: 20,),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: checkAdminController.system.mainColor
+                    ),
+                    child: TextButton(
+                      child: Text(
+                        'Crop Image',
+                        style: utils.boldLabelStyle(whiteColor),
+                      ),
+                      onPressed: () => _cropImage(),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: checkAdminController.system.mainColor
+                    ),
+                    child: TextButton(
+                      child: Text(
+                        'Cancel',
+                        style: utils.boldLabelStyle(whiteColor),
+                      ),
+                      onPressed: (){
+                        _simage = null;
+                        setState(() {
+                        });
+                        Get.back();
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _cropImage() async {
+    final scale = cropKey.currentState!.scale;
+    final area = cropKey.currentState!.area;
+    if (area == null) {
+      // cannot crop, widget is not setup
+      return;
+    }
+
+    // scale up to use maximum possible number of pixels
+    // this will sample image in higher resolution to make cropped image larger
+    final sample = await ImageCrop.sampleImage(
+        file: File(_simage!.path),
+        preferredWidth: 1600,
+        preferredHeight: 900
+    );
+
+    final file = await ImageCrop.cropImage(
+      file: sample,
+      area: area,
+    );
+
+    sample.delete();
+
+    _image = file;
+    setState(() {
+    });
+    Get.back();
+  }
+
+
 
 
   Future<String> uploadPic(file) async {

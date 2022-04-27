@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:image_crop/image_crop.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -25,8 +26,10 @@ class AddBannerScreen extends StatefulWidget{
 }
 
 class _AddBannerScreen extends State<AddBannerScreen>{
+  final cropKey = GlobalKey<CropState>();
   var utils = AppUtils();
   final ImagePicker _picker = ImagePicker();
+  File? _simage;
   File? _image;
   FirebaseStorage _storage = FirebaseStorage.instance;
   var selectedImage;
@@ -37,10 +40,12 @@ class _AddBannerScreen extends State<AddBannerScreen>{
   Future _getImage() async {
     var image =
     await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      _image = File(image!.path);
-    });
+    if(image != null) {
+      setState(() {
+        _simage = File(image.path);
+      });
+      showCropDialog();
+    }
   }
 
 
@@ -111,7 +116,7 @@ class _AddBannerScreen extends State<AddBannerScreen>{
                               _getImage();
                             },
                             child: Container(
-                              width: Get.width * 0.4,
+                              width: Get.width * 0.9,
                               height: Get.width * 0.4,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration: BoxDecoration(
@@ -173,6 +178,110 @@ class _AddBannerScreen extends State<AddBannerScreen>{
     );
   }
 
+  showCropDialog() async {
+    await Get.dialog(
+        _buildCroppingImage(),
+        barrierDismissible: false);
+  }
+
+  Widget _buildCroppingImage() {
+    return Container(
+      width: Get.width,
+      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: whiteColor
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Crop.file(
+              File(_simage!.path),
+              key: cropKey,
+              aspectRatio: 16/9,
+              scale: 1,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+            alignment: AlignmentDirectional.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(width: 20,),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: checkAdminController.system.mainColor
+                    ),
+                    child: TextButton(
+                      child: Text(
+                        'Crop Image',
+                        style: utils.boldLabelStyle(whiteColor),
+                      ),
+                      onPressed: () => _cropImage(),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: checkAdminController.system.mainColor
+                    ),
+                    child: TextButton(
+                      child: Text(
+                        'Cancel',
+                        style: utils.boldLabelStyle(whiteColor),
+                      ),
+                      onPressed: (){
+                        _simage = null;
+                        setState(() {
+                        });
+                        Get.back();
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _cropImage() async {
+    final scale = cropKey.currentState!.scale;
+    final area = cropKey.currentState!.area;
+    if (area == null) {
+      // cannot crop, widget is not setup
+      return;
+    }
+
+    // scale up to use maximum possible number of pixels
+    // this will sample image in higher resolution to make cropped image larger
+    final sample = await ImageCrop.sampleImage(
+      file: File(_simage!.path),
+      preferredWidth: 1600,
+      preferredHeight: 900
+    );
+
+    final file = await ImageCrop.cropImage(
+      file: sample,
+      area: area,
+    );
+
+    sample.delete();
+
+    _image = file;
+    setState(() {
+    });
+    Get.back();
+  }
 
   void addBanner() async {
     EasyLoading.show(status: "Loading...");
