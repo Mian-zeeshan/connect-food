@@ -544,10 +544,11 @@ class AppUtils{
 
 
   showCartBottom(BuildContext context , ItemModel itemModel, onAdd) {
+    ItemController itemController = Get.find();
+    itemController.getRelatedProducts(itemModel.code);
     showMaterialModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-
       barrierColor: Colors.transparent,
       isDismissible: true,
       elevation: 0,

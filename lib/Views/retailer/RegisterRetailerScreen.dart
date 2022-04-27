@@ -154,14 +154,15 @@ class _RegisterRetailerScreen extends State<RegisterRetailerScreen>{
               children: [
                 Container(
                   width: Get.width,
+                  color: checkAController.system.mainColor,
                   padding: EdgeInsets.only(right: 12, top: 6, bottom: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      IconButton(onPressed: ()=> Navigator.pop(context), icon: Icon(CupertinoIcons.arrow_left , color: blackColor, size: 24,)),
+                      IconButton(onPressed: ()=> Navigator.pop(context), icon: Icon(CupertinoIcons.arrow_left , color: whiteColor, size: 24,)),
                       SizedBox(width: 12,),
-                      Expanded(child: Text("Register Retailer" , style: utils.headingStyle(blackColor),)),
+                      Expanded(child: Text("Register Retailer" , style: utils.headingStyle(whiteColor),)),
                     ],
                   ),
                 ),
@@ -313,7 +314,6 @@ class _RegisterRetailerScreen extends State<RegisterRetailerScreen>{
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                     colors: [checkAController.system.mainColor, checkAController.system.mainColor])),
-                            height: 30,
                             child: TextButton(
                               onPressed: () async {
                                 if(nameController.text.isEmpty){

@@ -602,10 +602,11 @@ class _HomeFragment extends State<HomeFragment>{
                                           ),
                                           GestureDetector(
                                               onTap: () {
-                                                showOrderDetailBottom(
+                                                Get.to(()=> OrderDetailScreen(orderController.ordersRecent[i], fromBottom: false,));
+                                                /*showOrderDetailBottom(
                                                     context,
                                                     orderController
-                                                        .ordersRecent[i]);
+                                                        .ordersRecent[i]);*/
                                               },
                                               child: Text(
                                                 "View Order",

@@ -105,18 +105,17 @@ class _ItemWidgetStyle2 extends State<ItemWidgetStyle2> {
                         size: 25.w,
                       ), fit: BoxFit.contain,),
                   ),
-                  if(!inCart) GestureDetector(
+                  /*if(!inCart)*/ GestureDetector(
                     onTap: () async {
                       if(item.code != "0") {
                         if(userController.user != null){
-                          await utils.showCartBottom(context, item, (count, List<ProductAdons> adons, PSizes? productSized, PColors? productColors){
-                            item.selectedSizes = productSized;
-                            item.selectedColors = productColors;
-                            item.selectedAddons = adons;
-                            item.selectedQuantity = count;
-                            cartController.addToCart(item);
+                          await utils.showCartBottom(context, item, (count, List<ProductAdons> adons, ItemModel itemModel, PColors? productColors){
+                            itemModel.selectedColors = productColors;
+                            itemModel.selectedAddons = adons;
+                            itemModel.selectedQuantity = count;
+                            cartController.addToCart(itemModel);
                             Get.snackbar("Success", "Added to bag.");
-                            cartInfo = cartController.checkInCart(item);
+                            cartInfo = cartController.checkInCart(itemModel);
                             inCart = cartInfo["inCart"];
                             cartPosition = cartInfo["position"];
                             cartItem = cartInfo["cartItem"];
@@ -191,7 +190,7 @@ class _ItemWidgetStyle2 extends State<ItemWidgetStyle2> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.h,),
-            if(inCart) Container(
+            /*if(inCart) Container(
               width: Get.width,
               padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
               margin: EdgeInsets.symmetric(horizontal: 10.w),
@@ -256,7 +255,7 @@ class _ItemWidgetStyle2 extends State<ItemWidgetStyle2> {
                   ),
                 ],
               ),
-            )
+            )*/
           ],
         ),
       ),

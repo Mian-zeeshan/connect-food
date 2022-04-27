@@ -2,6 +2,7 @@ import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/CartController.dart';
 import 'package:connectsaleorder/GetXController/ChatController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
+import 'package:connectsaleorder/GetXController/ItemController.dart';
 import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/Models/ItemModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
@@ -27,6 +28,11 @@ class _AddToCartBottom extends State<AddToCartBottom>{
   var selectedColor = 0;
   var selectedSize = 0;
   List<ProductAdons> selectedAddOns = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,41 +183,43 @@ class _AddToCartBottom extends State<AddToCartBottom>{
               ],
             )
           ),
-          if(widget.itemModel.sizes.length > 0) Container(
-            width: Get.width,
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(0),
-                  color: whiteColor
-              ),
-            child: Wrap(
-              children: [
-                Container(
-                  width: Get.width,
-                  child: Text("Sizes" , style: utils.labelStyle(blackColor),),
+          GetBuilder<ItemController>(id: "0", builder: (itemController){
+            return itemController.sizedProducts.length > 0 ? Container(
+                width: Get.width,
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(0),
+                    color: whiteColor
                 ),
-                for(var i = 0 ; i  < widget.itemModel.sizes.length; i++)
-                  InkWell(
-                    onTap: (){
-                      selectedSize = i;
-                      widget.itemModel.sSize = widget.itemModel.sizes[i].size;
-                      setState(() {
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6,vertical: 4),
-                      margin: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: selectedSize == i ? checkAdminController.system.mainColor : whiteColor,
-                          border: Border.all(color: checkAdminController.system.mainColor, width: 1)
-                      ),
-                      child: Text("${widget.itemModel.sizes[i].size}", style: utils.smallLabelStyle(selectedSize == i ? whiteColor : checkAdminController.system.mainColor),),
+                child: Wrap(
+                  children: [
+                    Container(
+                      width: Get.width,
+                      child: Text("Sizes" , style: utils.labelStyle(blackColor),),
                     ),
-                  )
-              ],
-            )
-          ),
+                    for(var i = 0 ; i  < itemController.sizedProducts.length; i++)
+                      InkWell(
+                        onTap: (){
+                          selectedSize = i;
+                          widget.itemModel = itemController.sizedProducts[i];
+                          setState(() {
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 6,vertical: 4),
+                          margin: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: selectedSize == i ? checkAdminController.system.mainColor : whiteColor,
+                              border: Border.all(color: checkAdminController.system.mainColor, width: 1)
+                          ),
+                          child: Text("${itemController.sizedProducts[i].name.substring(itemController.sizedProducts[i].name.indexOf("-")+1)}", style: utils.smallLabelStyle(selectedSize == i ? whiteColor : checkAdminController.system.mainColor),),
+                        ),
+                      )
+                  ],
+                )
+            ) : Container();
+          }),
           Container(
             width: Get.width,
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
@@ -223,7 +231,7 @@ class _AddToCartBottom extends State<AddToCartBottom>{
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(child: Container()/*Text(widget.itemModel.totalStock > 0 ? "Available Stock: ${widget.itemModel.totalStock}" : "No stock available.", style: utils.boldSmallLabelStyle(checkAdminController.system.mainColor),)*/),
+                Expanded(child: Text("${utils.getFormattedPrice(widget.itemModel.discountedPrice??"0")}", style: utils.boldSmallLabelStyle(checkAdminController.system.mainColor),)),
                 SizedBox(width: 8,),
                 if(widget.itemModel.totalStock > 0) Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -277,7 +285,7 @@ class _AddToCartBottom extends State<AddToCartBottom>{
                  child: utils.button(checkAdminController.system.mainColor, "Add to cart", whiteColor, checkAdminController.system.mainColor, 1.0, (){
                    if(widget.itemModel.totalStock > 0){
                      Navigator.pop(context);
-                     return widget.onAdd(count, selectedAddOns, widget.itemModel.sizes.length > 0 ? widget.itemModel.sizes[selectedSize] : null, widget.itemModel.colors.length > 0 ? widget.itemModel.colors[selectedColor] : null);
+                     return widget.onAdd(count, selectedAddOns, widget.itemModel, widget.itemModel.colors.length > 0 ? widget.itemModel.colors[selectedColor] : null);
                    }else{
                      Get.snackbar("Error", "Sorry no stock available at this time. please contact us in case of any query");
                    }

@@ -614,20 +614,19 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          if(!inCart || userController.user == null) Expanded(
+                          /*if(!inCart || userController.user == null)*/ Expanded(
                             child: Container(
                               padding: EdgeInsets.all(10),
                               child: GestureDetector(
                                 onTap: () async {
                                   if(userController.user != null){
-                                    await utils.showCartBottom(context, itemModel, (count, List<ProductAdons> adons, PSizes? productSized, PColors? productColors){
-                                      itemModel.selectedSizes = productSized;
-                                      itemModel.selectedColors = productColors;
-                                      itemModel.selectedAddons = adons;
-                                      itemModel.selectedQuantity = count;
-                                      cartController.addToCart(itemModel);
+                                    await utils.showCartBottom(context, itemModel, (count, List<ProductAdons> adons, ItemModel item, PColors? productColors){
+                                      item.selectedColors = productColors;
+                                      item.selectedAddons = adons;
+                                      item.selectedQuantity = count;
+                                      cartController.addToCart(item);
                                       Get.snackbar("Success", "Added to bag.");
-                                      cartInfo = cartController.checkInCart(itemModel);
+                                      cartInfo = cartController.checkInCart(item);
                                       inCart = cartInfo["inCart"];
                                       cartPosition = cartInfo["position"];
                                       cartItem = cartInfo["cartItem"];
@@ -657,7 +656,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                               ),
                             ),
                           ),
-                          if(inCart && userController.user != null) Expanded(
+                          /*if(inCart && userController.user != null) Expanded(
                             child: Container(
                               padding: EdgeInsets.all(10),
                               child: GestureDetector(
@@ -677,7 +676,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       GestureDetector(
-                                          onTap: (){
+                                          onTap: () {
                                             if(cartItem!.selectedQuantity > 1) {
                                               var quantity = cartItem!
                                                   .selectedQuantity -
@@ -735,7 +734,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                           if(userController.user != null) Container(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: GestureDetector(

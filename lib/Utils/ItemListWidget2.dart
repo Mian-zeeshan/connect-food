@@ -213,7 +213,7 @@ class _ItemListWidget2 extends State<ItemListWidget2> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if(inCart) Expanded(
+                  /*if(inCart) Expanded(
                     child: GestureDetector(
                       child: Container(
                         color: checkAdminController.system.mainColor,
@@ -261,20 +261,19 @@ class _ItemListWidget2 extends State<ItemListWidget2> {
                         ),
                       ),
                     ),
-                  ),
-                  if(!inCart) Expanded(
+                  ),*/
+                  /*if(!inCart) */Expanded(
                     child: GestureDetector(
                       onTap: () async {
                         if(item.code != "0") {
                           if(userController.user != null){
-                            await utils.showCartBottom(context, item, (count, List<ProductAdons> adons, PSizes? productSized, PColors? productColors){
-                              item.selectedSizes = productSized;
-                              item.selectedColors = productColors;
-                              item.selectedAddons = adons;
-                              item.selectedQuantity = count;
-                              cartController.addToCart(item);
+                            await utils.showCartBottom(context, item, (count, List<ProductAdons> adons, ItemModel itemModel, PColors? productColors){
+                              itemModel.selectedColors = productColors;
+                              itemModel.selectedAddons = adons;
+                              itemModel.selectedQuantity = count;
+                              cartController.addToCart(itemModel);
                               Get.snackbar("Success", "Added to bag.");
-                              cartInfo = cartController.checkInCart(item);
+                              cartInfo = cartController.checkInCart(itemModel);
                               inCart = cartInfo["inCart"];
                               cartPosition = cartInfo["position"];
                               cartItem = cartInfo["cartItem"];

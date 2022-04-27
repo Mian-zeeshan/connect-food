@@ -548,10 +548,12 @@ class _OrderFragment extends State<OrderFragment> {
                                                     ),
                                                     GestureDetector(
                                                         onTap: () {
-                                                          showOrderDetailBottom(
+                                                          Get.to(() => OrderDetailScreen(orderController
+                                                              .orders[i], fromBottom: false,));
+                                                          /*showOrderDetailBottom(
                                                               context,
                                                               orderController
-                                                                  .orders[i]);
+                                                                  .orders[i]);*/
                                                         },
                                                         child: Text(
                                                           "View Order",

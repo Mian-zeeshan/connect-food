@@ -477,10 +477,12 @@ class _ManageOrderScreen extends State<ManageOrderScreen> {
                                                     ),
                                                     GestureDetector(
                                                         onTap: () {
-                                                          showOrderDetailBottom(
+                                                          Get.to(()=> OrderDetailScreen(orderController
+                                                              .ordersAdmin[i], fromBottom: false, fromCustomer: false,));
+                                                          /*showOrderDetailBottom(
                                                               context,
                                                               orderController
-                                                                  .ordersAdmin[i]);
+                                                                  .ordersAdmin[i]);*/
                                                         },
                                                         child: Text(
                                                           "View Order",
