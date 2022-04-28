@@ -86,7 +86,7 @@ class _CouponListPage extends State<CouponListPage>{
                           if(coupon.validFrom <= DateTime.now().millisecondsSinceEpoch){
                             if(coupon.validBefore >= DateTime.now().millisecondsSinceEpoch){
                               if(cartModel.discountedBill >= double.parse(coupon.maxOrderPrice.toString())){
-                                couponController.setSelectedCoupon(coupon);
+                                couponController.setSelectedCoupon(coupon, true);
                                 Get.back();
                               }else{
                                 Get.snackbar("Error", "Order value should be greater than ${coupon.maxOrderPrice}");

@@ -193,7 +193,7 @@ class _PaymentScreen extends State<PaymentScreen>{
                           if(couponController.selectedCoupon == null){
                             Get.toNamed(couponListRoute, arguments: widget.postOrderModel);
                           }else{
-                            couponController.setSelectedCoupon(null);
+                            couponController.setSelectedCoupon(null, true);
                           }
                         },
                         child: Container(
@@ -299,8 +299,5 @@ class _PaymentScreen extends State<PaymentScreen>{
         .set(widget.postOrderModel.toJson());
     EasyLoading.dismiss();
     Get.toNamed(orderSuccessRoute, arguments: widget.postOrderModel);
-    cartController.emptyCart();
-    CouponController couponController = Get.find();
-    couponController.setSelectedCoupon(null);
   }
 }

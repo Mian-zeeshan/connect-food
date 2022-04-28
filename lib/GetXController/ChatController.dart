@@ -7,6 +7,8 @@ import 'package:connectsaleorder/Models/ItemModel.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
+import '../services/NotificationApis.dart';
+
 class ChatController extends GetxController{
   ChatModel chatModel = ChatModel(uid: "", timestamp: DateTime.now().millisecondsSinceEpoch, name: "N/A", chat: []);
   List<ChatModel> chatModelList = [];
@@ -212,6 +214,36 @@ class ChatController extends GetxController{
         .child(chatRef)
         .child(selectedChat.uid)
         .update({"timestamp" : DateTime.now().millisecondsSinceEpoch});
+
+    sendNotification(receiverId, "New message from $appName", "${message??""}");
+
+  }
+
+
+  sendNotification(uid, title, message) async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    reference
+        .child(tokenRef)
+        .child(uid)
+        .onValue
+        .listen((event) {
+      if (event.snapshot.exists) {
+        var token = jsonDecode(jsonEncode(event.snapshot.value))["token"];
+
+        NotificationApis notificationApis = NotificationApis();
+
+        notificationApis.sendNotification(token, title, message);
+
+      }
+      update(["0"]);
+      notifyChildrens();
+    });
   }
 
 }

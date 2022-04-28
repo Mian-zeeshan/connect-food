@@ -48,6 +48,7 @@ class ItemModel {
   int freeDeliveryItems = -1;
   int minDeliveryTime = 0;
   int maxDeliveryTime = 0;
+  int status = 0;
   String? parentId;
 
   ItemModel(
@@ -56,6 +57,7 @@ class ItemModel {
         required this.type,
         required this.salesRate,
         required this.style,
+        required this.status,
         required this.mUnit,
         this.color,
         this.sSize,
@@ -88,6 +90,8 @@ class ItemModel {
     code = json['Code'];
     name = json['name'];
     type = json['type'];
+    if(json["status"] != null)
+      status = json['status'];
     style = json['style'];
     if(json['images'] != null){
       images = json['images'].cast<String>();
@@ -247,6 +251,7 @@ class ItemModel {
     data['ingredients'] = this.ingredients;
     data['images'] = this.images;
     data['style'] = this.style;
+    data['status'] = this.status;
     data['rating'] = this.rating;
     data['sales_rate'] = this.salesRate;
     data['description'] = this.description;

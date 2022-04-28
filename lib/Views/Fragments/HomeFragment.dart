@@ -276,7 +276,7 @@ class _HomeFragment extends State<HomeFragment>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("New Arrivals", style: utils.boldLabelStyle(blackColor),),
+                  Text("Popular", style: utils.boldLabelStyle(blackColor),),
                   GestureDetector(
                       onTap: (){
                         if(checkAdminController.system.bottomNavigationChecks.isDeals) {
@@ -310,43 +310,47 @@ class _HomeFragment extends State<HomeFragment>{
                 },),
               ),
               SizedBox(height: 12.h,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Top Deals", style: utils.boldLabelStyle(blackColor),),
-                  GestureDetector(
-                      onTap: (){
-                        if(checkAdminController.system.bottomNavigationChecks.isDeals) {
-                          drawerCustomController.setDrawer("categories", 3);
-                        }else{
-                          Get.toNamed(dealProductsRoute);
-                        }
-                      },
-                      child: Container(
-                          padding: EdgeInsets.only(left: 16),
-                          child: Text("VIEW ALL", style: utils.xSmallLabelStyle(checkAdminController.system.mainColor),))
-                  )
-                ],
-              ),
-              SizedBox(height: 16.h,),
-              Container(
-                width: Get.width,
-                child: GetBuilder<ItemController>(id: "0" , builder: (itemController){
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              GetBuilder<ItemController>(id: "0", builder: (itemController){
+                return itemController.itemModelsTopDeals.length > 0 ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        for(var item in itemController.itemModelsTopDeals)
-                          Container(
-                            child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
-                          )
+                        Text("Top Deals", style: utils.boldLabelStyle(blackColor),),
+                        GestureDetector(
+                            onTap: (){
+                              if(checkAdminController.system.bottomNavigationChecks.isDeals) {
+                                drawerCustomController.setDrawer("categories", 3);
+                              }else{
+                                Get.toNamed(dealProductsRoute);
+                              }
+                            },
+                            child: Container(
+                                padding: EdgeInsets.only(left: 16),
+                                child: Text("VIEW ALL", style: utils.xSmallLabelStyle(checkAdminController.system.mainColor),))
+                        )
                       ],
                     ),
-                  );
-                },),
-              ),
+                    SizedBox(height: 16.h,),
+                    Container(
+                      width: Get.width,
+                      child:SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for(var item in itemController.itemModelsTopDeals)
+                              Container(
+                                child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                              )
+                          ],
+                        ),
+                      )
+                    )
+                  ],
+                ) : Container();
+              },),
               SizedBox(height: 12,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

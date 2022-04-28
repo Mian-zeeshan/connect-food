@@ -97,47 +97,53 @@ class _AddToCartBottom extends State<AddToCartBottom>{
           ),
           if(widget.itemModel.addons.length > 0) Container(
             width: Get.width,
+            constraints: BoxConstraints(
+              maxHeight: Get.height * 0.5,
+              minHeight: 0
+            ),
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(0),
                   color: whiteColor
               ),
-            child: Wrap(
-              children: [
-                Container(
-                  width: Get.width,
-                  child: Text("Addons" , style: utils.labelStyle(blackColor),),
-                ),
-                for(var i = 0 ; i  < widget.itemModel.addons.length; i++)
+            child: SingleChildScrollView(
+              child: Wrap(
+                children: [
                   Container(
                     width: Get.width,
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(child: Text("${widget.itemModel.addons[i].adonDescription}",style: utils.boldSmallLabelStyle(blackColor))),
-                            SizedBox(width: 12,),
-                            Text(utils.getFormattedPrice(widget.itemModel.addons[i].adonPrice), style: utils.smallLabelStyle(blackColor),),
-                            SizedBox(width: 12,),
-                            IconButton(onPressed: (){
-                              addToAddons(widget.itemModel.addons[i]);
-                            }, icon: Icon(CupertinoIcons.add_circled, color: checkAdminController.system.mainColor, size: 20,))
-                          ],
-                        ),
-                        Container(
-                          width: Get.width,
-                          height: 1,
-                          color: grayColor,
-                        )
-                      ],
-                    ),
-                  )
-              ],
+                    child: Text("Addons" , style: utils.labelStyle(blackColor),),
+                  ),
+                  for(var i = 0 ; i  < widget.itemModel.addons.length; i++)
+                    Container(
+                      width: Get.width,
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(child: Text("${widget.itemModel.addons[i].adonDescription}",style: utils.boldSmallLabelStyle(blackColor))),
+                              SizedBox(width: 12,),
+                              Text(utils.getFormattedPrice(widget.itemModel.addons[i].adonPrice), style: utils.smallLabelStyle(blackColor),),
+                              SizedBox(width: 12,),
+                              IconButton(onPressed: (){
+                                addToAddons(widget.itemModel.addons[i]);
+                              }, icon: Icon(CupertinoIcons.add_circled, color: checkAdminController.system.mainColor, size: 20,))
+                            ],
+                          ),
+                          Container(
+                            width: Get.width,
+                            height: 1,
+                            color: grayColor,
+                          )
+                        ],
+                      ),
+                    )
+                ],
+              ),
             )
           ),
 

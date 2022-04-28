@@ -69,7 +69,7 @@ class ItemController extends GetxController{
         event.snapshot.value.forEach((key,value) async {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          if(itemModel.parentId == null) {
+          if(itemModel.parentId == null && itemModel.status == 0 && itemModel.status == 0) {
             int stock = itemModel.totalStock;
             for (var item in itemModel.stock) {
               stock += item.stock.toInt();
@@ -124,7 +124,7 @@ class ItemController extends GetxController{
         event.value.forEach((key,value) async {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          if(itemModel.parentId == null) {
+          if(itemModel.parentId == null && itemModel.status == 0) {
             if (itemModel.code != startAtCode) {
               int stock = itemModel.totalStock;
               for (var item in itemModel.stock) {
@@ -178,7 +178,7 @@ class ItemController extends GetxController{
         event.snapshot.value.forEach((key,value) async {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          if(itemModel.parentId == null) {
+          if(itemModel.parentId == null && itemModel.status == 0) {
             int stock = itemModel.totalStock;
             for (var item in itemModel.stock) {
               stock += item.stock.toInt();
@@ -239,7 +239,7 @@ class ItemController extends GetxController{
         event.snapshot.value.forEach((key,value) {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          if(itemModel.parentId == null) {
+          if(itemModel.parentId == null && itemModel.status == 0) {
             int stock = itemModel.totalStock;
             for (var item in itemModel.stock) {
               stock += item.stock.toInt();
@@ -301,7 +301,7 @@ class ItemController extends GetxController{
             event.snapshot.value.forEach((key,value) {
               ItemModel itemModel = ItemModel.fromJson(
                   jsonDecode(jsonEncode(value)));
-              if(itemModel.parentId == null) {
+              if(itemModel.parentId == null && itemModel.status == 0) {
                 int stock = itemModel.totalStock;
                 for (var item in itemModel.stock) {
                   stock += item.stock.toInt();

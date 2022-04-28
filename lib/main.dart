@@ -1,4 +1,5 @@
 import 'package:animated_widgets/widgets/rotation_animated.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:connectsaleorder/GetXController/BannerController.dart';
 import 'package:connectsaleorder/GetXController/BrandController.dart';
 import 'package:connectsaleorder/GetXController/CategoryController.dart';
@@ -76,6 +77,27 @@ import 'Views/orders/OrderSuccessScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  AwesomeNotifications().initialize(
+    // set the icon to null if you want to use the default app icon
+      'resource://drawable/logo',
+      [
+        NotificationChannel(
+            channelGroupKey: 'Mothas',
+            channelKey: 'Mithas',
+            channelName: 'Mithas notifications',
+            channelDescription: 'Notification channel for Mithas',
+            defaultColor: Color(0xFFEFEFEF),
+            ledColor: Colors.white)
+      ],
+      debug: true
+  );
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
+
   await PluginGooglePlacePicker.initialize(
     androidApiKey: "AIzaSyDnN0CXbNpwghnn0-I37oNUAf3wgWa2N_Q",
     iosApiKey: "AIzaSyDVYkQEnJBVVNgWM8NkKN94NmyPktLtl6k",
@@ -179,38 +201,39 @@ void main() async {
 
 //Connect Food
 //Package Command "flutter pub run change_app_package_name:main com.connectsol.foodecom"
-_configureAbnApp() async {
-  FirebaseOptions abnOptions = FirebaseOptions(
-      databaseURL: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/",
-      apiKey: "AIzaSyAu0slv7W4-MVjr19sBGA2eLtn_2kvubSs",
-      messagingSenderId: "1059382918533",
-      projectId: "connect-foods-2a2d2",
-      appId: "1:1059382918533:android:68dd14317d443c242a58ec",
-      storageBucket: "gs://connect-foods-2a2d2.appspot.com",
-  );
-  FirebaseApp app = await Firebase.initializeApp(name: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/", options: abnOptions);
-  database = FirebaseDatabase(databaseURL: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/");
-  databaseUrl = "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/";
-  appName = "Connect Food";
-  return app;
-}
+// _configureAbnApp() async {
+//   FirebaseOptions abnOptions = FirebaseOptions(
+//       databaseURL: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/",
+//       apiKey: "AIzaSyAu0slv7W4-MVjr19sBGA2eLtn_2kvubSs",
+//       messagingSenderId: "1059382918533",
+//       projectId: "connect-foods-2a2d2",
+//       appId: "1:1059382918533:android:68dd14317d443c242a58ec",
+//       storageBucket: "gs://connect-foods-2a2d2.appspot.com",
+//   );
+//   FirebaseApp app = await Firebase.initializeApp(name: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/", options: abnOptions);
+//   database = FirebaseDatabase(databaseURL: "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/");
+//   databaseUrl = "https://connect-foods-2a2d2-default-rtdb.firebaseio.com/";
+//   appName = "Connect Food";
+//   return app;
+// }
 
 //Mithas
 //Package Command "flutter pub run change_app_package_name:main com.connectsol.foodecom"
-// _configureAbnApp() async {
-//   FirebaseOptions abnOptions = FirebaseOptions(
-//       databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
-//       apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
-//       messagingSenderId: "739510084525",
-//       projectId: "mithas-fa138",
-//       appId: "1:739510084525:android:0a7dca33de0996e833b724"
-//   );
-//   FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
-//   database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
-//   databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
-//   appName = "Mithas";
-//   return app;
-// }
+_configureAbnApp() async {
+  FirebaseOptions abnOptions = FirebaseOptions(
+      databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
+      apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
+      messagingSenderId: "739510084525",
+      projectId: "mithas-fa138",
+      appId: "1:739510084525:android:0a7dca33de0996e833b724",
+      storageBucket: "gs://mithas-fa138.appspot.com",
+  );
+  FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
+  database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
+  databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
+  appName = "Mithas";
+  return app;
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

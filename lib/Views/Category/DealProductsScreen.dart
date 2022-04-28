@@ -25,7 +25,7 @@ class DealProductsScreen extends StatefulWidget{
 
 class _DealProductsScreen extends State<DealProductsScreen>{
   var utils = AppUtils();
-  var deals = ["Top Deals" , "New Arrivals" , "Today Deals"];
+  var deals = ["Top Deals" , "Popular" , "Today Deals"];
   var selected = 0;
   UserController userController = Get.find();
   CheckAdminController checkAdminController = Get.find();

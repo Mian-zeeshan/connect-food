@@ -72,10 +72,12 @@ class CouponController extends GetxController{
     return coupons.firstWhere((element) => element.code == code);
   }
 
-  void setSelectedCoupon(CouponModel? co) {
+  void setSelectedCoupon(CouponModel? co , mounted) {
     selectedCoupon = co;
-    update(["0"]);
-    notifyChildrens();
+    if(mounted) {
+      update(["0"]);
+      notifyChildrens();
+    }
   }
 
   void stopLoading() {

@@ -24,6 +24,7 @@ class CartController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     getUser();
+    addListenerFire();
   }
 
   void getUser() async {
@@ -148,7 +149,7 @@ class CartController extends GetxController{
     updateBill();
   }
 
-  updateBill() async {
+  updateBill({mounted = true}) async {
     var  isRetailer = userController.user != null ? userController.user!.isRetailer? userController.user!.retailerModel!.approved ? true : false :false : false;
     myCart.totalBill = 0;
     myCart.discountedBill = 0;
@@ -162,8 +163,10 @@ class CartController extends GetxController{
       myCart.discountedBill = myCart.discountedBill + ((isRetailer ? item.discountedPriceW??0 : item.discountedPrice??0) * item.selectedQuantity) + addonPrices;
       myCart.totalItems = myCart.totalItems + item.selectedQuantity;
     }
-    update(["0"]);
-    notifyChildrens();
+    if(mounted) {
+      update(["0"]);
+      notifyChildrens();
+    }
   }
 
   void updateQuantity(int i, String quantity) async {
@@ -179,6 +182,21 @@ class CartController extends GetxController{
     }
     await box.write(allCarts,cartModelList.toJson());
     updateBill();
+  }
+
+  addListenerFire() async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    reference
+        .child(itemRef)
+        .onValue.listen((event){
+          getLatestItems();
+    });
   }
 
   void getLatestItems() {

@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "738550336424",
-    "project_id": "electronics-demo-38010",
-    "storage_bucket": "electronics-demo-38010.appspot.com"
+    "project_number": "739510084525",
+    "firebase_url": "https://mithas-fa138-default-rtdb.firebaseio.com",
+    "project_id": "mithas-fa138",
+    "storage_bucket": "mithas-fa138.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:738550336424:android:0228de3091e994cbb06b9d",
+        "mobilesdk_app_id": "1:739510084525:android:0a7dca33de0996e833b724",
         "android_client_info": {
-          "package_name": "com.connectsol.electronics"
+          "package_name": "com.connect.mithas"
         }
       },
       "oauth_client": [
         {
-          "client_id": "738550336424-ubge6oc2624d7rv61in6erqons7h8qpk.apps.googleusercontent.com",
+          "client_id": "739510084525-0b9goflakeqtus39iip41s0vpbtjea0a.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCoVD4CO9qc03af4Irnb38qtjo1nCh52vc"
+          "current_key": "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "738550336424-ubge6oc2624d7rv61in6erqons7h8qpk.apps.googleusercontent.com",
+              "client_id": "739510084525-0b9goflakeqtus39iip41s0vpbtjea0a.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

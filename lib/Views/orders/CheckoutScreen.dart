@@ -415,6 +415,7 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                                                                           ],
                                                                         ),
                                                                       ),
+
                                                                       FittedBox(
                                                                         child: AutoSizeText(
                                                                           utils.getFormattedPrice(
@@ -426,6 +427,7 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                                                                               fontWeight: FontWeight.w600),
                                                                         ),
                                                                       ),
+
                                                                       Row(
                                                                         mainAxisAlignment: MainAxisAlignment.end,
                                                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -449,21 +451,21 @@ class _CheckoutScreen extends State<CheckoutScreen>{
                                                                           )
                                                                         ],
                                                                       ),
-                                                                      if(mProducts[j].selectedAddons.length > 0) RichText(text: TextSpan(
+
+                                                                      if(mProducts[j].selectedAddons.length > 0) Wrap(
                                                                         children: [
                                                                           for(var l = 0 ; l < mProducts[j].selectedAddons.length; l++)
-                                                                            TextSpan(
-                                                                              text: "${mProducts[j].selectedAddons[l].adonDescription}x${mProducts[j].selectedAddons[l].quantity}${l < mProducts[j].selectedAddons.length - 1 ? ",":""} ",
-                                                                              style: utils.xSmallLabelStyle(blackColor)
+                                                                            Text(
+                                                                                "${mProducts[j].selectedAddons[l].adonDescription}x${mProducts[j].selectedAddons[l].quantity}${l < mProducts[j].selectedAddons.length - 1 ? ",":""} ",
+                                                                                style: utils.xSmallLabelStyle(blackColor)
                                                                             ),
 
-                                                                          TextSpan(
-                                                                              text: " = ${utils.getFormattedPrice(addons[j])}",
+                                                                          Text(
+                                                                              " = ${utils.getFormattedPrice(addons[j])}",
                                                                               style: utils.xSmallLabelStyle(checkAdminController.system.mainColor)
-                                                                            )
-
-                                                                        ]
-                                                                      ))
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ],
                                                                   ),
                                                                 ],

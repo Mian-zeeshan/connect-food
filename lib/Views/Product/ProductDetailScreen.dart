@@ -228,6 +228,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                                 child: GestureDetector(
                                                   onTap: () async {
                                                     await Get.toNamed(addProductRoute , arguments: itemModel);
+                                                    EasyLoading.dismiss();
                                                     index = 0;
                                                     setState(() {
                                                     });
@@ -832,6 +833,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                     if(opacity > 0.5 && userController.user != null && checkAdminController.isAdmin == "1") IconButton(
                       onPressed : () async {
                         await Get.toNamed(addProductRoute , arguments: itemModel);
+                        EasyLoading.dismiss();
                         index = 0;
                         setState(() {
                         });

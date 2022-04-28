@@ -36,7 +36,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   CheckAdminController checkAdminController = Get.find();
   var activeStep = 0;
   var utils = AppUtils();
-  ItemModel addProductModel = Get.arguments??ItemModel(code: "", name: "", type: "", salesRate: 0, style: "", mUnit: "", images: [], purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
+  ItemModel addProductModel = Get.arguments??ItemModel(status: 0, code: "", name: "", type: "", salesRate: 0, style: "", mUnit: "", images: [], purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
   CategoryModel? selectedCategoryItem;
   BrandModel? selectedBrand;
   SubCategoryModel? selectedSubCategoryItem;
@@ -895,7 +895,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                     },
                                       activeColor: checkAdminController.system.mainColor,
                                     ),
-                                    Expanded(child: Text("New Arrival" , style: utils.smallLabelStyle(blackColor),))
+                                    Expanded(child: Text("Popular" , style: utils.smallLabelStyle(blackColor),))
                                   ],
                                 ),
                                 Row(
@@ -1186,11 +1186,13 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                     setData();
                                   }
                                   else{
+
                                     if (addProductModel.images.length + (GetPlatform.isWeb ? _productImagesWeb.length : _productImages.length) <= 0) {
                                       utils.snackBar(context,
                                           message: "Add at least one image.");
                                       return;
                                     }
+
                                     EasyLoading.show(status: "Uploading images...");
                                     if(GetPlatform.isWeb){
                                       for(var img in _productImagesWeb){
@@ -1711,14 +1713,13 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
       }
       var parentId = addProductModel.parentId == null ? addProductModel.code : addProductModel.parentId;
 
-
-
       FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
 
       if(!GetPlatform.isWeb) {
         database.setPersistenceEnabled(true);
         database.setPersistenceCacheSizeBytes(10000000);
       }
+
       DatabaseReference reference = database.reference();
       await reference.child(itemRef).child("${addProductModel.code}").update(
           addProductModel.toJson());
@@ -1731,6 +1732,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
 
         var code = productController.lastItem == null ? 1 : int.parse(
             productController.lastItem!.code) + 1;
+
         var child = code < 10 ? "0000000$code" : code < 100
             ? "000000$code"
             : code < 1000 ? "00000$code" : code < 10000 ? "0000$code" : code <
@@ -1754,6 +1756,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
       Get.back();
       EasyLoading.dismiss();
       Get.snackbar("Success", "Product Saved");
+
     }
     EasyLoading.dismiss();
   }

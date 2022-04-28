@@ -13,6 +13,8 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../GetXController/Couponcontroller.dart';
+
 class OrderSuccessScreen extends StatefulWidget {
   @override
   _OrderSuccessScreen createState() => _OrderSuccessScreen();
@@ -21,6 +23,14 @@ class OrderSuccessScreen extends StatefulWidget {
 class _OrderSuccessScreen extends State<OrderSuccessScreen> {
   var utils = AppUtils();
   CheckAdminController checkAdminController = Get.find();
+  CartController cartController = Get.find();
+  CouponController couponController = Get.find();
+
+  @override
+  void initState() {
+    couponController.setSelectedCoupon(null, false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +63,12 @@ class _OrderSuccessScreen extends State<OrderSuccessScreen> {
                       SizedBox(height: 12,),
                       utils.button(checkAdminController.system.mainColor, "Go to Orders", whiteColor, checkAdminController.system.mainColor, 1.0, (){
                         Get.offAllNamed(homeCRoute , arguments: 1);
+                        cartController.emptyCart();
                       }),
                       SizedBox(height: 12,),
                       utils.button(whiteColor, "Go to Home", checkAdminController.system.mainColor, checkAdminController.system.mainColor, 2.0, (){
                         Get.offAllNamed(homeCRoute);
+                        cartController.emptyCart();
                       })
                     ],
                   ),

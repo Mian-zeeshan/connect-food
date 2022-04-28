@@ -9,6 +9,7 @@ import 'package:connectsaleorder/Views/Coupon/ManageCouponPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:timelines/timelines.dart';
@@ -1119,8 +1120,9 @@ class _SettingScreen extends State<SettingScreen> {
                                   if (userController.user!.type == 0 &&
                                       checkAdminController.isAdmin == "1")
                                     GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(addProductRoute);
+                                      onTap: () async {
+                                        await Get.toNamed(addProductRoute);
+                                        EasyLoading.dismiss();
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(

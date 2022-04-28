@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/Models/CartModel.dart';
 import 'package:connectsaleorder/Models/UserModel.dart';
+import 'package:connectsaleorder/Utils/AppUtils.dart';
+import 'package:connectsaleorder/services/NotificationApis.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -119,7 +121,7 @@ class OrderController extends GetxController{
 
   void listenOrdersTrack(CartModel cartModel) {
     print(user.uid);
-      FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
       
     if(!GetPlatform.isWeb) {
       database.setPersistenceEnabled(true);
@@ -199,6 +201,7 @@ class OrderController extends GetxController{
   }
 
   void changeStatus(int status, CartModel cartModel) async {
+    AppUtils utils = AppUtils();
     EasyLoading.show(status : "Loading...");
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     
@@ -215,5 +218,32 @@ class OrderController extends GetxController{
     });
     this.selectedFilter = selectedFilter;
     EasyLoading.dismiss();
+    sendNotification(cartModel.userId, "Order Updated", "Your order status is updated to ${utils.getOrderStatus(status)}. please check your order");
+  }
+
+  sendNotification(uid, title, message) async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    reference
+        .child(tokenRef)
+        .child(uid)
+        .onValue
+        .listen((event) {
+      if (event.snapshot.exists) {
+        var token = jsonDecode(jsonEncode(event.snapshot.value))["token"];
+
+        NotificationApis notificationApis = NotificationApis();
+
+        notificationApis.sendNotification(token, title, message);
+
+      }
+      update(["0"]);
+      notifyChildrens();
+    });
   }
 }

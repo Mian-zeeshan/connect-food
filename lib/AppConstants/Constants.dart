@@ -80,6 +80,7 @@ final orderTypeRoute = "/orderType";
 var databaseUrl = "https://haya-collections-default-rtdb.firebaseio.com/";
 var appName = "Connect";
 final usersRef = "Users";
+final tokenRef = "Tokens";
 final categoryRef = "Category";
 final brandRef = "Brands";
 final subCategoryRef = "SubCategory";
@@ -113,3 +114,5 @@ final isAdminGlobal = "isAdminGlobal";
 FirebaseAuth? auth;
 FirebaseDatabase? database;
 FirebaseStorage? storage;
+
+final smsKey = "AAAArC48Y60:APA91bFAV5EhUCCs-8ZsqiY8gBrtVljc8gMLcThAPioJ-4v8LwupwEs-OpYw0eU9D9pdaq79GkAcdt56nUuQgxG2rL2U9a_zcXDNbB4n5p_osqtq385UD-E7fQM6rEpRn-8_sZm2--gO";

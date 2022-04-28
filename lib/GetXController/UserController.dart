@@ -7,6 +7,7 @@ import 'package:connectsaleorder/Models/AddressModel.dart';
 import 'package:connectsaleorder/Models/RetailerModel.dart';
 import 'package:connectsaleorder/Models/UserModel.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -82,10 +83,30 @@ class UserController extends GetxController{
             break;
           }
         }
+        updateToken();
         update(["0"]);
         notifyChildrens();
       }
     });
+  }
+
+  updateToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+
+    if(token != null) {
+      FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+      if(!GetPlatform.isWeb) {
+        database.setPersistenceEnabled(true);
+        database.setPersistenceCacheSizeBytes(10000000);
+      }
+
+      DatabaseReference reference = database.reference();
+      reference
+          .child(tokenRef)
+          .child(user!.uid)
+          .set({"token" : "$token"});
+    }
   }
   
   

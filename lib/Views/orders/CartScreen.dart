@@ -36,7 +36,7 @@ class _CartScreen extends State<CartScreen>{
     // TODO: implement initState
     isRetailer = userController.user != null ? userController.user!.isRetailer? userController.user!.retailerModel!.approved ? true : false :false : false;
     if(userController.user != null) {
-      cartController.updateBill();
+      cartController.updateBill(mounted: false);
     }
     super.initState();
   }
@@ -281,32 +281,36 @@ class _CartScreen extends State<CartScreen>{
                                       )
                                   ),
                                 SizedBox(height: 12.h,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(width: 12,),
-                                    Text("Recommendation", style: utils.boldLabelStyle(blackColor),)
-                                  ],
-                                ),
-                                SizedBox(height: 8.h,),
-                                Container(
-                                  width: Get.width,
-                                  child: GetBuilder<ItemController>(id: "0" , builder: (itemController){
-                                    return SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          for(var item in itemController.itemModelsTopDeals)
-                                            Container(
-                                              child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
-                                            )
-                                        ],
-                                      ),
-                                    );
-                                  },),
-                                ),
+                               GetBuilder<ItemController>(id: "0", builder: (itemController){
+                                 return itemController.itemModelsRecentView.length > 0 ? Column(
+                                   children: [
+                                     Row(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.center,
+                                       children: [
+                                         SizedBox(width: 12,),
+                                         Text("Recommendation", style: utils.boldLabelStyle(blackColor),)
+                                       ],
+                                     ),
+                                     SizedBox(height: 8.h,),
+                                     Container(
+                                       width: Get.width,
+                                       child: SingleChildScrollView(
+                                         scrollDirection: Axis.horizontal,
+                                         child: Row(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           children: [
+                                             for(var item in itemController.itemModelsRecentView)
+                                               Container(
+                                                 child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                                               )
+                                           ],
+                                         ),
+                                       )
+                                     ),
+                                   ],
+                                 ) : Container();
+                               },)
                               ],
                             )),
                             Container(

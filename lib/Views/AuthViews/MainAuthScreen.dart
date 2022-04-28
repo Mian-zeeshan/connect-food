@@ -55,7 +55,7 @@ class _MainAuthScreen extends State<MainAuthScreen>{
                     children: [
                       CachedNetworkImage(
                         imageUrl: checkAdminController.system.companyLogo,
-                        placeholder: (context, url) => SpinKitRotatingCircle(color: checkAdminController.system.mainColor,),
+                        placeholder: (context, url) => Image.asset("Assets/Images/mi_logo.jpeg"),
                         errorWidget: (context, url, error) => Icon(
                           Icons.image_not_supported_rounded,
                           size: 25,
