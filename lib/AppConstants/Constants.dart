@@ -81,6 +81,7 @@ var databaseUrl = "https://haya-collections-default-rtdb.firebaseio.com/";
 var appName = "Connect";
 final usersRef = "Users";
 final tokenRef = "Tokens";
+final adminTokenRef = "AdminTokens";
 final categoryRef = "Category";
 final brandRef = "Brands";
 final subCategoryRef = "SubCategory";

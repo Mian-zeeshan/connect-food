@@ -319,7 +319,22 @@ class _HomeScreenCustomer extends State<HomeScreenCustomer>{
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(child: Text("home".tr, style: utils.headingStyle(whiteColor),)),
+                      Expanded(child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: whiteColor
+                        ),
+                        child: TextField(
+                          onTap: () async {
+                            await Get.toNamed(searchRoute);
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
+                          decoration: InputDecoration.collapsed(hintText: "Search"),
+                          obscureText: false,
+                          maxLines: 1,
+                        ),
+                      )),
                       if(userController.user != null) IconButton(
                         onPressed : (){
                           Get.toNamed(chatRoute, arguments: 0);

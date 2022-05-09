@@ -246,4 +246,34 @@ class OrderController extends GetxController{
       notifyChildrens();
     });
   }
+
+  sendNotificationAdmin(title, message) async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    reference
+        .child(adminTokenRef)
+        .onValue
+        .listen((event) {
+      if (event.snapshot.exists) {
+        List<String> tokens = [];
+        event.snapshot.value.forEach((key, value){
+          var token = jsonDecode(jsonEncode(value))["token"];
+          tokens.add(token);
+        });
+
+        NotificationApis notificationApis = NotificationApis();
+
+        for(var t in tokens) {
+          notificationApis.sendNotification(t, title, message);
+        }
+      }
+      update(["0"]);
+      notifyChildrens();
+    });
+  }
 }

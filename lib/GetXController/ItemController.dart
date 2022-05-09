@@ -547,29 +547,45 @@ class ItemController extends GetxController{
           print(key);
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
-          int stock = itemModel.totalStock;
-          for (var item in itemModel.stock) {
-            stock += item.stock.toInt();
+          if(itemModel.status == 0) {
+            int stock = itemModel.totalStock;
+            for (var item in itemModel.stock) {
+              stock += item.stock.toInt();
+            }
+            itemModel.totalStock = stock;
+            double discountedPrice = 0;
+            double discountedPriceW = 0;
+            if (itemModel.discountType == "%") {
+              discountedPrice = itemModel.salesRate -
+                  ((itemModel.salesRate * itemModel.discountVal!) / 100);
+              discountedPriceW = (itemModel.wholeSale) -
+                  (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+            } else {
+              discountedPrice = itemModel.salesRate - itemModel.discountVal!;
+              discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
+            }
+            itemModel.discountedPrice = discountedPrice;
+            itemModel.discountedPriceW = discountedPriceW;
+            sizedProducts.add(itemModel);
           }
-          itemModel.totalStock = stock;
-          double discountedPrice = 0;
-          double discountedPriceW = 0;
-          if (itemModel.discountType == "%") {
-            discountedPrice = itemModel.salesRate -
-                ((itemModel.salesRate * itemModel.discountVal!) / 100);
-            discountedPriceW = (itemModel.wholeSale) -
-                (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
-          } else {
-            discountedPrice = itemModel.salesRate - itemModel.discountVal!;
-            discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
-          }
-          itemModel.discountedPrice = discountedPrice;
-          itemModel.discountedPriceW = discountedPriceW;
-          sizedProducts.add(itemModel);
         });
       }
       update(["0"]);
       notifyChildrens();
     });
+  }
+
+  void changeProductStatus(ItemModel itemModel) async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    reference
+        .child(itemRef)
+        .child(itemModel.code)
+        .update({"status" : itemModel.status});
   }
 }

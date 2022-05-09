@@ -2,6 +2,7 @@ import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/CartController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
 import 'package:connectsaleorder/GetXController/Couponcontroller.dart';
+import 'package:connectsaleorder/GetXController/OrderController.dart';
 import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/Models/CartModel.dart';
 import 'package:connectsaleorder/Models/CouponModel.dart';
@@ -287,6 +288,7 @@ class _PaymentScreen extends State<PaymentScreen>{
 
   void placeOrder(type) async {
     EasyLoading.show(status: "Placing Order...");
+    OrderController orderController = Get.find();
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     if(insController.text.isNotEmpty)
       widget.postOrderModel.instructions = insController.text.toString();
@@ -294,6 +296,7 @@ class _PaymentScreen extends State<PaymentScreen>{
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
     DatabaseReference reference = database.reference();
+    orderController.sendNotificationAdmin("New Order Received", "Congratulation! you got new order from ${widget.postOrderModel.customer != null ? widget.postOrderModel.customer!.name : ""}(${widget.postOrderModel.customer != null ? widget.postOrderModel.customer!.area : ""})");
     await reference.child(orderCRef)
         .child(widget.postOrderModel.cartId)
         .set(widget.postOrderModel.toJson());

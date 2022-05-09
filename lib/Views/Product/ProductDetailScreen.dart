@@ -97,11 +97,36 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
     });
   }
 
+  final GlobalKey _menuKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     if(userController.user != null){
       itemModel.isFav = favoriteController.checkFavorite(itemModel);
     }
+
+    final button = PopupMenuButton(
+        key: _menuKey,
+        icon: Icon(CupertinoIcons.ellipsis_vertical, color: opacity > 0.5 ? whiteColor : blackColor,),
+        itemBuilder: (_) => const<PopupMenuItem<String>>[
+          PopupMenuItem<String>(
+              child: Text('Edit'), value: 'edit'),
+          PopupMenuItem<String>(
+              child: Text('Change Status'), value: 'change_status'),
+        ],
+        onSelected: (value) async {
+          if(value.toString() == "edit"){
+            await Get.toNamed(addProductRoute , arguments: itemModel);
+            EasyLoading.dismiss();
+            index = 0;
+            setState(() {
+            });
+          }else{
+            showFilterBottom(context);
+          }
+        });
+
+
     return Scaffold(
         backgroundColor: whiteColor,
         body: Container(
@@ -222,30 +247,6 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                                 ],
                                               ),
                                             ),
-                                            if((checkAdminController.isAdmin == "1" || GetPlatform.isWeb) && opacity <= 0.5) Positioned(
-                                                right: 12,
-                                                bottom: 10,
-                                                child: GestureDetector(
-                                                  onTap: () async {
-                                                    await Get.toNamed(addProductRoute , arguments: itemModel);
-                                                    EasyLoading.dismiss();
-                                                    index = 0;
-                                                    setState(() {
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    width: 50,
-                                                    height: 50,
-                                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color: checkAdminController.system.mainColor
-                                                    ),
-                                                    child: Center(
-                                                      child: Icon(CupertinoIcons.pen, color: whiteColor, size: 24,),
-                                                    ),
-                                                  ),
-                                                ))
                                           ],
                                         ),
                                       ),
@@ -790,7 +791,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                       ),
                     ),
                     SizedBox(width: 12,),
-                    if(opacity > 0.5) Expanded(child: Text("${itemModel.name}" , style: utils.boldLabelStyle(whiteColor),maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                    Expanded(child:  Text("${itemModel.name}" , style: utils.boldLabelStyle(opacity > 0.5 ? whiteColor : blackColor),maxLines: 1, overflow: TextOverflow.ellipsis,)),
                     if(opacity > 0.5 && userController.user != null) GestureDetector(
                       onTap : (){
                         if(userController.user != null) {
@@ -830,16 +831,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                         ),
                       ),
                     ),
-                    if(opacity > 0.5 && userController.user != null && checkAdminController.isAdmin == "1") IconButton(
-                      onPressed : () async {
-                        await Get.toNamed(addProductRoute , arguments: itemModel);
-                        EasyLoading.dismiss();
-                        index = 0;
-                        setState(() {
-                        });
-                      },
-                      icon: Icon(CupertinoIcons.pen , color: whiteColor, size: 20.w,),
-                    ),
+                    if((checkAdminController.isAdmin == "1" || GetPlatform.isWeb)) button,
                   ],
                 )
               )
@@ -884,6 +876,89 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
         .update({
       "rating" : rating
     });
+  }
+
+
+  showFilterBottom(BuildContext context) {
+    var status = ["Online", "Offline" , "Out of Store" , "Disable"];
+    var icons = [CupertinoIcons.circle , CupertinoIcons.xmark_octagon , CupertinoIcons.cube_box, CupertinoIcons.xmark_seal];
+    showCupertinoModalBottomSheet(
+      context: context,
+      backgroundColor: whiteColor,
+      topRadius: Radius.circular(30),
+      builder: (context) => Container(
+        height: Get.height * 0.42,
+        padding: EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: whiteColor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(child: Container()),
+                Expanded(
+                    child: Container(
+                      height: 3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: blackColor.withOpacity(0.8),
+                      ),
+                    )),
+                Expanded(child: Container()),
+              ],
+            ),
+            Expanded(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    for(var i = 0 ; i < icons.length; i++)
+                      GestureDetector(
+                        onTap: (){
+                          itemModel.status = i;
+                          itemController.changeProductStatus(itemModel);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          width: Get.width,
+                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(icons[i] , size: 24, color: blackColor.withOpacity(0.9),),
+                                    SizedBox(width: 10,),
+                                    Expanded(child: Text(status[i],style: utils.labelStyle(blackColor.withOpacity(0.9)),)),
+                                    if( i == itemModel.status) Icon(CupertinoIcons.checkmark_alt, size: 24, color: blackColor.withOpacity(0.6),),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: Get.width,
+                                height: 1,
+                                color: grayColor,
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                  ],
+                )
+            )
+          ],
+        ),
+      ),
+    );
   }
 
 }

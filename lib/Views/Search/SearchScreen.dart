@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -70,62 +71,86 @@ class _SearchScreen extends State<SearchScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 12,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if(!widget.fromWeb) IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        CupertinoIcons.arrow_left,
-                        color: blackColor,
-                        size: 20,
-                      )),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  Expanded(
-                    child: utils.textField(
-                        grayColor.withOpacity(0.3),
-                        null,
-                        null,
-                        CupertinoIcons.search,
-                        blackColor.withOpacity(0.6),
-                        blackColor,
-                        "Search...",
-                        blackColor.withOpacity(0.5),
-                        blackColor.withOpacity(0.6),
-                        2.0,
-                        Get.width - 12,
-                        false,
-                        searchController, onTextChange: (val) {
-                          Timer.periodic(Duration(milliseconds: 600), (timer) {
-                            timer.cancel();
-                            if(searchController.text.isNotEmpty) {
-                              iController.searchProducts(searchController.text.toString());
-                            }else{
-                              iController.emptyProductsSearch();
-                            }
-                          });
-                    }),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  if (searchController.text.length > 0)
-                    IconButton(
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
+                    color: checkAdminController.system.mainColor
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if(!widget.fromWeb) IconButton(
                         onPressed: () {
-                          searchController.clear();
-                          iController.emptyProductsSearch();
+                          Get.back();
                         },
                         icon: Icon(
-                          CupertinoIcons.xmark_circle,
-                          color: checkAdminController.system.mainColor,
-                        ))
-                ],
+                          CupertinoIcons.arrow_left,
+                          color: whiteColor,
+                          size: 20,
+                        )),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8.w),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: whiteColor
+                        ),
+                        child: TextField(
+                          onTap: (){
+                            Get.toNamed(searchRoute);
+                          },
+                          decoration: InputDecoration.collapsed(hintText: "Search"),
+                          obscureText: false,
+                          maxLines: 1,
+                          controller: searchController,
+                          onChanged: (val){
+                            Timer.periodic(Duration(milliseconds: 600), (timer) {
+                              timer.cancel();
+                              if(searchController.text.isNotEmpty) {
+                                iController.searchProducts(searchController.text.toString());
+                              }else{
+                                iController.emptyProductsSearch();
+                              }
+                            });
+                          },
+                        ),
+                      )/*utils.textField(
+                          grayColor.withOpacity(0.3),
+                          null,
+                          null,
+                          CupertinoIcons.search,
+                          blackColor.withOpacity(0.6),
+                          blackColor,
+                          "Search...",
+                          blackColor.withOpacity(0.5),
+                          blackColor.withOpacity(0.6),
+                          2.0,
+                          Get.width - 12,
+                          false,
+                          searchController, onTextChange: (val) {
+
+                      }),*/
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    if (searchController.text.length > 0)
+                      IconButton(
+                          onPressed: () {
+                            searchController.clear();
+                            iController.emptyProductsSearch();
+                          },
+                          icon: Icon(
+                            CupertinoIcons.xmark_circle,
+                            color: checkAdminController.system.mainColor,
+                          ))
+                  ],
+                ),
               ),
               Expanded(child: SingleChildScrollView(
                 controller: _scrollController,

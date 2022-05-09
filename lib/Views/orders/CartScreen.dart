@@ -301,9 +301,9 @@ class _CartScreen extends State<CartScreen>{
                                            crossAxisAlignment: CrossAxisAlignment.start,
                                            children: [
                                              for(var item in itemController.itemModelsRecentView)
-                                               Container(
-                                                 child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
-                                               )
+                                             Container(
+                                               child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                                             )
                                            ],
                                          ),
                                        )

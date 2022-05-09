@@ -76,6 +76,7 @@ class UserController extends GetxController{
         box.write(currentUser, user!.toJson());
         if(user!.type == 0){
           checkAdminController.updateAdmin("1");
+          updateTokenAdmin();
         }
         for(var i = 0 ; i < user!.addressList.length; i++){
           if(user!.addressList[i].id == user!.defaultAddressId){
@@ -104,6 +105,25 @@ class UserController extends GetxController{
       DatabaseReference reference = database.reference();
       reference
           .child(tokenRef)
+          .child(user!.uid)
+          .set({"token" : "$token"});
+    }
+  }
+
+  updateTokenAdmin() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+
+    if(token != null) {
+      FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+      if(!GetPlatform.isWeb) {
+        database.setPersistenceEnabled(true);
+        database.setPersistenceCacheSizeBytes(10000000);
+      }
+
+      DatabaseReference reference = database.reference();
+      reference
+          .child(adminTokenRef)
           .child(user!.uid)
           .set({"token" : "$token"});
     }

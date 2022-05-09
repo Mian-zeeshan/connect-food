@@ -49,7 +49,10 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
             children: [
               if(!widget.fromBottom) Container(
                 width: Get.width,
-                color: checkAdminController.system.mainColor,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
+                  color: checkAdminController.system.mainColor,
+                ),
                 padding: EdgeInsets.only(right: 12, top: 6, bottom: 6),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -99,13 +102,26 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
                                         borderRadius: BorderRadius.circular(12),
                                         color: blackColor.withOpacity(0.5)
                                     ),
-                                    child: CachedNetworkImage(
-                                      imageUrl: widget.cartModel.products[i].images.length > 0 ? widget.cartModel.products[i].images[0] :"" ,
-                                      placeholder: (context, url) => SpinKitRotatingCircle(color: checkAdminController.system.mainColor,),
-                                      errorWidget: (context, url, error) => Icon(
-                                        Icons.image_not_supported_rounded,
-                                        size: 25,
-                                      ), fit: BoxFit.cover,),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          width: 60,
+                                          height: 60,
+                                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(12),
+                                              color: blackColor.withOpacity(0.5)
+                                          ),
+                                          child: CachedNetworkImage(
+                                            imageUrl: widget.cartModel.products[i].images.length > 0 ? widget.cartModel.products[i].images[0] :"" ,
+                                            placeholder: (context, url) => SpinKitRotatingCircle(color: checkAdminController.system.mainColor,),
+                                            errorWidget: (context, url, error) => Icon(
+                                              Icons.image_not_supported_rounded,
+                                              size: 25,
+                                            ), fit: BoxFit.cover,),
+                                        ),
+                                      ],
+                                    )
                                   ),
                                   SizedBox(width: 10,),
                                   Expanded(child: Column(

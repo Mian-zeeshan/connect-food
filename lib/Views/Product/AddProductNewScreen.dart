@@ -60,6 +60,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   var wholeSalePriceController = TextEditingController();
   var discPriceController = TextEditingController();
   var stockController = TextEditingController();
+  var gstController = TextEditingController();
 
   /*
   todo implement later
@@ -115,6 +116,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
       stockController.text = addProductModel.totalStock.toString();
       ingredientController.text = addProductModel.ingredients??"";
       unitController.text = addProductModel.mUnit;
+      gstController.text = "${addProductModel.gSTTax??0}";
       selectedBrand = BrandModel(code: addProductModel.brandCode??"", name: addProductModel.brandName??"Select Brand", image: "", secondName: addProductModel.brandName??"Select Brand");
       sDescriptionController.text = addProductModel.shortDescription??"";
       descriptionController.text = addProductModel.description??"";
@@ -203,6 +205,23 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
+                          color: checkAdminController.system.mainColor,
+                        ),
+                        padding: EdgeInsets.only(right: 12, top: 6, bottom: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(onPressed: ()=> Get.back(), icon: Icon(CupertinoIcons.arrow_left , color: whiteColor, size: 24,)),
+                            SizedBox(width: 12,),
+                            Expanded(child: Text(Get.arguments == null ? "Add Product" : "Update Product" , style: utils.headingStyle(whiteColor),)),
+                          ],
+                        ),
+                      ),
                       IconStepper(
                         icons: [
                           Icon(CupertinoIcons.person , color: whiteColor,),
@@ -333,6 +352,8 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                   ),
                                   SizedBox(height: 12,),
                                   form("Discount", discPriceController, isNumber: true),
+                                  SizedBox(height: 12,),
+                                  form("GST %", gstController, isNumber: true),
                                   SizedBox(height: 12,),
                                   form("Stock", stockController, isNumber: true),
                                   //SizedBox(height: 12,),
@@ -1085,6 +1106,10 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                         stockController.text = "0";
                                       }
 
+                                      if(gstController.text.isEmpty){
+                                        gstController.text = "0";
+                                      }
+
                                       /*if(skuController.text.isEmpty){
                                         skuController.text = "N/A";
                                       }*/
@@ -1100,6 +1125,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                       addProductModel.styleName = selectedSubCategoryItem!.name.toString();
                                       addProductModel.salesRate = double.parse(priceController.text.toString());
                                       addProductModel.wholeSale = double.parse(wholeSalePriceController.text.toString());
+                                      addProductModel.gSTTax = double.parse(gstController.text.toString());
                                       addProductModel.purchaseRate = 0;
                                       addProductModel.lockRate = 0;
                                       addProductModel.rating = 0;
@@ -1708,9 +1734,8 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
       Get.snackbar("Success", "Product Saved");
     }
     else{
-      for(var i = 0; i < pSizes.length; i++){
-        addProductModel.sizes.add(pSizes[i]);
-      }
+      addProductModel.sizes.addAll(pSizes);
+      
       var parentId = addProductModel.parentId == null ? addProductModel.code : addProductModel.parentId;
 
       FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
