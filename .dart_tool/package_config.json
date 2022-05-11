@@ -284,6 +284,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flex_color_picker",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flex_color_picker-2.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/arslan/Library/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -303,13 +309,37 @@
     },
     {
       "name": "flutter_colorpicker",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_colorpicker-0.6.1",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_colorpicker-1.0.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "flutter_easyloading",
       "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_easyloading-3.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_inappwebview",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_inappwebview-5.4.3+7",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "flutter_keyboard_visibility",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility-5.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_platform_interface",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_platform_interface-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_web",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_web-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -464,6 +494,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "html_editor_enhanced",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/html_editor_enhanced-2.4.0+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "http",
       "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.3",
       "packageUri": "lib/",
@@ -524,6 +560,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "infinite_listview",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/infinite_listview-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "intl",
       "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
       "packageUri": "lib/",
@@ -568,6 +610,12 @@
     {
       "name": "modal_bottom_sheet",
       "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/modal_bottom_sheet-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "numberpicker",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/numberpicker-2.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -651,7 +699,13 @@
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-2.0.1",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "pointer_interceptor",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/pointer_interceptor-0.9.3+1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -789,7 +843,7 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.20",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -848,6 +902,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "visibility_detector",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/visibility_detector-0.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "watcher",
       "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/watcher-1.0.1",
       "packageUri": "lib/",
@@ -884,7 +944,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-05-09T05:31:53.637137Z",
+  "generated": "2022-05-11T06:37:41.650112Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }

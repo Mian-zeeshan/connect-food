@@ -128,7 +128,17 @@ class CartController extends GetxController{
   }
 
   addToCart(ItemModel item)async{
-    myCart.products.add(item);
+    var isAvailable = false;
+    for(var i = 0 ; i < myCart.products.length; i++){
+      if(myCart.products[i].code == item.code){
+        isAvailable = true;
+        item.selectedQuantity = myCart.products[i].selectedQuantity + item.selectedQuantity;
+        myCart.products[i] = item;
+      }
+    }
+    if(!isAvailable) {
+      myCart.products.add(item);
+    }
     myCart.userId = user.uid;
     myCart.createdAt = DateTime.now().millisecondsSinceEpoch;
     var isFind = -1;

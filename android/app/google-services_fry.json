@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1003574277643",
+    "firebase_url": "https://fryway-868ee-default-rtdb.firebaseio.com",
+    "project_id": "fryway-868ee",
+    "storage_bucket": "fryway-868ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003574277643:android:1002ee2e1b1ed138ee390e",
+        "android_client_info": {
+          "package_name": "com.connect.fryway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003574277643-p6hrtm0spg2j203nuk7dphg136n18ntb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAENzSzAsspk2RLJKWlS8lvhvUCmp6P9gk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003574277643-p6hrtm0spg2j203nuk7dphg136n18ntb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

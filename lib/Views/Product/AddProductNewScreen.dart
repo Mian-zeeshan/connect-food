@@ -26,6 +26,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import 'EditorPage.dart';
+
 
 class AddProductNewScreen extends StatefulWidget {
   @override
@@ -438,6 +440,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                   ),
                                   SizedBox(height: 12,),
                                   form("Long Description of 200 characters", descriptionController, isMultiline: true, onChange: (val){
+                                    //Get.to(()=> EditorPage());
                                     if(val == null){
                                       longDLength = 0;
                                     }else{
@@ -1138,6 +1141,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
                                       FocusScope.of(context).unfocus();
                                     }
                                     else if(activeStep == 1){
+
                                       if(sDescriptionController.text.isEmpty){
                                         addProductModel.shortDescription = "N/A";
                                       }else if(descriptionController.text.isEmpty){

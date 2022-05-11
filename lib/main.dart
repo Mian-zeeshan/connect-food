@@ -219,19 +219,55 @@ void main() async {
 
 //Mithas
 //Package Command "flutter pub run change_app_package_name:main com.connectsol.foodecom"
+// _configureAbnApp() async {
+//   FirebaseOptions abnOptions = FirebaseOptions(
+//       databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
+//       apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
+//       messagingSenderId: "739510084525",
+//       projectId: "mithas-fa138",
+//       appId: "1:739510084525:android:0a7dca33de0996e833b724",
+//       storageBucket: "gs://mithas-fa138.appspot.com",
+//   );
+//   FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
+//   database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
+//   databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
+//   appName = "Mithas";
+//   return app;
+// }
+
+//Fryway
+//Package Command "flutter pub run change_app_package_name:main com.connectsol.fryway"
+// _configureAbnApp() async {
+//   FirebaseOptions abnOptions = FirebaseOptions(
+//       databaseURL: "https://fryway-868ee-default-rtdb.firebaseio.com/",
+//       apiKey: "AIzaSyDb8X3Gj8Rw1MSQZwCuyls-mGcxgiILzyE",
+//       messagingSenderId: "1003574277643",
+//       projectId: "fryway-868ee",
+//       appId: "1:1003574277643:android:1002ee2e1b1ed138ee390e",
+//       storageBucket: "gs://mithas-fa138.appspot.com",
+//   );
+//   FirebaseApp app = await Firebase.initializeApp(name: "https://fryway-868ee-default-rtdb.firebaseio.com/", options: abnOptions);
+//   database = FirebaseDatabase(databaseURL: "https://fryway-868ee-default-rtdb.firebaseio.com/");
+//   databaseUrl = "https://fryway-868ee-default-rtdb.firebaseio.com/";
+//   appName = "Fryway";
+//   return app;
+// }
+
+//Fryway
+//Package Command "flutter pub run change_app_package_name:main com.connectsol.fryway"
 _configureAbnApp() async {
   FirebaseOptions abnOptions = FirebaseOptions(
-      databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
-      apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
-      messagingSenderId: "739510084525",
-      projectId: "mithas-fa138",
-      appId: "1:739510084525:android:0a7dca33de0996e833b724",
-      storageBucket: "gs://mithas-fa138.appspot.com",
+      databaseURL: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/",
+      apiKey: "AIzaSyDFmabVibHiNGVrzN7WYbAUTlIYSYGWdso",
+      messagingSenderId: "467533798799",
+      projectId: "mandi-online-5e4fa",
+      appId: "1:467533798799:android:3c1fd330836d45f0d53ffa",
+      storageBucket: "gs://mandi-online-5e4fa.appspot.com",
   );
-  FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
-  database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
-  databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
-  appName = "Mithas";
+  FirebaseApp app = await Firebase.initializeApp(name: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/", options: abnOptions);
+  database = FirebaseDatabase(databaseURL: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/");
+  databaseUrl = "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/";
+  appName = "Mandi Online";
   return app;
 }
 

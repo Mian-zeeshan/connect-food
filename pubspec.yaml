@@ -53,7 +53,7 @@ dependencies:
   swipe_image_gallery: ^0.0.4
   persistent_bottom_nav_bar: ^4.0.2
   font_awesome_flutter: ^9.2.0
-  flutter_colorpicker: ^0.6.0
+  flutter_colorpicker: ^1.0.3
   bubble: ^1.2.1
   chat_bubbles: ^1.1.0
   auto_size_text: ^3.0.0
@@ -78,6 +78,7 @@ dependencies:
   firebase_messaging: ^11.2.5
   awesome_notifications: ^0.6.21
   flutter_local_notifications: ^9.4.0
+  html_editor_enhanced: ^2.4.0+1
 
 
 
@@ -90,7 +91,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "Assets/Images/mi_logo.jpeg"
+  image_path: "Assets/Images/mo_logo.jpg"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

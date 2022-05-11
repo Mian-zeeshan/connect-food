@@ -330,6 +330,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.8"
+  flex_color_picker:
+    dependency: transitive
+    description:
+      name: flex_color_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.5.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -355,7 +362,7 @@ packages:
       name: flutter_colorpicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1"
+    version: "1.0.3"
   flutter_easyloading:
     dependency: "direct main"
     description:
@@ -363,6 +370,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.3"
+  flutter_inappwebview:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.4.3+7"
+  flutter_keyboard_visibility:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.2.0"
+  flutter_keyboard_visibility_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  flutter_keyboard_visibility_web:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -532,6 +567,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
+  html_editor_enhanced:
+    dependency: "direct main"
+    description:
+      name: html_editor_enhanced
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0+1"
   http:
     dependency: transitive
     description:
@@ -602,6 +644,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
+  infinite_listview:
+    dependency: transitive
+    description:
+      name: infinite_listview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   intl:
     dependency: "direct main"
     description:
@@ -658,6 +707,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  numberpicker:
+    dependency: transitive
+    description:
+      name: numberpicker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   octo_image:
     dependency: transitive
     description:
@@ -755,7 +811,14 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.2"
+  pointer_interceptor:
+    dependency: transitive
+    description:
+      name: pointer_interceptor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.3+1"
   printing:
     dependency: "direct main"
     description:
@@ -914,7 +977,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.20"
+    version: "6.1.0"
   url_launcher_android:
     dependency: transitive
     description:
@@ -978,6 +1041,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   watcher:
     dependency: "direct main"
     description:
@@ -1015,4 +1085,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.16.0 <3.0.0"
-  flutter: ">=2.8.0"
+  flutter: ">=2.10.0"

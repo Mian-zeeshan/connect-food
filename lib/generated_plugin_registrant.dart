@@ -11,6 +11,7 @@ import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:firebase_database_web/firebase_database_web.dart';
 import 'package:firebase_messaging_web/firebase_messaging_web.dart';
 import 'package:firebase_storage_web/firebase_storage_web.dart';
+import 'package:flutter_keyboard_visibility_web/flutter_keyboard_visibility_web.dart';
 import 'package:geolocator_web/geolocator_web.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:printing/printing_web.dart';
@@ -26,6 +27,7 @@ void registerPlugins(Registrar registrar) {
   FirebaseDatabaseWeb.registerWith(registrar);
   FirebaseMessagingWeb.registerWith(registrar);
   FirebaseStorageWeb.registerWith(registrar);
+  FlutterKeyboardVisibilityPlugin.registerWith(registrar);
   GeolocatorPlugin.registerWith(registrar);
   ImagePickerPlugin.registerWith(registrar);
   PrintingPlugin.registerWith(registrar);

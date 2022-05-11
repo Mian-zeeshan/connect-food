@@ -233,6 +233,7 @@ class _OrderFragment extends State<OrderFragment> {
                                     showCalendarDialog(orderController);
                                   }
                                 },
+                                decoration: InputDecoration.collapsed(hintText: ""),
                                 items: _dropDownValues.map((location) {
                                   return DropdownMenuItem(
                                     child: new Text(

@@ -354,9 +354,9 @@ class AppUtils{
       case 1:
         return "Preparing";
       case 2:
-        return "Shipping";
+        return "On the way";
       case 3:
-        return "Shipped";
+        return "Delivered";
       case -1:
         return "Canceled";
       default:
