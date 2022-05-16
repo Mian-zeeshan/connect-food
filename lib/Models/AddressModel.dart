@@ -11,6 +11,8 @@ class AddressModel {
   String address = "";
   String area = "";
   var selected = false;
+  double lat = -1;
+  double lng = -1;
 
   AddressModel(
       {required this.id,
@@ -23,7 +25,9 @@ class AddressModel {
         required this.city,
         required this.country,
         required this.area,
-        required this.address});
+        required this.address,
+        required this.lat,
+        required this.lng});
 
   AddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,6 +41,8 @@ class AddressModel {
     country = json['country'];
     address = json['address'];
     area = json['area'];
+    lat = json['lat'];
+    lng = json['lng'];
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +59,8 @@ class AddressModel {
     data['address'] = this.address;
     data['selected'] = this.selected;
     data['area'] = this.area;
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
     return data;
   }
 }

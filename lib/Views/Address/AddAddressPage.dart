@@ -318,33 +318,33 @@ class _AddAddressPage extends State<AddAddressPage>{
                           ),
                         ),
                         SizedBox(height: 12,),
-                        // GestureDetector(
-                        //   onTap: () async {
-                        //     _place = await Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen()));
-                        //     setData();
-                        //     },
-                        //   child: Container(
-                        //     width: Get.size.width,
-                        //     padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 12),
-                        //     decoration: BoxDecoration(
-                        //         color: whiteColor,
-                        //         borderRadius: BorderRadius.circular(8),
-                        //         border: Border.all(color: blackColor.withOpacity(0.4) , width: 1)
-                        //     ),
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.start,
-                        //       crossAxisAlignment: CrossAxisAlignment.center,
-                        //       children: [
-                        //         SizedBox(width: 10,),
-                        //         Expanded(child: Text(
-                        //           _place != null ? "${_place!.address}":"Select Address From Map",
-                        //           style: utils.labelStyle(blackColor),
-                        //         )),
-                        //         Icon(CupertinoIcons.chevron_down , color: blackColor, size: 20,)
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
+                        GestureDetector(
+                          onTap: () async {
+                            _place = await Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen()));
+                            setData();
+                            },
+                          child: Container(
+                            width: Get.size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 12),
+                            decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: blackColor.withOpacity(0.4) , width: 1)
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(width: 10,),
+                                Expanded(child: Text(
+                                  _place != null ? "${_place!.address}":"Select Address From Map",
+                                  style: utils.labelStyle(blackColor),
+                                )),
+                                Icon(CupertinoIcons.chevron_down , color: blackColor, size: 20,)
+                              ],
+                            ),
+                          ),
+                        ),
                         form("Address", "Address", addressController),
                         if(type != 2) SizedBox(height: 20,),
                         if(type != 2) Container(
@@ -477,6 +477,9 @@ class _AddAddressPage extends State<AddAddressPage>{
                               }else if(selected == -1 && type != 2){
                                 Get.snackbar("Opps", "Select Label First!");
                                 return;
+                              }else if(_place == null && type != 2){
+                                Get.snackbar("Opps", "Select Map Address First!");
+                                return;
                               }
                                 AddressModel aModel = AddressModel(
                                     id: type == 0 ? "${DateTime
@@ -499,7 +502,9 @@ class _AddAddressPage extends State<AddAddressPage>{
                                     province: selectedState!.name,
                                     city: selectedCity!.name,
                                     country: selectedCountry!.name,
-                                    address: addressController.text.toString());
+                                    address: addressController.text.toString(),
+                                    lat: type == 1 ? _place!.latitude : selectedAddress!.lat,
+                                    lng: type == 1 ? _place!.longitude: selectedAddress!.lng);
                                 if(type != 2) {
                                   addAddress(aModel);
                                 }else{

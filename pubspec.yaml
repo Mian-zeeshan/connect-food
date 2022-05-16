@@ -65,7 +65,6 @@ dependencies:
   flutter_screenutil: ^5.2.0
   google_places_picker: ^3.0.2
   google_maps_flutter: ^2.1.1
-  geocode: ^1.0.1
   geolocator: ^8.0.0
   pull_to_refresh: ^2.0.0
   shimmer: ^2.0.0
@@ -92,7 +91,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "Assets/Images/mo_logo.jpg"
+  image_path: "Assets/Images/mi_logo.jpeg"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

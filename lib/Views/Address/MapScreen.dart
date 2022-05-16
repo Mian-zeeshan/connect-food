@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
+import 'package:connectsaleorder/Models/GeoCoderModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
+import 'package:connectsaleorder/services/LocationService.dart';
 import 'package:flutter/material.dart';
-import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -196,15 +198,27 @@ class _MapScreen extends State<MapScreen> {
   }
 
   getUserLocation(LatLng latLng) async {
-    GeoCode geoCode = GeoCode(apiKey: "AIzaSyDnN0CXbNpwghnn0-I37oNUAf3wgWa2N_Q");
-    try {
+    print("${latLng.longitude} ${latLng.latitude} latLng");
+    LocationService locationService = LocationService();
+    Response geoCode = await locationService.getLocation(latLng.latitude, latLng.longitude);
+    print(geoCode.body);
+    if(geoCode.statusCode == 200) {
+      print("200");
+      GeoCoderModel coderModel = GeoCoderModel.fromJson(
+          jsonDecode(jsonEncode(geoCode.body)));
+      if(coderModel.results != null && coderModel.results!.length > 0 ){
+        _place.address  = coderModel.results![0].formattedAddress;
+        addressString  = coderModel.results![0].formattedAddress;
+        setState(() {});
+      }
+    }
+    /*try {
       Address address = await geoCode.reverseGeocoding(
           latitude: latLng.latitude, longitude: latLng.longitude);
       addressString = "${address.streetAddress}, ${address.postal}";
-      _place.address = addressString;
-      setState(() {});
+
     }catch(e){
 
-    }
+    }*/
   }
 }
