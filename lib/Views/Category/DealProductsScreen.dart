@@ -12,8 +12,11 @@ import 'package:connectsaleorder/Utils/ItemWidgetStyle4.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../Utils/ItemWidgetStyle5.dart';
 
 class DealProductsScreen extends StatefulWidget{
   bool fromNav;
@@ -185,7 +188,7 @@ class _DealProductsScreen extends State<DealProductsScreen>{
                           Container(
                             width: checkAdminController.system.itemGridStyle.code == "001" ? Get.width * 0.45 : Get.width * 0.4,
                             child: Container(
-                              child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(items[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(items[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(items[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(items[i]) : ItemWidget(items[i]),
+                              child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(items[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(items[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(items[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(items[i]) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(items[i], 140.w) : ItemWidget(items[i]),
                             ),
                           )
                       ],

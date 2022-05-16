@@ -74,7 +74,7 @@ class _ItemWidget extends State<ItemWidget> {
         });
       },
       child: Container(
-        width: 220.w,
+        width: 190.w,
         margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),

@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>467533798799-505qgsqoeedj6jc48sstjigfb9rrjhqt.apps.googleusercontent.com</string>
+	<string>738550336424-6fonvuafg7trr4nu407c0e1hu3fvi3kg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.467533798799-505qgsqoeedj6jc48sstjigfb9rrjhqt</string>
+	<string>com.googleusercontent.apps.738550336424-6fonvuafg7trr4nu407c0e1hu3fvi3kg</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>738550336424-ravk5kd04qkphf2hhsv2o407bor4baan.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBqkAUR5PLruV_a6vy35XRpP5ElW_hvSec</string>
+	<string>AIzaSyAQ5_PnO4XnYJP12WpEt2PKwoPhjHfbQ50</string>
 	<key>GCM_SENDER_ID</key>
-	<string>467533798799</string>
+	<string>738550336424</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.connect.mandionline</string>
+	<string>com.connectsol.electronics</string>
 	<key>PROJECT_ID</key>
-	<string>mandi-online-5e4fa</string>
+	<string>electronics-demo-38010</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mandi-online-5e4fa.appspot.com</string>
+	<string>electronics-demo-38010.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:467533798799:ios:32120496476afc7bd53ffa</string>
+	<string>1:738550336424:ios:3365df70090f26ccb06b9d</string>
 	<key>DATABASE_URL</key>
-	<string>https://mandi-online-5e4fa-default-rtdb.firebaseio.com</string>
+	<string>https://electronics-demo-38010-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

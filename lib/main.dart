@@ -119,9 +119,9 @@ void main() async {
   }else{
     await Firebase.initializeApp();
   }
-  FirebaseApp app = await _configureAbnApp();
-  auth = await FirebaseAuth.instanceFor(app: app);
-  storage = FirebaseStorage.instanceFor(app: app);
+  // FirebaseApp app = await _configureAbnApp();
+  // auth = await FirebaseAuth.instanceFor(app: app);
+  // storage = FirebaseStorage.instanceFor(app: app);
   await GetStorage.init();
   Get.put(LocaleController());
   Get.put(ItemController());
@@ -218,7 +218,7 @@ void main() async {
 // }
 
 //Mithas
-//Package Command "flutter pub run change_app_package_name:main com.connectsol.foodecom"
+//Package Command "flutter pub run change_app_package_name:main com.connect.mithas"
 // _configureAbnApp() async {
 //   FirebaseOptions abnOptions = FirebaseOptions(
 //       databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
@@ -236,7 +236,7 @@ void main() async {
 // }
 
 //Fryway
-//Package Command "flutter pub run change_app_package_name:main com.connectsol.fryway"
+//Package Command "flutter pub run change_app_package_name:main com.connect.fryway"
 // _configureAbnApp() async {
 //   FirebaseOptions abnOptions = FirebaseOptions(
 //       databaseURL: "https://fryway-868ee-default-rtdb.firebaseio.com/",
@@ -253,23 +253,23 @@ void main() async {
 //   return app;
 // }
 
-//Fryway
-//Package Command "flutter pub run change_app_package_name:main com.connectsol.fryway"
-_configureAbnApp() async {
-  FirebaseOptions abnOptions = FirebaseOptions(
-      databaseURL: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/",
-      apiKey: "AIzaSyDFmabVibHiNGVrzN7WYbAUTlIYSYGWdso",
-      messagingSenderId: "467533798799",
-      projectId: "mandi-online-5e4fa",
-      appId: "1:467533798799:android:3c1fd330836d45f0d53ffa",
-      storageBucket: "gs://mandi-online-5e4fa.appspot.com",
-  );
-  FirebaseApp app = await Firebase.initializeApp(name: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/", options: abnOptions);
-  database = FirebaseDatabase(databaseURL: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/");
-  databaseUrl = "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/";
-  appName = "Mandi Online";
-  return app;
-}
+//Mandi Online
+//Package Command "flutter pub run change_app_package_name:main com.connect.mandi"
+// _configureAbnApp() async {
+//   FirebaseOptions abnOptions = FirebaseOptions(
+//       databaseURL: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/",
+//       apiKey: "AIzaSyDFmabVibHiNGVrzN7WYbAUTlIYSYGWdso",
+//       messagingSenderId: "467533798799",
+//       projectId: "mandi-online-5e4fa",
+//       appId: "1:467533798799:android:3c1fd330836d45f0d53ffa",
+//       storageBucket: "gs://mandi-online-5e4fa.appspot.com",
+//   );
+//   FirebaseApp app = await Firebase.initializeApp(name: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/", options: abnOptions);
+//   database = FirebaseDatabase(databaseURL: "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/");
+//   databaseUrl = "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/";
+//   appName = "Mandi Online";
+//   return app;
+// }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

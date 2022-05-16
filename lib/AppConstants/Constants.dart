@@ -77,7 +77,7 @@ final couponListRoute = "/couponsPage";
 final orderTypeRoute = "/orderType";
 
 //daabase references
-var databaseUrl = "https://haya-collections-default-rtdb.firebaseio.com/";
+var databaseUrl = "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/";
 var appName = "Connect";
 final usersRef = "Users";
 final tokenRef = "Tokens";
@@ -112,8 +112,8 @@ final isAdminGlobal = "isAdminGlobal";
 
 //Firebase
 
-FirebaseAuth? auth;
-FirebaseDatabase? database;
-FirebaseStorage? storage;
+FirebaseAuth? auth = FirebaseAuth.instance;
+FirebaseDatabase? database = FirebaseDatabase.instance;
+FirebaseStorage? storage = FirebaseStorage.instance;
 
 final smsKey = "AAAArC48Y60:APA91bFAV5EhUCCs-8ZsqiY8gBrtVljc8gMLcThAPioJ-4v8LwupwEs-OpYw0eU9D9pdaq79GkAcdt56nUuQgxG2rL2U9a_zcXDNbB4n5p_osqtq385UD-E7fQM6rEpRn-8_sZm2--gO";

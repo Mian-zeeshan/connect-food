@@ -87,7 +87,7 @@ class ItemModel {
         required this.parentId});
 
   ItemModel.fromJson(Map<String, dynamic> json) {
-    code = json['Code'];
+    code = json['Code']??"";
     name = json['name'];
     type = json['type'];
     if(json["status"] != null)

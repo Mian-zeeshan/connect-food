@@ -34,11 +34,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../Utils/ItemWidgetStyle5.dart';
 
 class HomeFragment extends StatefulWidget{
   @override
@@ -302,7 +305,7 @@ class _HomeFragment extends State<HomeFragment>{
                       children: [
                         for(var item in itemController.itemModelsNewArrival)
                           Container(
-                            child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                            child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(item, 140.w) : ItemWidget(item),
                           )
                       ],
                     ),
@@ -342,7 +345,7 @@ class _HomeFragment extends State<HomeFragment>{
                           children: [
                             for(var item in itemController.itemModelsTopDeals)
                               Container(
-                                child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                                child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(item, 140.w) : ItemWidget(item),
                               )
                           ],
                         ),
@@ -351,6 +354,387 @@ class _HomeFragment extends State<HomeFragment>{
                   ],
                 ) : Container();
               },),
+              SizedBox(height: 12,),
+              GetBuilder<ItemController>(id: "0", builder: (itemController){
+                return itemController.itemModelsTopDeals.length > 0 ? Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Best Offers", style: utils.boldLabelStyle(blackColor),),
+                      ],
+                    ),
+                    SizedBox(height: 16,),
+                    StaggeredGrid.count(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 4,
+                      crossAxisSpacing: 4,
+                      children: [
+                        if(itemController.itemModelsTopDeals.length > 0) StaggeredGridTile.count(
+                          crossAxisCellCount: 2,
+                          mainAxisCellCount: 2,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[0]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: whiteColor),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsTopDeals[0].images.length > 0 ? itemController.itemModelsTopDeals[0].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget: (context,
+                                    url, error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if(itemController.itemModelsTopDeals.length > 1) StaggeredGridTile.count(
+                          crossAxisCellCount: 2,
+                          mainAxisCellCount: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[1]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: checkAdminController.system.mainColor),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsTopDeals[1].images.length > 0 ? itemController.itemModelsTopDeals[1].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget:
+                                    (context, url,
+                                    error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if(itemController.itemModelsTopDeals.length > 2) StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[2]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: checkAdminController.system.mainColor
+                              ),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsTopDeals[2].images.length > 0 ? itemController.itemModelsTopDeals[2].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget:
+                                    (context, url,
+                                    error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if(itemController.itemModelsTopDeals.length > 3) StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[3]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: checkAdminController.system.mainColor),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsTopDeals[3].images.length > 0 ? itemController.itemModelsTopDeals[3].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget:
+                                    (context, url,
+                                    error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ) : Container();
+              }),
+              SizedBox(height: 12,),
+              GetBuilder<ItemController>(id: "0", builder: (itemController){
+                return itemController.itemModelsRecentView.length > 0 ? Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("Trending", style: utils.boldLabelStyle(blackColor),),
+                      ],
+                    ),
+                    SizedBox(height: 16,),
+                    StaggeredGrid.count(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 4,
+                      crossAxisSpacing: 4,
+                      children: [
+                        if(itemController.itemModelsRecentView.length > 0) StaggeredGridTile.count(
+                          crossAxisCellCount: 4,
+                          mainAxisCellCount: 2,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[0]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: whiteColor),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsRecentView[0].images.length > 0 ? itemController.itemModelsRecentView[0].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget: (context,
+                                    url, error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if(itemController.itemModelsRecentView.length > 1) StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[1]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: checkAdminController.system.mainColor),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsRecentView[1].images.length > 0 ? itemController.itemModelsRecentView[1].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget:
+                                    (context, url,
+                                    error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if(itemController.itemModelsRecentView.length > 2) StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[2]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: checkAdminController.system.mainColor
+                              ),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsRecentView[2].images.length > 0 ? itemController.itemModelsRecentView[2].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget:
+                                    (context, url,
+                                    error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if(itemController.itemModelsRecentView.length > 3) StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[3]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: checkAdminController.system.mainColor),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsRecentView[3].images.length > 0 ? itemController.itemModelsRecentView[3].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget:
+                                    (context, url,
+                                    error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if(itemController.itemModelsRecentView.length > 4) StaggeredGridTile.count(
+                          crossAxisCellCount: 1,
+                          mainAxisCellCount: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[4]);
+                              setState(() {
+                              });
+                            },
+                            child: Container(
+                              width: Get.width,
+                              clipBehavior: Clip
+                                  .antiAliasWithSaveLayer,
+                              margin: EdgeInsets
+                                  .symmetric(
+                                  horizontal: 5,
+                                  vertical: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius
+                                      .circular(
+                                      8),
+                                  color: checkAdminController.system.mainColor),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: itemController.itemModelsRecentView[4].images.length > 0 ? itemController.itemModelsRecentView[4].images[0] : "",
+                                progressIndicatorBuilder:
+                                    (context, url,
+                                    downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
+                                errorWidget:
+                                    (context, url,
+                                    error) => Icon(CupertinoIcons.info_circle_fill, color: blackColor,),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ) : Container();
+              }),
               SizedBox(height: 12,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -370,7 +754,7 @@ class _HomeFragment extends State<HomeFragment>{
                       children: [
                         for(var item in itemController.itemModelsRecentView)
                           Container(
-                            child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                            child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(item, 140.w) :ItemWidget(item),
                           )
                       ],
                     ),
@@ -668,7 +1052,7 @@ class _HomeFragment extends State<HomeFragment>{
                 ],
               ),
               SizedBox(height: 16,),
-              Container(
+              /*Container(
                 width: Get.width,
                 child: GetBuilder<ItemController>(id: "0" , builder: (itemController){
                   return itemController.itemModelsAll.isNotEmpty ? Wrap(
@@ -677,9 +1061,30 @@ class _HomeFragment extends State<HomeFragment>{
                     children: [
                       for(var item in itemController.itemModelsAll)
                         Container(
-                          child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                          child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(item,null) : ItemWidget(item),
                         )
                     ],
+                  ) : Center(
+                    child: Text("You haven't review any Item Explore now."),
+                  );
+                },),
+              ),*/
+              Container(
+                width: Get.width,
+                child: GetBuilder<ItemController>(id: "0" , builder: (itemController){
+                  return itemController.itemModelsAll.isNotEmpty ? GridView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: itemController.itemModelsAll.length,
+                    gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: 2,
+                        childAspectRatio: 2 / 3.1),
+                    itemBuilder: (context, i) {
+                      return checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(itemController.itemModelsAll[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(itemController.itemModelsAll[i],null) : ItemWidget(itemController.itemModelsAll[i]);
+                    },
                   ) : Center(
                     child: Text("You haven't review any Item Explore now."),
                   );

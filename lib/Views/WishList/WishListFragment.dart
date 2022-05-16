@@ -19,6 +19,8 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../Utils/ItemWidgetStyle5.dart';
+
 class WishListFragment extends StatefulWidget {
   bool fromNav;
 
@@ -308,7 +310,8 @@ class _WishListFragment extends State<WishListFragment> {
                                                                             .products[i])
                                                                         : checkAdminController.system.itemGridStyle.code == "004"
                                                                             ? ItemWidgetStyle4(favController.myFav.products[i])
-                                                                            : ItemWidget(favController.myFav.products[i]),
+                                                                            : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(favController.myFav.products[i], Get.width * 0.4)
+                                                                :ItemWidget(favController.myFav.products[i]),
                                                           ),
                                                         ),
                                                       )

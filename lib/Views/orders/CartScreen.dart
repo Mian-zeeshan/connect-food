@@ -17,6 +17,7 @@ import '../../Utils/ItemWidget.dart';
 import '../../Utils/ItemWidgetStyle2.dart';
 import '../../Utils/ItemWidgetStyle3.dart';
 import '../../Utils/ItemWidgetStyle4.dart';
+import '../../Utils/ItemWidgetStyle5.dart';
 
 class CartScreen extends StatefulWidget{
   @override
@@ -302,7 +303,7 @@ class _CartScreen extends State<CartScreen>{
                                            children: [
                                              for(var item in itemController.itemModelsRecentView)
                                              Container(
-                                               child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : ItemWidget(item),
+                                               child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(item, 140.w) : ItemWidget(item),
                                              )
                                            ],
                                          ),

@@ -30,6 +30,8 @@ import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 
+import '../../Utils/ItemWidgetStyle5.dart';
+
 
 class SystemConfigScreen extends StatefulWidget{
   bool fromWeb;
@@ -65,6 +67,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
     itemGridStyles.add(Languages(code: "002", name: "Style 1"));
     itemGridStyles.add(Languages(code: "003", name: "Style 2"));
     itemGridStyles.add(Languages(code: "004", name: "Style 3"));
+    itemGridStyles.add(Languages(code: "005", name: "Style 4"));
     itemListStyle.add(Languages(code: "001", name: "default"));
     itemListStyle.add(Languages(code: "002", name: "Style 1"));
     itemListStyle.add(Languages(code: "003", name: "Style 2"));
@@ -675,7 +678,49 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
                                           ],
                                         )
                                       ),
-                                )
+                                ),
+                                GestureDetector(
+                                  onTap : (){
+                                    selectedGrid = 3;
+                                    checkController.system.itemGridStyle = Languages(code: "005", name: "Style 5");
+                                    setState(() {
+                                    });
+                                  },
+                                  child: Container(
+                                      width: GetPlatform.isWeb ? 220.w :Get.width * 0.44,
+                                      margin: EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            ItemWidgetStyle5(itemModel,null),
+                                            GestureDetector(
+                                              onTap : (){
+                                                selectedGrid = 4;
+                                                checkController.system.itemGridStyle = Languages(code: "005", name: "Style 5");
+                                                setState(() {
+                                                });
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 18,
+                                                    height: 18,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: selectedGrid == 4 ? checkAdminController.system.mainColor : whiteColor,
+                                                        border: Border.all(color: checkAdminController.system.mainColor)
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ),
+                                ),
                               ],
                             ),
                           ),

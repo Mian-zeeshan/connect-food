@@ -31,6 +31,8 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../Utils/ItemWidgetStyle5.dart';
+
 class HomeFragmentCustomer extends StatefulWidget {
   bool fromNav;
 
@@ -515,7 +517,8 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                                                                       : checkAdminController.system.itemGridStyle.code ==
                                                                               "004"
                                                                           ? ItemWidgetStyle4(itemController.itemModels[i])
-                                                                          : ItemWidget(itemController.itemModels[i]),
+                                                                          : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(itemController.itemModels[i], Get.width * 0.4)
+                                                              : ItemWidget(itemController.itemModels[i]),
                                                         ),
                                                       )
                                                     : Container(),

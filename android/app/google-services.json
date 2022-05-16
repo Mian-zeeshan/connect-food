@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "467533798799",
-    "firebase_url": "https://mandi-online-5e4fa-default-rtdb.firebaseio.com",
-    "project_id": "mandi-online-5e4fa",
-    "storage_bucket": "mandi-online-5e4fa.appspot.com"
+    "project_number": "739510084525",
+    "firebase_url": "https://mithas-fa138-default-rtdb.firebaseio.com",
+    "project_id": "mithas-fa138",
+    "storage_bucket": "mithas-fa138.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:467533798799:android:3c1fd330836d45f0d53ffa",
+        "mobilesdk_app_id": "1:739510084525:android:0a7dca33de0996e833b724",
         "android_client_info": {
-          "package_name": "com.connect.mandionline"
+          "package_name": "com.connect.mithas"
         }
       },
       "oauth_client": [
         {
-          "client_id": "467533798799-vv8ian420jqnfv7vdi3spifrud8h4193.apps.googleusercontent.com",
+          "client_id": "739510084525-0b9goflakeqtus39iip41s0vpbtjea0a.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDJfTPvj1WRtaevENxuPHUmBXT7GBVgcyY"
+          "current_key": "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "467533798799-vv8ian420jqnfv7vdi3spifrud8h4193.apps.googleusercontent.com",
+              "client_id": "739510084525-0b9goflakeqtus39iip41s0vpbtjea0a.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

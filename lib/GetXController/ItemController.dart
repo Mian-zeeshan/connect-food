@@ -236,6 +236,7 @@ class ItemController extends GetxController{
       itemModelsTopDeals = [];
 
       if (event.snapshot.exists) {
+        print("Top Deals ${event.snapshot.value}");
         event.snapshot.value.forEach((key,value) {
           ItemModel itemModel = ItemModel.fromJson(
               jsonDecode(jsonEncode(value)));
