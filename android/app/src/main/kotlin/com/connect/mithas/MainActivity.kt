@@ -1,4 +1,4 @@
-package com.connect.mandionline
+package com.connect.mithas
 
 import io.flutter.embedding.android.FlutterActivity
 

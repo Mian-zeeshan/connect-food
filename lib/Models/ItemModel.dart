@@ -50,6 +50,7 @@ class ItemModel {
   int maxDeliveryTime = 0;
   int status = 0;
   String? parentId;
+  int sold = 0;
 
   ItemModel(
       {required this.code,
@@ -83,6 +84,7 @@ class ItemModel {
         required this.freeDeliveryItems,
         required this.minDeliveryTime,
         required this.maxDeliveryTime,
+        required this.sold,
         required this.stock,
         required this.parentId});
 
@@ -161,6 +163,10 @@ class ItemModel {
     }
     if(json['totalStock'] != null){
       totalStock = json['totalStock'];
+    }
+
+    if(json['sold'] != null){
+      sold = json['sold'];
     }
     if(json['isNewArrival'] != null){
       isNewArrival = json['isNewArrival'];
@@ -280,6 +286,7 @@ class ItemModel {
     data['isTopDeal'] = this.isTopDeal;
     data['isNewArrival'] = this.isNewArrival;
     data['totalStock'] = this.totalStock;
+    data['sold'] = this.sold;
     data['selectedColors'] = this.selectedColors;
     data['selectedSizes'] = this.selectedSizes;
     data['Stock'] = this.stock.map((v) => v.toJson()).toList();

@@ -119,9 +119,9 @@ void main() async {
   }else{
     await Firebase.initializeApp();
   }
-  // FirebaseApp app = await _configureAbnApp();
-  // auth = await FirebaseAuth.instanceFor(app: app);
-  // storage = FirebaseStorage.instanceFor(app: app);
+  FirebaseApp app = await _configureAbnApp();
+  auth = await FirebaseAuth.instanceFor(app: app);
+  storage = FirebaseStorage.instanceFor(app: app);
   await GetStorage.init();
   Get.put(LocaleController());
   Get.put(ItemController());
@@ -219,21 +219,21 @@ void main() async {
 
 //Mithas
 //Package Command "flutter pub run change_app_package_name:main com.connect.mithas"
-// _configureAbnApp() async {
-//   FirebaseOptions abnOptions = FirebaseOptions(
-//       databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
-//       apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
-//       messagingSenderId: "739510084525",
-//       projectId: "mithas-fa138",
-//       appId: "1:739510084525:android:0a7dca33de0996e833b724",
-//       storageBucket: "gs://mithas-fa138.appspot.com",
-//   );
-//   FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
-//   database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
-//   databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
-//   appName = "Mithas";
-//   return app;
-// }
+_configureAbnApp() async {
+  FirebaseOptions abnOptions = FirebaseOptions(
+      databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
+      apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
+      messagingSenderId: "739510084525",
+      projectId: "mithas-fa138",
+      appId: "1:739510084525:android:0a7dca33de0996e833b724",
+      storageBucket: "gs://mithas-fa138.appspot.com",
+  );
+  FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
+  database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
+  databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
+  appName = "Mithas";
+  return app;
+}
 
 //Fryway
 //Package Command "flutter pub run change_app_package_name:main com.connect.fryway"
@@ -303,7 +303,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: signUpRoute, page: () => SignUpScreen() ,),
           GetPage(name: forgotRoute, page: () => (GetPlatform.isWeb ? ForgotPasswordScreenWeb() : ForgotPasswordScreen()) ,),
           GetPage(name: homeCRoute, page: () => (GetPlatform.isWeb ? HomeScreenWeb() : HomeScreenCustomer()) ,),
-          GetPage(name: productDetailRoute, page: () => ProductDetailScreen() ,),
+          // GetPage(name: productDetailRoute, page: () => ProductDetailScreen() ,),
           GetPage(name: pdfRoute, page: () => PdfScreen() ,),
           GetPage(name: cartRoute, page: () => CartScreen() ,),
           GetPage(name: checkoutRoute, page: () => CheckoutScreen() ,),

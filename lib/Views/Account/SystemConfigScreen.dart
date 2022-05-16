@@ -72,7 +72,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
     itemListStyle.add(Languages(code: "002", name: "Style 1"));
     itemListStyle.add(Languages(code: "003", name: "Style 2"));
     itemListStyle.add(Languages(code: "004", name: "Style 3"));
-    itemModel = ItemModel(status: 0,code: "0", name: "Samsung Galaxy S21", type: "0", salesRate: 99999, style: "0", mUnit: "1Kg", images: ["https://www.apple.com/newsroom/images/product/iphone/standard/Apple_new-iphone-se-white_04152020_big.jpg"], purchaseRate: 129999, stock: [], deliveryApplyItem: 2, deliveryPrice: 50, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
+    itemModel = ItemModel(status: 0,code: "0", sold: 0, name: "Samsung Galaxy S21", type: "0", salesRate: 99999, style: "0", mUnit: "1Kg", images: ["https://www.apple.com/newsroom/images/product/iphone/standard/Apple_new-iphone-se-white_04152020_big.jpg"], purchaseRate: 129999, stock: [], deliveryApplyItem: 2, deliveryPrice: 50, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
     itemModel.totalStock = 99;
     itemModel.disCont = true;
     itemModel.discountType = "%";
@@ -963,7 +963,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          CategoryWidget(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png')),
+                                          CategoryWidget(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'), null),
                                           SizedBox(height: 10,),
                                           GestureDetector(
                                             onTap : (){
@@ -1006,7 +1006,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          CategoryWidget2(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png')),
+                                          CategoryWidget2(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),null),
                                           SizedBox(height: 10,),
                                           GestureDetector(
                                             onTap : (){
@@ -1049,7 +1049,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          CategoryWidget3(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png')),
+                                          CategoryWidget3(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),null),
                                           SizedBox(height: 10,),
                                           GestureDetector(
                                             onTap : (){
@@ -1092,7 +1092,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          CategoryWidget4(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png')),
+                                          CategoryWidget4(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),null),
                                           SizedBox(height: 10,),
                                           GestureDetector(
                                             onTap : (){
@@ -1135,7 +1135,7 @@ class _SystemConfigScreen extends State<SystemConfigScreen>{
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          CategoryWidget5(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png')),
+                                          CategoryWidget5(CategoryModel(code: "0" , name: "Mobiles" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),null),
                                           SizedBox(height: 10,),
                                           GestureDetector(
                                             onTap : (){

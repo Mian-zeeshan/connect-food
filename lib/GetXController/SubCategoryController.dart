@@ -59,14 +59,14 @@ class SubCategoryController extends GetxController{
     isLoadingSubCategories = false;
     update(["0"]);
     notifyChildrens();
-    updateSubCategory(0);
+    updateSubCategory(0,false);
   }
 
-  updateSubCategory(int selected){
+  updateSubCategory(int selected, mounted){
     selectedSubCategory = selected;
     update(["0"]);
-    notifyChildrens();/*
+    notifyChildrens();
     if(subCategories.length > 0)
-      itemController.getItems(subCategories[selected].code, false);*/
+      itemController.getItemsSub(subCategories[selected].code, false);
   }
 }

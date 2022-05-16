@@ -12,6 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
+import '../Views/Product/ProductDetailScreen.dart';
+
 class ItemWidgetStyle2 extends StatefulWidget {
   ItemModel itemModel;
 
@@ -69,7 +71,7 @@ class _ItemWidgetStyle2 extends State<ItemWidgetStyle2> {
     }
     return GestureDetector(
       onTap: () async {
-        await Get.toNamed(productDetailRoute , arguments: item);
+        await Get.to(()=> ProductDetailScreen(), routeName: "${item.code}", arguments: item);
         setState(() {
         });
       },

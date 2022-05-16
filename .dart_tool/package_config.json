@@ -434,12 +434,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "geocode",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/geocode-1.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "geolocator",
       "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-8.0.1",
       "packageUri": "lib/",
@@ -507,9 +501,9 @@
     },
     {
       "name": "http",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.3",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "http_parser",
@@ -950,7 +944,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-05-13T06:21:18.655486Z",
+  "generated": "2022-05-16T11:51:25.273532Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }

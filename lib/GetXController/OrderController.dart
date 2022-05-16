@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/Models/CartModel.dart';
+import 'package:connectsaleorder/Models/ItemModel.dart';
 import 'package:connectsaleorder/Models/UserModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
 import 'package:connectsaleorder/services/NotificationApis.dart';
@@ -204,6 +205,9 @@ class OrderController extends GetxController{
     AppUtils utils = AppUtils();
     EasyLoading.show(status : "Loading...");
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+    if(cartModel.status == 0){
+      decreaseStockAndIncreaseSale(cartModel);
+    }
     
     if(!GetPlatform.isWeb) {
       database.setPersistenceEnabled(true);
@@ -219,6 +223,30 @@ class OrderController extends GetxController{
     this.selectedFilter = selectedFilter;
     EasyLoading.dismiss();
     sendNotification(cartModel.userId, "Order Updated", "Your order status is updated to ${utils.getOrderStatus(status)}. please check your order");
+  }
+
+  decreaseStockAndIncreaseSale(CartModel cartModel) async{
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    for(var c in cartModel.products){
+      await reference
+          .child(itemRef)
+          .child(c.code)
+          .once().then((value) async {
+            ItemModel i = ItemModel.fromJson(jsonDecode(jsonEncode(value.value)));
+            await reference
+                .child(itemRef)
+                .child(c.code)
+                .update({
+              "sold" : i.sold+c.selectedQuantity,
+              "totalStock" : i.totalStock-c.selectedQuantity
+            });
+      });
+    }
   }
 
   sendNotification(uid, title, message) async {

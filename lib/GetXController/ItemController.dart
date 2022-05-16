@@ -12,6 +12,8 @@ import 'package:get_storage/get_storage.dart';
 
 class ItemController extends GetxController{
   List<ItemModel> itemModels = [];
+  List<ItemModel> itemModelsSub = [];
+  List<ItemModel> itemModelsTrending = [];
   List<ItemModel> itemModelsSearch = [];
   List<ItemModel> itemModelsSearchFilter = [];
   List<ItemModel> itemModelsFilter = [];
@@ -27,6 +29,8 @@ class ItemController extends GetxController{
 
   ItemModel? lastItem;
   int itemsLength = 0;
+  int itemsLengthSub = 0;
+  var isLoadingSub = true;
   var isLoading = false;
   var box = GetStorage();
   var isList = true;
@@ -37,6 +41,7 @@ class ItemController extends GetxController{
   void onInit(){
     super.onInit();
     getNewArrivals();
+    getTrendingProducts();
     getTopDeals();
     getCurrency();
     getRecentItems();
@@ -93,6 +98,53 @@ class ItemController extends GetxController{
         });
       }
 
+      update(["0"]);
+      notifyChildrens();
+    });
+  }
+  getTrendingProducts(){
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+
+    reference
+        .child(itemRef)
+        .orderByChild("sold")
+        .limitToFirst(5)
+        .onValue
+        .listen((event) {
+      itemModelsTrending = [];
+      if (event.snapshot.exists) {
+        event.snapshot.value.forEach((key,value) async {
+          ItemModel itemModel = ItemModel.fromJson(
+              jsonDecode(jsonEncode(value)));
+          if(itemModel.parentId == null && itemModel.status == 0 && itemModel.status == 0) {
+            int stock = itemModel.totalStock;
+            for (var item in itemModel.stock) {
+              stock += item.stock.toInt();
+            }
+            itemModel.totalStock = stock;
+            double discountedPrice = 0;
+            double discountedPriceW = 0;
+            if (itemModel.discountType == "%") {
+              discountedPrice = itemModel.salesRate -
+                  ((itemModel.salesRate * itemModel.discountVal!) / 100);
+              discountedPriceW = (itemModel.wholeSale) -
+                  (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+            } else {
+              discountedPrice = itemModel.salesRate - itemModel.discountVal!;
+              discountedPriceW = (itemModel.wholeSale) - itemModel.discountVal!;
+            }
+            itemModel.discountedPrice = discountedPrice;
+            itemModel.discountedPriceW = discountedPriceW;
+            itemModelsTrending.add(itemModel);
+          }
+        });
+      }
       update(["0"]);
       notifyChildrens();
     });
@@ -332,6 +384,70 @@ class ItemController extends GetxController{
         if(brandModel != null)
           updateProducts(brandModel!);
         isLoading = false;
+        update(["0"]);
+        notifyChildrens();
+      });
+    }
+  }
+
+  getItemsSub(String scid , isPaging , {mounted = true}) {
+    isLoadingSub = true;
+    if(mounted) {
+      update(["0"]);
+      notifyChildrens();
+    }
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    if (isPaging) {
+      itemsLengthSub = itemsLengthSub + 10 > itemModelsSub.length ? itemModelsSub.length : itemsLengthSub + 10;
+      isLoadingSub = false;
+      update(["0"]);
+      notifyChildrens();
+    } else {
+      itemsLengthSub = 0;
+      reference
+          .child(itemRef)
+          .orderByChild("style")
+          .equalTo(scid)
+          .onValue
+          .listen((event) {
+        itemModelsSub = [];
+        if (event.snapshot.exists) {
+            event.snapshot.value.forEach((key,value) {
+              ItemModel itemModel = ItemModel.fromJson(
+                  jsonDecode(jsonEncode(value)));
+              if(itemModel.parentId == null && itemModel.status == 0) {
+                int stock = itemModel.totalStock;
+                for (var item in itemModel.stock) {
+                  stock += item.stock.toInt();
+                }
+                itemModel.totalStock = stock;
+                double discountedPrice = 0;
+                double discountedPriceW = 0;
+                if (itemModel.discountType == "%") {
+                  discountedPrice = itemModel.salesRate -
+                      ((itemModel.salesRate * itemModel.discountVal!) / 100);
+                  discountedPriceW = (itemModel.wholeSale) -
+                      (((itemModel.wholeSale) * itemModel.discountVal!) / 100);
+                } else {
+                  discountedPrice =
+                      itemModel.salesRate - itemModel.discountVal!;
+                  discountedPriceW =
+                      (itemModel.wholeSale) - itemModel.discountVal!;
+                }
+                itemModel.discountedPrice = discountedPrice;
+                itemModel.discountedPriceW = discountedPriceW;
+                itemModelsSub.add(itemModel);
+              }
+            });
+        }
+        itemsLengthSub = itemsLengthSub + 10 > itemModelsSub.length ? itemModelsSub.length : itemsLengthSub + 10;
+        isLoadingSub = false;
         update(["0"]);
         notifyChildrens();
       });

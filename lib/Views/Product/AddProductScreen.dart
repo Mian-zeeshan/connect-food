@@ -500,7 +500,7 @@ class _AddProductScreen extends State<AddProductScreen>{
     var code = productController.lastItem == null ? 1 : int.parse(productController.lastItem!.code)+1;
     var child = code < 10 ? "0000000$code" : code < 100 ? "000000$code" : code < 1000 ? "00000$code" : code < 10000 ? "0000$code" : code < 100000 ? "000$code" : code < 1000000 ? "00$code" : code < 10000000 ? "0$code" : "$code";
 
-    ItemModel productModel = new ItemModel(status: 0, code: "$child",images: selectedImages, name: nameController.text.toString(), type: "${selectedCategory!.code}",typeName: "${selectedCategory!.name}", salesRate: double.parse(priceController.text.toString()), style: "${selectedSubCategory!.code}",styleName: "${selectedSubCategory!.name}", mUnit: "${unitController.text}", purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
+    ItemModel productModel = new ItemModel(sold:0,status: 0, code: "$child",images: selectedImages, name: nameController.text.toString(), type: "${selectedCategory!.code}",typeName: "${selectedCategory!.name}", salesRate: double.parse(priceController.text.toString()), style: "${selectedSubCategory!.code}",styleName: "${selectedSubCategory!.name}", mUnit: "${unitController.text}", purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
     if(selectedBrand != null) {
       productModel.brandCode = selectedBrand!.code;
       productModel.brandName = selectedBrand!.name;

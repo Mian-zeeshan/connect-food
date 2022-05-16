@@ -27,6 +27,7 @@ import 'package:connectsaleorder/Utils/ItemWidgetStyle4.dart';
 import 'package:connectsaleorder/Views/AuthViews/MainAuthScreen.dart';
 import 'package:connectsaleorder/Views/orders/OrderDetailScreen.dart';
 import 'package:connectsaleorder/Views/orders/OrdersFragment.dart';
+import 'package:connectsaleorder/Widgets/home/PopularDeals.dart';
 import 'package:coupon_uikit/coupon_uikit.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +42,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../Models/CategoryModel.dart';
 import '../../Utils/ItemWidgetStyle5.dart';
+import '../Product/ProductDetailScreen.dart';
 
 class HomeFragment extends StatefulWidget{
   @override
@@ -92,6 +95,7 @@ class _HomeFragment extends State<HomeFragment>{
     _bannerController.getBanner(true);
     _refreshController.refreshCompleted();
     _itemController.getAllProducts(page);
+    _itemController.getTrendingProducts();
   }
 
   @override
@@ -234,7 +238,7 @@ class _HomeFragment extends State<HomeFragment>{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("Top Categories", style: utils.boldLabelStyle(blackColor),),
-                  GestureDetector(
+                  /*GestureDetector(
                       onTap: (){
                         if(checkAdminController.system.bottomNavigationChecks.isProducts) {
                           drawerCustomController.setDrawer("categories", 1);
@@ -245,7 +249,7 @@ class _HomeFragment extends State<HomeFragment>{
                       child: Container(
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text("VIEW ALL", style: utils.xSmallLabelStyle(checkAdminController.system.mainColor),))
-                  ),
+                  ),*/
                 ],
               ),
               SizedBox(height: 16.h,),
@@ -259,59 +263,70 @@ class _HomeFragment extends State<HomeFragment>{
                       children: [
                         for(var i = 0 ; i < categoryController.categories.length; i++)
                           checkAdminController.system.categoryView == 0 ?
-                          CategoryWidget(categoryController.categories[i]) :
+                          CategoryWidget(categoryController.categories[i],null) :
                           checkAdminController.system.categoryView == 1 ?
-                          CategoryWidget2(categoryController.categories[i]) :
+                          CategoryWidget2(categoryController.categories[i],null) :
                           checkAdminController.system.categoryView == 2 ?
-                          CategoryWidget3(categoryController.categories[i]) :
+                          CategoryWidget3(categoryController.categories[i],null) :
                           checkAdminController.system.categoryView == 3 ?
-                          CategoryWidget4(categoryController.categories[i]) :
+                          CategoryWidget4(categoryController.categories[i],null) :
                           checkAdminController.system.categoryView == 4 ?
-                          CategoryWidget5(categoryController.categories[i]) :
-                          CategoryWidget(categoryController.categories[i])
+                          CategoryWidget5(categoryController.categories[i],null) :
+                          CategoryWidget(categoryController.categories[i],null),
+                        checkAdminController.system.categoryView == 0 ?
+                          CategoryWidget(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                            if(checkAdminController.system.bottomNavigationChecks.isProducts) {
+                              drawerCustomController.setDrawer("categories", 1);
+                            }else{
+                              Get.toNamed(homeFragmentRoute);
+                            }
+                          }) :
+                          checkAdminController.system.categoryView == 1 ?
+                          CategoryWidget2(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                            if(checkAdminController.system.bottomNavigationChecks.isProducts) {
+                              drawerCustomController.setDrawer("categories", 1);
+                            }else{
+                              Get.toNamed(homeFragmentRoute);
+                            }
+                          }) :
+                          checkAdminController.system.categoryView == 2 ?
+                          CategoryWidget3(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                            if(checkAdminController.system.bottomNavigationChecks.isProducts) {
+                              drawerCustomController.setDrawer("categories", 1);
+                            }else{
+                              Get.toNamed(homeFragmentRoute);
+                            }
+                          }) :
+                          checkAdminController.system.categoryView == 3 ?
+                          CategoryWidget4(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                            if(checkAdminController.system.bottomNavigationChecks.isProducts) {
+                              drawerCustomController.setDrawer("categories", 1);
+                            }else{
+                              Get.toNamed(homeFragmentRoute);
+                            }
+                          }) :
+                          checkAdminController.system.categoryView == 4 ?
+                          CategoryWidget5(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                            if(checkAdminController.system.bottomNavigationChecks.isProducts) {
+                              drawerCustomController.setDrawer("categories", 1);
+                            }else{
+                              Get.toNamed(homeFragmentRoute);
+                            }
+                          }) :
+                          CategoryWidget(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                            if(checkAdminController.system.bottomNavigationChecks.isProducts) {
+                              drawerCustomController.setDrawer("categories", 1);
+                            }else{
+                              Get.toNamed(homeFragmentRoute);
+                            }
+                          })
                       ],
                     ),
                   ),
                 );
               }),
               SizedBox(height: 10.h,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Popular", style: utils.boldLabelStyle(blackColor),),
-                  GestureDetector(
-                      onTap: (){
-                        if(checkAdminController.system.bottomNavigationChecks.isDeals) {
-                          drawerCustomController.setDrawer("categories", 3);
-                        }else{
-                          Get.toNamed(dealProductsRoute);
-                        }
-                      },
-                      child: Container(
-                          padding: EdgeInsets.only(left: 16),
-                          child: Text("VIEW ALL", style: utils.xSmallLabelStyle(checkAdminController.system.mainColor),))
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h,),
-              Container(
-                width: Get.width,
-                child: GetBuilder<ItemController>(id: "0" , builder: (itemController){
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for(var item in itemController.itemModelsNewArrival)
-                          Container(
-                            child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(item, 140.w) : ItemWidget(item),
-                          )
-                      ],
-                    ),
-                  );
-                },),
-              ),
+              PopularDeals("Popular"),
               SizedBox(height: 12.h,),
               GetBuilder<ItemController>(id: "0", builder: (itemController){
                 return itemController.itemModelsTopDeals.length > 0 ? Column(
@@ -378,7 +393,7 @@ class _HomeFragment extends State<HomeFragment>{
                           mainAxisCellCount: 2,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[0]);
+                              await Get.to(()=> ProductDetailScreen(), routeName: "${itemController.itemModelsTopDeals[0].code}", arguments: itemController.itemModelsTopDeals[0]);
                               setState(() {
                               });
                             },
@@ -414,7 +429,7 @@ class _HomeFragment extends State<HomeFragment>{
                           mainAxisCellCount: 1,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[1]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTopDeals[1].code}", arguments: itemController.itemModelsTopDeals[1]);
                               setState(() {
                               });
                             },
@@ -451,7 +466,7 @@ class _HomeFragment extends State<HomeFragment>{
                           mainAxisCellCount: 1,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[2]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTopDeals[2].code}", arguments: itemController.itemModelsTopDeals[2]);
                               setState(() {
                               });
                             },
@@ -489,7 +504,7 @@ class _HomeFragment extends State<HomeFragment>{
                           mainAxisCellCount: 1,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsTopDeals[3]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTopDeals[3].code}", arguments: itemController.itemModelsTopDeals[3]);
                               setState(() {
                               });
                             },
@@ -545,12 +560,12 @@ class _HomeFragment extends State<HomeFragment>{
                       mainAxisSpacing: 4,
                       crossAxisSpacing: 4,
                       children: [
-                        if(itemController.itemModelsRecentView.length > 0) StaggeredGridTile.count(
+                        if(itemController.itemModelsTrending.length > 0) StaggeredGridTile.count(
                           crossAxisCellCount: 4,
                           mainAxisCellCount: 2,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[0]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTrending[0].code}", arguments: itemController.itemModelsTrending[0]);
                               setState(() {
                               });
                             },
@@ -570,7 +585,7 @@ class _HomeFragment extends State<HomeFragment>{
                                   color: whiteColor),
                               child:
                               CachedNetworkImage(
-                                imageUrl: itemController.itemModelsRecentView[0].images.length > 0 ? itemController.itemModelsRecentView[0].images[0] : "",
+                                imageUrl: itemController.itemModelsTrending[0].images.length > 0 ? itemController.itemModelsTrending[0].images[0] : "",
                                 progressIndicatorBuilder:
                                     (context, url,
                                     downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
@@ -581,12 +596,12 @@ class _HomeFragment extends State<HomeFragment>{
                             ),
                           ),
                         ),
-                        if(itemController.itemModelsRecentView.length > 1) StaggeredGridTile.count(
+                        if(itemController.itemModelsTrending.length > 1) StaggeredGridTile.count(
                           crossAxisCellCount: 1,
                           mainAxisCellCount: 1,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[1]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTrending[1].code}", arguments: itemController.itemModelsTrending[1]);
                               setState(() {
                               });
                             },
@@ -606,7 +621,7 @@ class _HomeFragment extends State<HomeFragment>{
                                   color: checkAdminController.system.mainColor),
                               child:
                               CachedNetworkImage(
-                                imageUrl: itemController.itemModelsRecentView[1].images.length > 0 ? itemController.itemModelsRecentView[1].images[0] : "",
+                                imageUrl: itemController.itemModelsTrending[1].images.length > 0 ? itemController.itemModelsTrending[1].images[0] : "",
                                 progressIndicatorBuilder:
                                     (context, url,
                                     downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
@@ -618,12 +633,12 @@ class _HomeFragment extends State<HomeFragment>{
                             ),
                           ),
                         ),
-                        if(itemController.itemModelsRecentView.length > 2) StaggeredGridTile.count(
+                        if(itemController.itemModelsTrending.length > 2) StaggeredGridTile.count(
                           crossAxisCellCount: 1,
                           mainAxisCellCount: 1,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[2]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTrending[2].code}", arguments: itemController.itemModelsTrending[2]);
                               setState(() {
                               });
                             },
@@ -644,7 +659,7 @@ class _HomeFragment extends State<HomeFragment>{
                               ),
                               child:
                               CachedNetworkImage(
-                                imageUrl: itemController.itemModelsRecentView[2].images.length > 0 ? itemController.itemModelsRecentView[2].images[0] : "",
+                                imageUrl: itemController.itemModelsTrending[2].images.length > 0 ? itemController.itemModelsTrending[2].images[0] : "",
                                 progressIndicatorBuilder:
                                     (context, url,
                                     downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
@@ -656,12 +671,12 @@ class _HomeFragment extends State<HomeFragment>{
                             ),
                           ),
                         ),
-                        if(itemController.itemModelsRecentView.length > 3) StaggeredGridTile.count(
+                        if(itemController.itemModelsTrending.length > 3) StaggeredGridTile.count(
                           crossAxisCellCount: 1,
                           mainAxisCellCount: 1,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[3]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTrending[3].code}", arguments: itemController.itemModelsTrending[3]);
                               setState(() {
                               });
                             },
@@ -681,7 +696,7 @@ class _HomeFragment extends State<HomeFragment>{
                                   color: checkAdminController.system.mainColor),
                               child:
                               CachedNetworkImage(
-                                imageUrl: itemController.itemModelsRecentView[3].images.length > 0 ? itemController.itemModelsRecentView[3].images[0] : "",
+                                imageUrl: itemController.itemModelsTrending[3].images.length > 0 ? itemController.itemModelsTrending[3].images[0] : "",
                                 progressIndicatorBuilder:
                                     (context, url,
                                     downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
@@ -693,12 +708,12 @@ class _HomeFragment extends State<HomeFragment>{
                             ),
                           ),
                         ),
-                        if(itemController.itemModelsRecentView.length > 4) StaggeredGridTile.count(
+                        if(itemController.itemModelsTrending.length > 4) StaggeredGridTile.count(
                           crossAxisCellCount: 1,
                           mainAxisCellCount: 1,
                           child: InkWell(
                             onTap: () async {
-                              await Get.toNamed(productDetailRoute , arguments: itemController.itemModelsRecentView[4]);
+                              await Get.to(()=> ProductDetailScreen(),routeName: "${itemController.itemModelsTrending[4].code}", arguments: itemController.itemModelsTrending[4]);
                               setState(() {
                               });
                             },
@@ -718,7 +733,7 @@ class _HomeFragment extends State<HomeFragment>{
                                   color: checkAdminController.system.mainColor),
                               child:
                               CachedNetworkImage(
-                                imageUrl: itemController.itemModelsRecentView[4].images.length > 0 ? itemController.itemModelsRecentView[4].images[0] : "",
+                                imageUrl: itemController.itemModelsTrending[4].images.length > 0 ? itemController.itemModelsTrending[4].images[0] : "",
                                 progressIndicatorBuilder:
                                     (context, url,
                                     downloadProgress) => SpinKitFadingCircle(color: checkAdminController.system.mainColor,),
@@ -1083,7 +1098,7 @@ class _HomeFragment extends State<HomeFragment>{
                         crossAxisCount: 2,
                         childAspectRatio: 2 / 3.1),
                     itemBuilder: (context, i) {
-                      return checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(itemController.itemModelsAll[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(itemController.itemModelsAll[i],null) : ItemWidget(itemController.itemModelsAll[i]);
+                      return /*checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(itemController.itemModelsAll[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(itemController.itemModelsAll[i]) : checkAdminController.system.itemGridStyle.code == "005" ?*/ ItemWidgetStyle5(itemController.itemModelsAll[i],null) /*: ItemWidget(itemController.itemModelsAll[i])*/;
                     },
                   ) : Center(
                     child: Text("You haven't review any Item Explore now."),

@@ -38,7 +38,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   CheckAdminController checkAdminController = Get.find();
   var activeStep = 0;
   var utils = AppUtils();
-  ItemModel addProductModel = Get.arguments??ItemModel(status: 0, code: "", name: "", type: "", salesRate: 0, style: "", mUnit: "", images: [], purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null);
+  ItemModel addProductModel = Get.arguments??ItemModel(status: 0, code: "", name: "", type: "", salesRate: 0, style: "", mUnit: "", images: [], purchaseRate: 0, stock: [], deliveryApplyItem: 0, deliveryPrice: 0, freeDeliveryItems: -1, maxDeliveryTime: 0, minDeliveryTime: 0, parentId: null, sold: 0);
   CategoryModel? selectedCategoryItem;
   BrandModel? selectedBrand;
   SubCategoryModel? selectedSubCategoryItem;

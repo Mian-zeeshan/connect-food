@@ -27,6 +27,8 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:swipe_image_gallery/swipe_image_gallery.dart';
 
+import '../../Widgets/home/PopularDeals.dart';
+
 class ProductDetailScreen extends StatefulWidget{
   @override
   _ProductDetailScreen createState() => _ProductDetailScreen();
@@ -593,6 +595,8 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                       ),
                                     ),
 
+                                SizedBox(height: 12,),
+                                PopularDeals("Just for you", skipCode: itemModel.code,),
                                 SizedBox(height: 20,),
                               ],
                             ),

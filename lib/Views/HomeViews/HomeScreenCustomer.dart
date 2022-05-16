@@ -337,15 +337,9 @@ class _HomeScreenCustomer extends State<HomeScreenCustomer>{
                       )),
                       if(userController.user != null) IconButton(
                         onPressed : (){
-                          Get.toNamed(chatRoute, arguments: 0);
-                        },
-                        icon: Icon(CupertinoIcons.conversation_bubble, color: whiteColor, size: 24.w,),
-                      ),
-                      if(userController.user != null) IconButton(
-                        onPressed : (){
                           Get.toNamed(favoriteRoute);
                         },
-                        icon: Icon(CupertinoIcons.heart, color: whiteColor, size: 24.w,),
+                        icon: Icon(CupertinoIcons.heart, color: whiteColor, size: 20.w,),
                       ),
                       if(userController.user != null) IconButton(
                         onPressed : (){
@@ -358,30 +352,29 @@ class _HomeScreenCustomer extends State<HomeScreenCustomer>{
                           }
                         },
                         icon: Container(
-                          width: 24.w,
-                          height: 24.w,
+                          width: 20.w,
+                          height: 20.w,
                           child: Stack(
                             alignment: Alignment.bottomCenter,
                             children: [
-                              Icon(CupertinoIcons.shopping_cart , color: whiteColor, size: 24.w,),
-                              Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Container(
-                                    width: 14.w,
-                                    height: 14.w,
-                                    padding: EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                        color: redColor,
-                                        shape: BoxShape.circle
-                                    ),
-                                    child: Center(
-                                      child: GetBuilder<CartController>(id: "0", builder: (cartController){
-                                        return Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),);
-                                      },),
-                                    ),
-                                  )
-                              )
+                              Icon(CupertinoIcons.shopping_cart , color: whiteColor, size: 20.w,),
+                              GetBuilder<CartController>(id: "0", builder: (cartController){
+                                return cartController.myCart.totalItems > 0 ? Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: Container(
+                                      width: 18,
+                                      height: 18,
+                                      padding: EdgeInsets.all(2),
+                                      decoration: BoxDecoration(
+                                          color: redColor,
+                                          shape: BoxShape.circle
+                                      ),
+                                      child: Center(
+                                          child: Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),)
+                                      ),
+                                    )
+                                ) : Container();}),
                             ],
                           ),
                         ),

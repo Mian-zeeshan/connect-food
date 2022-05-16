@@ -288,6 +288,7 @@ class _PaymentScreen extends State<PaymentScreen>{
 
   void placeOrder(type) async {
     EasyLoading.show(status: "Placing Order...");
+    widget.postOrderModel.status = 0;
     OrderController orderController = Get.find();
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     if(insController.text.isNotEmpty)

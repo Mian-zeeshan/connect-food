@@ -274,10 +274,6 @@ font_awesome_flutter
 2.12
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-9.2.0/
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-9.2.0/lib/
-geocode
-2.12
-file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/geocode-1.0.1/
-file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/geocode-1.0.1/lib/
 geolocator
 2.12
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-8.0.1/
@@ -323,9 +319,9 @@ html_editor_enhanced
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/html_editor_enhanced-2.4.0+1/
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/html_editor_enhanced-2.4.0+1/lib/
 http
-2.12
-file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.3/
-file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.3/lib/
+2.14
+file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/
+file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/lib/
 http_parser
 2.12
 file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/

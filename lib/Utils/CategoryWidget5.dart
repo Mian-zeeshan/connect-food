@@ -20,7 +20,8 @@ import 'package:get/get.dart';
 class CategoryWidget5 extends StatefulWidget {
   CategoryModel categoryModel;
 
-  CategoryWidget5(this.categoryModel);
+  var onPress;
+  CategoryWidget5(this.categoryModel, this.onPress);
 
   @override
   _CategoryWidget5 createState() => _CategoryWidget5(categoryModel);
@@ -55,7 +56,7 @@ class _CategoryWidget5 extends State<CategoryWidget5> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: category.code == "-1" ? widget.onPress : (){
         if(category.code != "0") {
           categoryController.updateCategory(category.code);
           _sCategoryController.getSubCategories(category.code);

@@ -1,6 +1,7 @@
 import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/CartController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
+import 'package:connectsaleorder/GetXController/DrawerCustomController.dart';
 import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/Models/ItemModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
@@ -28,6 +29,7 @@ class _CartScreen extends State<CartScreen>{
   var utils = AppUtils();
   List<ItemModel> products = [];
   CheckAdminController checkAdminController = Get.find();
+  DrawerCustomController customController = Get.find();
   UserController userController = Get.find();
   CartController cartController = Get.find();
   var isRetailer = false;
@@ -354,6 +356,7 @@ class _CartScreen extends State<CartScreen>{
                             GestureDetector(
                               onTap: (){
                                 Get.back();
+                                customController.setDrawer("Home", 0);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),

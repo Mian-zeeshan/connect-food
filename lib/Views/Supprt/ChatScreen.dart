@@ -14,6 +14,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../Product/ProductDetailScreen.dart';
+
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreen createState() => _ChatScreen();
@@ -130,7 +132,7 @@ class _ChatScreen extends State<ChatScreen> {
                                     color: whiteColor,
                                     child: InkWell(
                                       onTap: (){
-                                        Get.toNamed(productDetailRoute, arguments: chatController.chatModel.chat[i].enquiryProduct);
+                                        Get.to(()=> ProductDetailScreen(), routeName: "${chatController.chatModel.chat[i].enquiryProduct!.code}", arguments: chatController.chatModel.chat[i].enquiryProduct);
                                       },
                                       child: Container(
                                         child: Column(
@@ -300,7 +302,7 @@ class _ChatScreen extends State<ChatScreen> {
                                     color: whiteColor,
                                     child: InkWell(
                                       onTap: (){
-                                        Get.toNamed(productDetailRoute, arguments: chatController.chatModel.chat[i].enquiryProduct);
+                                        Get.to(()=> ProductDetailScreen(), arguments: chatController.chatModel.chat[i].enquiryProduct);
                                       },
                                       child: Container(
                                         child: Column(

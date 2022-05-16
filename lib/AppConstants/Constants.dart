@@ -38,7 +38,6 @@ final signUpRoute = "/signUp";
 final forgotRoute = "/forgotPassword";
 final homeCRoute = "/homeCustomer";
 final checkoutRoute = "/checkout";
-final productDetailRoute = "/productDetail";
 final cartRoute = "/cartRoute";
 final profileRoute = "/profileRoute";
 final editProfileRoute = "/editprofileRoute";

@@ -67,7 +67,22 @@ class _DealProductsScreen extends State<DealProductsScreen>{
                         },
                         icon: Icon(CupertinoIcons.arrow_left, color: whiteColor, size: 24,)
                     ),
-                    Expanded(child: Text("Products".tr, style: utils.headingStyle(whiteColor),)),
+                    Expanded(child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: whiteColor
+                      ),
+                      child: TextField(
+                        onTap: () async {
+                          await Get.toNamed(searchRoute);
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
+                        decoration: InputDecoration.collapsed(hintText: "Search"),
+                        obscureText: false,
+                        maxLines: 1,
+                      ),
+                    )),
                     if(userController.user != null) GestureDetector(
                       onTap : (){
                         Get.toNamed(favoriteRoute);
@@ -101,7 +116,8 @@ class _DealProductsScreen extends State<DealProductsScreen>{
                           alignment: Alignment.bottomCenter,
                           children: [
                             Icon(CupertinoIcons.shopping_cart , color: whiteColor,),
-                            Positioned(
+                            GetBuilder<CartController>(id: "0", builder: (cartController){
+                               return cartController.myCart.totalItems > 0 ? Positioned(
                                 top: 0,
                                 right: 0,
                                 child: Container(
@@ -113,12 +129,10 @@ class _DealProductsScreen extends State<DealProductsScreen>{
                                       shape: BoxShape.circle
                                   ),
                                   child: Center(
-                                    child: GetBuilder<CartController>(id: "0", builder: (cartController){
-                                      return Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),);
-                                    },),
+                                    child: Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),)
                                   ),
                                 )
-                            )
+                            ) : Container();}),
                           ],
                         ),
                       ),
@@ -179,7 +193,7 @@ class _DealProductsScreen extends State<DealProductsScreen>{
                         ? itemController.itemModelsTopDeals
                         : itemController.itemModelsNewArrival;
 
-                    return itemController.itemModels.length > 0 ? Container(
+                    return items.length > 0 ? Container(
                     width: Get.width,
                     child: Wrap(
                       alignment: WrapAlignment.spaceEvenly,

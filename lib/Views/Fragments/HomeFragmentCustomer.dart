@@ -121,10 +121,21 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                             color: whiteColor,
                             size: 20.w,
                           )),
-                    Expanded(
-                        child: Text(
-                      "Products".tr,
-                      style: utils.headingStyle(whiteColor),
+                    Expanded(child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: whiteColor
+                      ),
+                      child: TextField(
+                        onTap: () async {
+                          await Get.toNamed(searchRoute);
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
+                        decoration: InputDecoration.collapsed(hintText: "Search"),
+                        obscureText: false,
+                        maxLines: 1,
+                      ),
                     )),
                     if (userController.user != null)
                       GestureDetector(
@@ -171,29 +182,23 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                                 color: whiteColor,
                                 size: 20.w,
                               ),
-                              Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Container(
-                                    width: 14.w,
-                                    height: 14.w,
-                                    padding: EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                        color: redColor,
-                                        shape: BoxShape.circle),
-                                    child: Center(
-                                      child: GetBuilder<CartController>(
-                                        id: "0",
-                                        builder: (cartController) {
-                                          return Text(
-                                            "${cartController.myCart.totalItems}",
-                                            style: utils
-                                                .xSmallLabelStyle(whiteColor),
-                                          );
-                                        },
+                              GetBuilder<CartController>(id: "0", builder: (cartController){
+                                return cartController.myCart.totalItems > 0 ? Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: Container(
+                                      width: 18,
+                                      height: 18,
+                                      padding: EdgeInsets.all(2),
+                                      decoration: BoxDecoration(
+                                          color: redColor,
+                                          shape: BoxShape.circle
                                       ),
-                                    ),
-                                  ))
+                                      child: Center(
+                                          child: Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),)
+                                      ),
+                                    )
+                                ) : Container();}),
                             ],
                           ),
                         ),
@@ -228,35 +233,11 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 8,
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: utils.textField(
-                          grayColor.withOpacity(0.3),
-                          null,
-                          null,
-                          CupertinoIcons.search,
-                          blackColor.withOpacity(0.6),
-                          blackColor,
-                          "Search...",
-                          blackColor.withOpacity(0.5),
-                          blackColor.withOpacity(0.6),
-                          2.0,
-                          Get.width - 12,
-                          false,
-                          searchController, onClick: () {
-                        Get.toNamed(searchRoute);
-                      }),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        SizedBox(width: 8,),
                         GetBuilder<ItemController>(
                             id: "0",
                             builder: (itemController) {
@@ -290,7 +271,7 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                         SizedBox(
                           width: 16,
                         ),
-                        /*GetBuilder<ItemController>(
+                        *//*GetBuilder<ItemController>(
                             id: "0",
                             builder: (itemController) {
                               return GestureDetector(
@@ -318,37 +299,14 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                                   style: utils.labelStyle(blackColor),
                                 ),
                               );
-                            }),*/
+                            }),*//*
                         SizedBox(
                           width: 12,
                         ),
                       ],
-                    ),
+                    ),*/
                     SizedBox(
                       height: 8,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 5,
-                          height: 5,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: blackColor),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Text(
-                          "CATEGORIES",
-                          style: utils.boldLabelStyle(blackColor),
-                        )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 12,
                     ),
                     GetBuilder<CategoryController>(
                         id: "0",
@@ -360,37 +318,62 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  GetBuilder<ItemController>(
+                                      id: "0",
+                                      builder: (itemController) {
+                                        return GestureDetector(
+                                            onTap: () {
+                                              itemController.changeView();
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: checkAdminController.system.mainColor
+                                              ),
+                                              child: Icon(
+                                                itemController.isList
+                                                    ? CupertinoIcons.rectangle_grid_2x2
+                                                    : CupertinoIcons.list_bullet,
+                                                color: Colors.white,
+                                                size: 20.w,
+                                              ),
+                                            ));
+                                      }),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   for (var i = 0;
                                       i < categoryController.categories.length;
                                       i++)
                                     checkAdminController.system.categoryView ==
                                             0
                                         ? CategoryWidget(
-                                            categoryController.categories[i])
+                                            categoryController.categories[i],null)
                                         : checkAdminController.system.categoryView ==
                                                 1
                                             ? CategoryWidget2(categoryController
-                                                .categories[i])
+                                                .categories[i],null)
                                             : checkAdminController
                                                         .system.categoryView ==
                                                     2
                                                 ? CategoryWidget3(
                                                     categoryController
-                                                        .categories[i])
+                                                        .categories[i],null)
                                                 : checkAdminController.system
                                                             .categoryView ==
                                                         3
                                                     ? CategoryWidget4(
                                                         categoryController
-                                                            .categories[i])
+                                                            .categories[i],null)
                                                     : checkAdminController
                                                                 .system
                                                                 .categoryView ==
                                                             4
                                                         ? CategoryWidget5(
                                                             categoryController
-                                                                .categories[i])
-                                                        : CategoryWidget(categoryController.categories[i])
+                                                                .categories[i],null)
+                                                        : CategoryWidget(categoryController.categories[i],null)
                                 ],
                               ),
                             ),
@@ -463,7 +446,21 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                                                     : Container()
                                             ],
                                           )
-                                        : Wrap(
+                                        : GridView.builder(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      itemCount: itemController
+                                          .itemsLength,
+                                      gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          crossAxisCount: 2,
+                                          childAspectRatio: 2 / 3.5),
+                                      itemBuilder: (context, i) {
+                                        return checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(itemController.itemModels[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(itemController.itemModels[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(itemController.itemModels[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(itemController.itemModels[i]) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(itemController.itemModels[i],null) : ItemWidget(itemController.itemModels[i]);
+                                      },
+                                    )/*Wrap(
                                             alignment:
                                                 WrapAlignment.spaceEvenly,
                                             children: [
@@ -523,7 +520,7 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                                                       )
                                                     : Container(),
                                             ],
-                                          ),
+                                          ),*/
                                   )
                                 : Container(
                                     child: Center(
@@ -772,7 +769,7 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                                           onChanged: (val) {
                                             selectedSubCategory = i;
                                             subCategoryController
-                                                .updateSubCategory(i);
+                                                .updateSubCategory(i, false);
                                             setState(() {});
                                           },
                                           toggleable: true,

@@ -15,8 +15,8 @@ import 'package:get/get.dart';
 
 class CategoryWidget extends StatefulWidget {
   CategoryModel categoryModel;
-
-  CategoryWidget(this.categoryModel);
+  var onPress;
+  CategoryWidget(this.categoryModel, this.onPress);
 
   @override
   _CategoryWidget createState() => _CategoryWidget(categoryModel);
@@ -51,7 +51,7 @@ class _CategoryWidget extends State<CategoryWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: category.code == "-1" ? widget.onPress : (){
         if(category.code != "0") {
           categoryController.updateCategory(category.code);
           _sCategoryController.getSubCategories(category.code);
@@ -66,7 +66,7 @@ class _CategoryWidget extends State<CategoryWidget> {
       },
       child: Container(
         width: 60.w,
-        height: 100.h,
+        height: 70.h,
         margin: EdgeInsets.symmetric(horizontal: 4.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -80,7 +80,9 @@ class _CategoryWidget extends State<CategoryWidget> {
                   borderRadius: BorderRadius.circular(8),
                   color: whiteColor
               ),
-              child: CachedNetworkImage(
+              child: category.code == "-1" ? Center(
+                child: Icon(CupertinoIcons.add, color: blackColor,),
+              ):CachedNetworkImage(
                 imageUrl: category.image != null ? category.image! : "" ,
                 placeholder: (context, url) => SpinKitRotatingCircle(color: checkAdminController.system.mainColor,),
                 errorWidget: (context, url, error) => Icon(

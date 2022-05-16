@@ -39,6 +39,12 @@ class _OrderFragment extends State<OrderFragment> {
   UserController userController = Get.find();
 
   @override
+  void initState() {
+    selectedType = checkAdminController.system.dineIn ? 0 : 1;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
@@ -54,7 +60,7 @@ class _OrderFragment extends State<OrderFragment> {
             builder: (orderController) {
               orderController.orders.sort((a,b) => b.createdAt.compareTo(a.createdAt));
               return DefaultTabController(
-                length: 2,
+                length: checkAdminController.system.dineIn ? 2 : 1,
                 child: Container(
                   color: whiteColor,
                   width: Get.width,
@@ -181,7 +187,7 @@ class _OrderFragment extends State<OrderFragment> {
                             ),
                             Container(
                               width: 140.w,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       color: blackColor.withOpacity(0.6), width: 2),
@@ -324,7 +330,7 @@ class _OrderFragment extends State<OrderFragment> {
                             color: Colors.transparent,
                           ),
                           tabs: [
-                            utils.tabStyle(
+                            if(checkAdminController.system.dineIn) utils.tabStyle(
                                 selectedType == 0,
                                 "Dine-In",
                                 checkAdminController.system.mainColor),

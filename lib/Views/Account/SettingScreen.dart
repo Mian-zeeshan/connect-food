@@ -531,6 +531,49 @@ class _SettingScreen extends State<SettingScreen> {
                                         .withOpacity(0.3),
                                   ),
                                   GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(chatRoute, arguments: 0);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.bubble_left,
+                                            color: blackColor,
+                                            size: 24,
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Expanded(
+                                              child: Text(
+                                            "Support Chat",
+                                            style: utils.labelStyle(blackColor),
+                                          )),
+                                          Icon(
+                                            CupertinoIcons.forward,
+                                            color: blackColor,
+                                            size: 24,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: Get.width,
+                                    height: 1,
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 6),
+                                    color: checkAdminController.system.mainColor
+                                        .withOpacity(0.3),
+                                  ),
+                                  GestureDetector(
                                     onTap: () async {
                                       await box.remove(currentUser);
                                       checkAdminController.updateAdmin("0");

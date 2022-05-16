@@ -3,15 +3,27 @@ import 'package:connectsaleorder/GetXController/BrandController.dart';
 import 'package:connectsaleorder/GetXController/CategoryController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
 import 'package:connectsaleorder/GetXController/DrawerCustomController.dart';
+import 'package:connectsaleorder/GetXController/ItemController.dart';
 import 'package:connectsaleorder/GetXController/SubCategoryController.dart';
 import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/Models/CustomerModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../GetXController/CartController.dart';
+import '../../Utils/ItemWidget.dart';
+import '../../Utils/ItemWidgetStyle2.dart';
+import '../../Utils/ItemWidgetStyle3.dart';
+import '../../Utils/ItemWidgetStyle4.dart';
+import '../../Utils/ItemWidgetStyle5.dart';
 
 class CategoryScreen extends StatefulWidget{
+  bool fromNav;
+  CategoryScreen({this.fromNav = true});
   @override
   _CategoryScreen createState() => _CategoryScreen();
 
@@ -36,6 +48,7 @@ class _CategoryScreen extends State<CategoryScreen>{
   var totalSubCategories = 0;
   var totalBrands = 0;
   CheckAdminController checkAdminController = Get.find();
+  var selectedSub = 0;
 
 
   @override
@@ -73,13 +86,109 @@ class _CategoryScreen extends State<CategoryScreen>{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 8,),
-              InkWell(
-                onTap: (){
-                },
-                child:utils.textField(grayColor.withOpacity(0.3), null, null,  CupertinoIcons.search, blackColor.withOpacity(0.6), blackColor, "Search...", blackColor.withOpacity(0.5), blackColor.withOpacity(0.6), 2.0, Get.width-12, false, searchController , onClick: (){
-                  Get.toNamed(searchRoute);
-                }),
+              Container(
+                padding: EdgeInsets.only(left: widget.fromNav ? 8 : 0 , right: 8, top: widget.fromNav ? 12 : 6, bottom: widget.fromNav ? 12 :6),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
+                    color: checkAdminController.system.mainColor
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if(!widget.fromNav) IconButton(
+                        onPressed: (){
+                          Get.back();
+                        },
+                        icon: Icon(CupertinoIcons.arrow_left, color: whiteColor, size: 24,)
+                    ),
+                    Expanded(child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: whiteColor
+                      ),
+                      child: TextField(
+                        onTap: () async {
+                          await Get.toNamed(searchRoute);
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
+                        decoration: InputDecoration.collapsed(hintText: "Search"),
+                        obscureText: false,
+                        maxLines: 1,
+                      ),
+                    )),
+                    if(userController.user != null) GestureDetector(
+                      onTap : (){
+                        Get.toNamed(favoriteRoute);
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Icon(CupertinoIcons.heart , color: whiteColor,),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8,),
+                    if(userController.user != null) GestureDetector(
+                      onTap : (){
+                        if(userController.user != null) {
+                          setState(() {
+                            Get.toNamed(cartRoute);
+                          });
+                        }else{
+                          utils.loginBottomSheet(context);
+                        }
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Icon(CupertinoIcons.shopping_cart , color: whiteColor,),
+                            GetBuilder<CartController>(id: "0", builder: (cartController){
+                              return cartController.myCart.totalItems > 0 ? Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: Container(
+                                    width: 18,
+                                    height: 18,
+                                    padding: EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                        color: redColor,
+                                        shape: BoxShape.circle
+                                    ),
+                                    child: Center(
+                                        child: Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),)
+                                    ),
+                                  )
+                              ) : Container();}),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if(userController.user == null) GestureDetector(
+                      onTap : (){
+                        utils.loginBottomSheet(context);
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Image.asset("Assets/Images/account.png" , color: whiteColor,),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 8,),
               Expanded(child: Row(
@@ -103,6 +212,8 @@ class _CategoryScreen extends State<CategoryScreen>{
                               for(var i = 0; i < lengthCategories; i++)
                                 GestureDetector(
                                   onTap: (){
+                                    selectedSub = 0;
+                                    setData();
                                     selectedCategoryName = categoryController.categories[i].name;
                                     categoryController.updateCategory(categoryController.categories[i].code);
                                     _sCategoryController.getSubCategories(categoryController.categories[i].code);
@@ -168,84 +279,143 @@ class _CategoryScreen extends State<CategoryScreen>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 12,),
-                                Text("Sub Categories" , style: utils.boldLabelStyle(blackColor),),
-                                SizedBox(height: 6,),
-                                GetBuilder<SubCategoryController>(id: "0" , builder: (subCategoryController){
-                                  lengthSubCategories = subCategoryController.subCategories.length > lengthSubCategories ? lengthSubCategories : subCategoryController.subCategories.length;
-                                  totalSubCategories = subCategoryController.subCategories.length;
-                                  return lengthSubCategories > 0 ? Container(
-                                    width: Get.width,
-                                    padding: EdgeInsets.symmetric(vertical: 8 , horizontal: 4),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: whiteColor
-                                    ),
-                                    child: Wrap(
-                                      alignment: WrapAlignment.spaceEvenly,
-                                      children: [
-                                        for(var i = 0; i < lengthSubCategories; i++)
-                                          GestureDetector(
-                                            onTap: (){
-                                              subCategoryController.updateSubCategory(i);
-                                              drawerCustomController.setDrawer("", 1);
-                                            },
-                                            child: Container(
-                                              width: 60,
-                                              height: 85,
-                                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                                              margin: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
-                                              decoration: BoxDecoration(
-                                                  color: whiteColor
+                                if(selectedSub == 0) Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Sub Categories" , style: utils.boldLabelStyle(blackColor),),
+                                    SizedBox(height: 6,),
+                                    GetBuilder<SubCategoryController>(id: "0" , builder: (subCategoryController){
+                                      lengthSubCategories = subCategoryController.subCategories.length > lengthSubCategories ? lengthSubCategories : subCategoryController.subCategories.length;
+                                      totalSubCategories = subCategoryController.subCategories.length;
+                                      return lengthSubCategories > 0 ? Container(
+                                        width: Get.width,
+                                        padding: EdgeInsets.symmetric(vertical: 8 , horizontal: 4),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: whiteColor
+                                        ),
+                                        child: Wrap(
+                                          alignment: WrapAlignment.spaceEvenly,
+                                          children: [
+                                            for(var i = 0; i < lengthSubCategories; i++)
+                                              GestureDetector(
+                                                onTap: (){
+                                                  selectedSub = -1;
+                                                  setData();
+                                                  subCategoryController.updateSubCategory(i, true);
+
+                                                  // drawerCustomController.setDrawer("", 1);
+                                                },
+                                                child: Container(
+                                                  width: 60,
+                                                  height: 85,
+                                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+                                                  decoration: BoxDecoration(
+                                                      color: whiteColor
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        width: 70,
+                                                        height: 50,
+                                                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                        decoration: BoxDecoration(
+                                                            color: whiteColor
+                                                        ),
+                                                        child: Image.network(subCategoryController.subCategories[i].image != null ? subCategoryController.subCategories[i].image! :"https://s7d2.scene7.com/is/image/Caterpillar/CM20200212-04866-33d60", fit: BoxFit.cover,),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Expanded(child: Text("${subCategoryController.subCategories[i].name}" , style: utils.xSmallLabelStyle(blackColor),textAlign: TextAlign.center,overflow: TextOverflow.ellipsis, maxLines: 2,)),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                            if(lengthSubCategories < totalSubCategories) Container(
+                                              width: Get.width,
+                                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
-                                                  Container(
-                                                    width: 70,
-                                                    height: 50,
-                                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                    decoration: BoxDecoration(
-                                                        color: whiteColor
+                                                  GestureDetector(
+                                                    onTap : (){
+                                                      lengthSubCategories = lengthSubCategories + 3;
+                                                      setData();
+                                                    },
+                                                    child: Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          color: whiteColor
+                                                      ),
+                                                      child: Text("Load More", style: utils.xSmallLabelStyle(checkAdminController.system.mainColor),),
                                                     ),
-                                                    child: Image.network(subCategoryController.subCategories[i].image != null ? subCategoryController.subCategories[i].image! :"https://s7d2.scene7.com/is/image/Caterpillar/CM20200212-04866-33d60", fit: BoxFit.cover,),
-                                                  ),
-                                                  SizedBox(height: 5,),
-                                                  Expanded(child: Text("${subCategoryController.subCategories[i].name}" , style: utils.xSmallLabelStyle(blackColor),textAlign: TextAlign.center,overflow: TextOverflow.ellipsis, maxLines: 2,)),
+                                                  )
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                        if(lengthSubCategories < totalSubCategories) Container(
-                                          width: Get.width,
-                                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              GestureDetector(
-                                                onTap : (){
-                                                  lengthSubCategories = lengthSubCategories + 3;
-                                                  setData();
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(8),
-                                                      color: whiteColor
-                                                  ),
-                                                  child: Text("Load More", style: utils.xSmallLabelStyle(checkAdminController.system.mainColor),),
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ):Container();
-                                },),
-                                SizedBox(height: 12,),
-                                Text("Brands" , style: utils.boldLabelStyle(blackColor),),
+                                      ):Container();
+                                    },),
+                                  ],
+                                ),
+                                if(selectedSub != 0) Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Products" , style: utils.boldLabelStyle(blackColor),),
+                                    SizedBox(height: 6,),
+                                    GetBuilder<ItemController>(id: "0" , builder: (itemController){
+                                      return itemController.isLoadingSub ? Container(
+                                        width: Get.width,
+                                        height: Get.height,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SpinKitChasingDots(color: checkAdminController.system.mainColor,)
+                                          ],
+                                        ),
+                                      ) :itemController.itemsLengthSub > 0 ? Container(
+                                        width: Get.width,
+                                        child: GridView.builder(
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount: itemController.itemModelsSub.length,
+                                          gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisSpacing: 10,
+                                              mainAxisSpacing: 10,
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 2 / 3.5),
+                                          itemBuilder: (context, i) {
+                                            return /*checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(itemController.itemModelsSub[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(itemController.itemModelsSub[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(itemController.itemModelsSub[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(itemController.itemModelsSub[i]) : checkAdminController.system.itemGridStyle.code == "005" ?*/ ItemWidgetStyle5(itemController.itemModelsSub[i],null) /*: ItemWidget(itemController.itemModelsSub[i])*/;
+                                          },
+                                        ),
+                                      ) : Container(
+                                        width: Get.width,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Lottie.asset("Assets/lottie/searchempty.json"),
+                                            SizedBox(height: 12,),
+                                            Text("No product available", style: utils.labelStyle(grayColor),)
+                                          ],
+                                        ),
+                                      );
+                                    },),
+                                    SizedBox(height: 20,),
+                                  ],
+                                ),
+
+                                //todo Brands to be shift
+                                /*Text("Brands" , style: utils.boldLabelStyle(blackColor),),
                                 SizedBox(height: 12,),
                                 GetBuilder<BrandController>(id: "0" , builder: (brandController){
                                   lengthBrands = brandController.brands.length > lengthBrands ? lengthBrands : brandController.brands.length;
@@ -319,7 +489,7 @@ class _CategoryScreen extends State<CategoryScreen>{
                                       ],
                                     ),
                                   );
-                                },),
+                                },),*/
                               ],
                             )
                         ),
