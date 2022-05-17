@@ -1,10 +1,13 @@
 import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
 import 'package:connectsaleorder/GetXController/ItemController.dart';
+import 'package:connectsaleorder/GetXController/OrderController.dart';
+import 'package:connectsaleorder/Models/CartModel.dart';
 import 'package:connectsaleorder/Models/CountriesModel.dart';
 import 'package:connectsaleorder/Models/CurrencyModel.dart';
 import 'package:connectsaleorder/Models/CustomerModel.dart';
 import 'package:connectsaleorder/Models/ItemModel.dart';
+import 'package:connectsaleorder/Models/UserModel.dart';
 import 'package:connectsaleorder/Views/orders/bottomsheet/AddToCartBottomsheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -576,6 +579,42 @@ class AppUtils{
                 style: labelStyle(index
                     ? whiteColor
                     : blackColor.withOpacity(0.5))
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  showRiders(BuildContext context, UserModel rider, CartModel cartModel) {
+    OrderController orderController = Get.find();
+    return GestureDetector(
+      onTap: (){
+        orderController.changeStatus(2, cartModel, setRider: true, riderId: rider.uid);
+        Navigator.pop(context);
+      },
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child: Text("${rider.name}(${rider.phone})",style: labelStyle(blackColor.withOpacity(0.9)),)),
+                  if(rider.uid == cartModel.riderId) Icon(CupertinoIcons.checkmark_alt, size: 24, color: blackColor.withOpacity(0.6),),
+                ],
+              ),
+            ),
+            Container(
+              width: Get.width,
+              height: 1,
+              color: grayColor,
             )
           ],
         ),

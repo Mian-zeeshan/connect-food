@@ -15,6 +15,7 @@ class UserController extends GetxController{
   UserModel? user;
   UserModel? currentSeller;
   List<UserModel> retailers = [];
+  List<UserModel> riders = [];
   List<UserModel> allRetailers = [];
   CheckAdminController checkAdminController = Get.find();
   var box = GetStorage();
@@ -35,6 +36,7 @@ class UserController extends GetxController{
       user = UserModel.fromJson(value);
       if(user!.type == 0){
         getRetailers();
+        getRiders();
       }
       loadUerFromFirebase();
       Get.put(ChatController());
@@ -240,5 +242,26 @@ class UserController extends GetxController{
     }
     update(["0"]);
     notifyChildrens();
+  }
+
+  void getRiders() async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+
+    DatabaseReference reference = database.reference();
+    reference
+        .child(riderRef)
+        .onValue.listen((event) {
+      riders = [];
+      if(event.snapshot.exists){
+        event.snapshot.value.forEach((key,value){
+          riders.add(UserModel.fromJson(jsonDecode(jsonEncode(value))));
+        });
+      }
+    });
   }
 }

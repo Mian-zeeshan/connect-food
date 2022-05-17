@@ -208,6 +208,8 @@ class _MapScreen extends State<MapScreen> {
           jsonDecode(jsonEncode(geoCode.body)));
       if(coderModel.results != null && coderModel.results!.length > 0 ){
         _place.address  = coderModel.results![0].formattedAddress;
+        _place.latitude  = latLng.latitude;
+        _place.longitude  = latLng.longitude;
         addressString  = coderModel.results![0].formattedAddress;
         setState(() {});
       }

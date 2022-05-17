@@ -95,6 +95,7 @@ final systemRef = "System";
 final chatRef = "ChatSupport";
 final chatItemRef = "Chat";
 final couponRef = "Coupons";
+final riderRef = "Riders";
 
 
 //Json Database

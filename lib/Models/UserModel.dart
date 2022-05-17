@@ -21,13 +21,16 @@ class UserModel {
     email = json['email'];
     phone = json['phone'];
     image = json['image'];
-    type = json['type'];
+    if(json["type"] != null)
+      type = json['type'];
+
     if(json["addressList"] != null){
       addressList = [];
       json["addressList"].forEach((v){
         addressList.add(AddressModel.fromJson(v));
       });
     }
+
     retailerModel = json['retailerModel'] != null
         ? new RetailerModel.fromJson(json['retailerModel'])
         : null;

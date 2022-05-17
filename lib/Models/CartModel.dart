@@ -24,6 +24,7 @@ class CartModel {
   int orderType = 1;
   double couponValue = 0;
   AddressModel? branch;
+  String? riderId;
 
   CartModel(
       {required this.userId,
@@ -54,6 +55,7 @@ class CartModel {
     isDraft = json['isDraft'];
     instructions = json['instructions'];
     isSync = json['isSync'];
+    riderId = json['riderId'];
     if(json["orderType"] != null)
     orderType = json['orderType'];
 
@@ -91,6 +93,7 @@ class CartModel {
     data['isSync'] = this.isSync;
     data['orderType'] = this.orderType;
     data['couponValue'] = this.couponValue;
+    data['riderId'] = this.riderId;
     data['products'] = this.products.map((v) => v.toJson()).toList();
     return data;
   }

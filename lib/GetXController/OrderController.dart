@@ -201,7 +201,7 @@ class OrderController extends GetxController{
     notifyChildrens();
   }
 
-  void changeStatus(int status, CartModel cartModel) async {
+  void changeStatus(int status, CartModel cartModel, {setRider, riderId}) async {
     AppUtils utils = AppUtils();
     EasyLoading.show(status : "Loading...");
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
@@ -214,12 +214,22 @@ class OrderController extends GetxController{
       database.setPersistenceCacheSizeBytes(10000000);
     }
     DatabaseReference reference = database.reference();
-    await reference
-        .child(orderCRef)
-        .child(cartModel.cartId)
-        .update({
-      "status" : status
-    });
+    if(setRider != null){
+      await reference
+          .child(orderCRef)
+          .child(cartModel.cartId)
+          .update({
+        "status" : status,
+        "riderId" : riderId
+      });
+    }else{
+      await reference
+          .child(orderCRef)
+          .child(cartModel.cartId)
+          .update({
+        "status" : status
+      });
+    }
     this.selectedFilter = selectedFilter;
     EasyLoading.dismiss();
     sendNotification(cartModel.userId, "Order Updated", "Your order status is updated to ${utils.getOrderStatus(status)}. please check your order");

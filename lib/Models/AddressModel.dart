@@ -41,7 +41,9 @@ class AddressModel {
     country = json['country'];
     address = json['address'];
     area = json['area'];
+    if(json['lat'] != null)
     lat = json['lat'];
+    if(json['lng'] != null)
     lng = json['lng'];
   }
 

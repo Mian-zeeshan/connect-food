@@ -645,13 +645,19 @@ class _CheckoutScreen extends State<CheckoutScreen>{
           phone: phoneController.text.toString(),
           type: 0,
           address: selectedAddress!.address + ", " + selectedAddress!.city +
-              " " + selectedAddress!.province + " " + selectedAddress!.country);
+              " " + selectedAddress!.province + " " + selectedAddress!.country,
+          area: selectedAddress!.area,
+          lat: selectedAddress!.lat,
+          lng: selectedAddress!.lng);
     }else{
       myCart.customer = CustomerModel(id: userController.user!.uid,
           name: "Dine-in customer",
           phone: phoneController.text.toString(),
           type: 0,
-          address: "Table#"+tNoController.text.toString());
+          area: "Dine-In",
+          address: "Table#"+tNoController.text.toString(),
+          lat: 0,
+          lng: 0);
     }
     myCart.deliveryPrice = deliveryPrice;
     if(checkAdminController.system.maxDeliveryPrice <= myCart.discountedBill)

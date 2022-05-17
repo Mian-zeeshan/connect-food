@@ -8,6 +8,8 @@ class CustomerModel {
   String? area;
   String? address;
   int type = 0;
+  double lat = 0;
+  double lng = 0;
 
   CustomerModel(
       {required this.id,
@@ -18,7 +20,9 @@ class CustomerModel {
         this.emi,
         this.area,
         this.address,
-        required this.type});
+        required this.type,
+        required this.lat,
+        required this.lng});
 
   CustomerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,6 +34,10 @@ class CustomerModel {
     area = json['area'];
     address = json['address'];
     type = json['type'];
+    if(json["lat"] != null)
+      lat = json['lat'];
+    if(json["lng"] != null)
+      lng = json['lng'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +51,8 @@ class CustomerModel {
     data['area'] = this.area;
     data['address'] = this.address;
     data['type'] = this.type;
+    data['lng'] = this.lng;
+    data['lat'] = this.lat;
     return data;
   }
 }
