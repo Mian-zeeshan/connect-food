@@ -12,6 +12,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../GetXController/UserController.dart';
+
 class OrderDetailScreen extends StatefulWidget{
   CartModel cartModel;
   var fromBottom = true;
@@ -29,6 +31,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
   CartController cartController = Get.find();
   CheckAdminController checkAdminController = Get.find();
   OrderController orderController = Get.find();
+  UserController userController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -193,7 +196,7 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
                               ),
                             ),
                           )),
-                          if(!widget.fromCustomer) Expanded(child: Container(
+                          if(!widget.fromCustomer && widget.cartModel.status != 3) Expanded(child: Container(
                             margin: EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
@@ -353,8 +356,20 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
                             orderController.setFilter(i);
                             Navigator.pop(context);
                           }else{
-                            orderController.changeStatus(i == 4 ? -1 : i , cartModel!);
-                            Navigator.pop(context);
+                            if(i == 2){
+                              if(userController.riders.length > 0) {
+                                Navigator.pop(context);
+                                showRider(context, cartModel!, i);
+                              }else{
+                                orderController.changeStatus(
+                                    i == 4 ? -1 : i, cartModel!);
+                                Navigator.pop(context);
+                              }
+                            }else {
+                              orderController.changeStatus(
+                                  i == 4 ? -1 : i, cartModel!);
+                              Navigator.pop(context);
+                            }
                           }
                         },
                         child: Container(
@@ -394,4 +409,62 @@ class _OrderDetailScreen extends State<OrderDetailScreen>{
       ),
     );
   }
+
+  showRider(BuildContext context, CartModel cartModel, type) {
+    showCupertinoModalBottomSheet(
+      context: context,
+      backgroundColor: whiteColor,
+      topRadius: Radius.circular(30),
+      builder: (context) => Container(
+        height: Get.height * 0.42,
+        padding: EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: whiteColor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(child: Container()),
+                Expanded(
+                    child: Container(
+                      height: 3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: blackColor.withOpacity(0.8),
+                      ),
+                    )),
+                Expanded(child: Container()),
+              ],
+            ),
+            SizedBox(height: 12,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Riders", style: utils.boldLabelStyle(blackColor),),
+              ],
+            ),
+            SizedBox(height: 12,),
+            Expanded(
+                child: GetBuilder<UserController>(id: "0", builder: (uController){
+                  return ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      for(var i = 0 ; i < uController.riders.length; i++)
+                        utils.showRiders(context, uController.riders[i], cartModel)
+                    ],
+                  );
+                },)
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }

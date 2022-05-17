@@ -32,6 +32,7 @@ class _ManageOrderScreen extends State<ManageOrderScreen> {
     "Last Month",
     "Custom"
   ];
+
   var statuse = ["All","Placed" , "Preparing" , "On the way", "Delivered","Canceled"];
   CartController cartController = Get.find();
   CheckAdminController checkAdminController = Get.find();
@@ -441,15 +442,15 @@ class _ManageOrderScreen extends State<ManageOrderScreen> {
                                                   crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                                   children: [
-                                                    Icon(
+                                                    if(orderController.ordersAdmin[i].status != 3) Icon(
                                                       CupertinoIcons.arrow_3_trianglepath,
                                                       color: whiteColor,
                                                       size: 20,
                                                     ),
-                                                    SizedBox(
+                                                    if(orderController.ordersAdmin[i].status != 3)  SizedBox(
                                                       width: 12,
                                                     ),
-                                                    GestureDetector(
+                                                    if(orderController.ordersAdmin[i].status != 3)  GestureDetector(
                                                         onTap: () {
                                                           showFilterBottom(context, orderController, 1 , orderController
                                                               .ordersAdmin[i]);
@@ -459,14 +460,14 @@ class _ManageOrderScreen extends State<ManageOrderScreen> {
                                                           style: utils.boldLabelStyle(
                                                               whiteColor),
                                                         )),
-                                                    SizedBox(
+                                                    if(orderController.ordersAdmin[i].status != 3)  SizedBox(
                                                       width: 12,
                                                     ),
-                                                    Container(
+                                                    if(orderController.ordersAdmin[i].status != 3)  Container(
                                                       width: 1,
                                                       color: whiteColor,
                                                     ),
-                                                    SizedBox(
+                                                    if(orderController.ordersAdmin[i].status != 3)  SizedBox(
                                                       width: 12,
                                                     ),
                                                     Icon(
@@ -815,6 +816,15 @@ class _ManageOrderScreen extends State<ManageOrderScreen> {
                 Expanded(child: Container()),
               ],
             ),
+            SizedBox(height: 12,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Riders", style: utils.boldLabelStyle(blackColor),),
+              ],
+            ),
+            SizedBox(height: 12,),
             Expanded(
                 child: GetBuilder<UserController>(id: "0", builder: (uController){
                   return ListView(

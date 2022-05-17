@@ -36,6 +36,8 @@ class OrderController extends GetxController{
   setFilter(int filter){
     if(filter == 0){
       this.selectedFilter = 5;
+    }else if(filter == 5){
+      this.selectedFilter = -1;
     }else{
       this.selectedFilter = filter-1;
     }
