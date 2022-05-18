@@ -77,7 +77,7 @@ final orderTypeRoute = "/orderType";
 
 //daabase references
 var databaseUrl = "https://mandi-online-5e4fa-default-rtdb.firebaseio.com/";
-var appName = "Connect";
+var appName = "Mandi Online";
 final usersRef = "Users";
 final tokenRef = "Tokens";
 final adminTokenRef = "AdminTokens";
@@ -112,8 +112,9 @@ final isAdminGlobal = "isAdminGlobal";
 
 //Firebase
 
-FirebaseAuth? auth = FirebaseAuth.instance;
-FirebaseDatabase? database = FirebaseDatabase.instance;
-FirebaseStorage? storage = FirebaseStorage.instance;
+FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseDatabase database = FirebaseDatabase.instance;
+FirebaseStorage storage = FirebaseStorage.instance;
 
-final smsKey = "AAAArC48Y60:APA91bFAV5EhUCCs-8ZsqiY8gBrtVljc8gMLcThAPioJ-4v8LwupwEs-OpYw0eU9D9pdaq79GkAcdt56nUuQgxG2rL2U9a_zcXDNbB4n5p_osqtq385UD-E7fQM6rEpRn-8_sZm2--gO";
+// final smsKey = "AAAArC48Y60:APA91bFAV5EhUCCs-8ZsqiY8gBrtVljc8gMLcThAPioJ-4v8LwupwEs-OpYw0eU9D9pdaq79GkAcdt56nUuQgxG2rL2U9a_zcXDNbB4n5p_osqtq385UD-E7fQM6rEpRn-8_sZm2--gO";
+final smsKey = "AAAAbNsvnY8:APA91bGSFpUSKajg2XVZ-LxjKCpVC_iDg4hHHBWNu0NAREV6p-KGTPpF4bCA_Ruytrcl_vqSzTOG2vBf_Zo-Pl9UNnxLAHI_MNrkEmQbqHZ5zZV72_Lu2EF3_zd7pVWghENtyP7g9wiW";

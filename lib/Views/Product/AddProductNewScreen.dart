@@ -1651,7 +1651,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
     var random = DateTime.now();
     //Create a reference to the location you want to upload to in firebase
     firebase_storage.Reference reference =
-    storage!.ref().child("images/$random.JPG");
+    storage.ref().child("images/$random.JPG");
     //Upload the file to firebase
     firebase_storage.UploadTask uploadTask = reference.putFile(file);
     var downUrl = await (await uploadTask).ref.getDownloadURL();
@@ -1663,7 +1663,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
   Future<String> uploadPicWeb(PlatformFile file) async {
     var random = DateTime.now();
     firebase_storage.Reference reference =
-    storage!.ref().child("images/$random.JPG");
+    storage.ref().child("images/$random.JPG");
     //Upload the file to firebase
     var downUrl = "";
     if (GetPlatform.isWeb) {

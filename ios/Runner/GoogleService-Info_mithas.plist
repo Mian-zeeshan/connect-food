@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>467533798799-505qgsqoeedj6jc48sstjigfb9rrjhqt.apps.googleusercontent.com</string>
+	<string>739510084525-p89e51apmg5e9hp6pqec9nr9i97n8clg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.467533798799-505qgsqoeedj6jc48sstjigfb9rrjhqt</string>
+	<string>com.googleusercontent.apps.739510084525-p89e51apmg5e9hp6pqec9nr9i97n8clg</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBqkAUR5PLruV_a6vy35XRpP5ElW_hvSec</string>
+	<string>AIzaSyCmI6xpfSddkm17xq_kzrJYTj-Ip-RYmCY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>467533798799</string>
+	<string>739510084525</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.connect.mandionline</string>
+	<string>com.connect.mithas</string>
 	<key>PROJECT_ID</key>
-	<string>mandi-online-5e4fa</string>
+	<string>mithas-fa138</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mandi-online-5e4fa.appspot.com</string>
+	<string>mithas-fa138.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:467533798799:ios:32120496476afc7bd53ffa</string>
+	<string>1:739510084525:ios:ceab2d3ac9f3966a33b724</string>
 	<key>DATABASE_URL</key>
-	<string>https://mandi-online-5e4fa-default-rtdb.firebaseio.com</string>
+	<string>https://mithas-fa138-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

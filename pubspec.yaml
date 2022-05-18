@@ -91,7 +91,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "Assets/Images/mi_logo.jpeg"
+  image_path: "Assets/Images/mo_logo.jpg"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

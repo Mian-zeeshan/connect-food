@@ -227,7 +227,7 @@ class _SignUpScreen extends State<SignUpScreen>{
 
 
   void createUserWithEmail() async {
-    await auth!
+    await auth
         .createUserWithEmailAndPassword(
         email: emailController.text.trim(), password: passwordController.text.toString())
         .then((value) {
