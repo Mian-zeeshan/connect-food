@@ -256,35 +256,45 @@ class _AddBrandScreen extends State<AddBrandScreen>{
                             child: utils.textField(whiteColor, CupertinoIcons.tag, checkAdminController.system.mainColor, null, null, blackColor, "Second Name", blackColor.withOpacity(0.4), checkAdminController.system.mainColor, 1.0, Get.width-40, false, nameTwoController),
                           ),
                           SizedBox(height: 20,),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
-                            child: utils.button(checkAdminController.system.mainColor, selectedBrandModel == null ? "Add" : "Update", whiteColor, checkAdminController.system.mainColor, 1.0, (){
-                              if(nameController.text.isEmpty){
-                                Get.snackbar("Error", "Name is required!");
-                                return;
-                              }else if(nameTwoController.text.isEmpty){
-                                Get.snackbar("Error", "Second Name is required!");
-                                return;
-                              }
-                              if(selectedBrandModel == null){
-                                if(_image == null) {
-                                  Get.snackbar("Error", "Image is required!");
-                                  return;
-                                }
-                              }else{
-                                if(selectedImage == null) {
-                                  if(_image == null) {
-                                    Get.snackbar("Error", "Image is required!");
+                          Row(
+                            children: [
+                              Expanded(child: Container(
+                                margin: EdgeInsets.only(left: 20 , right: selectedBrandModel == null ? 20 : 4),
+                                child: utils.button(checkAdminController.system.mainColor, selectedBrandModel == null ? "Add" : "Update", whiteColor, checkAdminController.system.mainColor, 1.0, (){
+                                  if(nameController.text.isEmpty){
+                                    Get.snackbar("Error", "Name is required!");
+                                    return;
+                                  }else if(nameTwoController.text.isEmpty){
+                                    Get.snackbar("Error", "Second Name is required!");
                                     return;
                                   }
-                                }
-                              }
-                              if(selectedBrandModel == null)
-                                addBrand();
-                              else
-                                updateBrand();
-                            }),
-                          ),
+                                  if(selectedBrandModel == null){
+                                    if(_image == null) {
+                                      Get.snackbar("Error", "Image is required!");
+                                      return;
+                                    }
+                                  }else{
+                                    if(selectedImage == null) {
+                                      if(_image == null) {
+                                        Get.snackbar("Error", "Image is required!");
+                                        return;
+                                      }
+                                    }
+                                  }
+                                  if(selectedBrandModel == null)
+                                    addBrand();
+                                  else
+                                    updateBrand();
+                                }),
+                              ),),
+                              if(selectedBrandModel != null) Expanded(child: Container(
+                                margin: EdgeInsets.only(left: 4 , right: 20),
+                                child: utils.button(whiteColor, "Delete", checkAdminController.system.mainColor, checkAdminController.system.mainColor, 1.0, (){
+                                    deleteBrand();
+                                }),
+                              ),),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -311,14 +321,14 @@ class _AddBrandScreen extends State<AddBrandScreen>{
         code: "$child",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
     DatabaseReference reference = database.reference();
-    reference.child(brandRef).child("$child").set(
+    await reference.child(brandRef).child("$child").set(
         brandModel.toJson());
     EasyLoading.dismiss();
     Get.back();
@@ -336,18 +346,43 @@ class _AddBrandScreen extends State<AddBrandScreen>{
         code: "${selectedBrandModel!.code}",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
     DatabaseReference reference = database.reference();
-    reference.child(brandRef).child("${selectedBrandModel!.code}").set(
+    await reference.child(brandRef).child("${selectedBrandModel!.code}").set(
         brandModel.toJson());
     EasyLoading.dismiss();
     Get.back();
     Get.snackbar("Success", "Brand Updated!");
+  }
+
+  void deleteBrand() async {
+    BrandController brandController = Get.find();
+    EasyLoading.show(status: "Loading...");
+    if (_image != null) {
+      selectedImage = await uploadPic(_image!);
+    }
+
+    BrandModel brandModel = BrandModel(
+        code: "${selectedBrandModel!.code}",
+        image: selectedImage,
+        name: nameController.text.toString(),
+        secondName: nameTwoController.text.toString(),isEnable: false);
+
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    database.setPersistenceEnabled(true);
+    database.setPersistenceCacheSizeBytes(10000000);
+    DatabaseReference reference = database.reference();
+    await reference.child(brandRef).child("${selectedBrandModel!.code}").set(
+        brandModel.toJson());
+    EasyLoading.dismiss();
+    Get.back();
+    Get.snackbar("Success", "Brand deleted!");
   }
 
   void setData() {

@@ -456,7 +456,7 @@ class _HomeFragmentCustomer extends State<HomeFragmentCustomer> {
                                           crossAxisSpacing: 10,
                                           mainAxisSpacing: 10,
                                           crossAxisCount: 2,
-                                          childAspectRatio: 2 / 3.5),
+                                          childAspectRatio: checkAdminController.system.itemGridStyle.code == "001" ? 1/1.111 : 2 / 3.5),
                                       itemBuilder: (context, i) {
                                         return checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(itemController.itemModels[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(itemController.itemModels[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(itemController.itemModels[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(itemController.itemModels[i]) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(itemController.itemModels[i],null) : ItemWidget(itemController.itemModels[i]);
                                       },

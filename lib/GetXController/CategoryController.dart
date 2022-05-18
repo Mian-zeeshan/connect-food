@@ -37,8 +37,10 @@ class CategoryController extends GetxController{
       if(event.snapshot.exists){
         event.snapshot.value.forEach((key, value){
           CategoryModel categoryModel = CategoryModel.fromJson(jsonDecode(jsonEncode(value)));
-          categories.add(categoryModel);
-          filterCategories.add(categoryModel);
+          if(categoryModel.isEnable) {
+            categories.add(categoryModel);
+            filterCategories.add(categoryModel);
+          }
         });
       }
       if(categories.length > 0){

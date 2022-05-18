@@ -247,34 +247,46 @@ class _AddCategoryScreen extends State<AddCategoryScreen>{
                             child: utils.textField(whiteColor, CupertinoIcons.tag, checkAdminController.system.mainColor, null, null, blackColor, "Second Name", blackColor.withOpacity(0.4), checkAdminController.system.mainColor, 1.0, Get.width-40, false, nameTwoController),
                           ),
                           SizedBox(height: 20,),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
-                            child: utils.button(checkAdminController.system.mainColor, selectedCategoryModel == null ? "Add" : "Update", whiteColor, checkAdminController.system.mainColor, 1.0, (){
-                              if(nameController.text.isEmpty){
-                                Get.snackbar("Error", "Name is required!");
-                                return;
-                              }else if(nameTwoController.text.isEmpty){
-                                Get.snackbar("Error", "Second Name is required!");
-                                return;
-                              }
-                              if(selectedCategoryModel == null){
-                                if(_image == null) {
-                                  Get.snackbar("Error", "Image is required!");
-                                  return;
-                                }
-                              }else{
-                                if(selectedImage == null) {
-                                  if(_image == null) {
-                                    Get.snackbar("Error", "Image is required!");
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(child: Container(
+                                margin: EdgeInsets.only(left: 20, right: selectedCategoryModel == null ? 20 : 4),
+                                child: utils.button(checkAdminController.system.mainColor, selectedCategoryModel == null ? "Add" : "Update", whiteColor, checkAdminController.system.mainColor, 1.0, (){
+                                  if(nameController.text.isEmpty){
+                                    Get.snackbar("Error", "Name is required!");
+                                    return;
+                                  }else if(nameTwoController.text.isEmpty){
+                                    Get.snackbar("Error", "Second Name is required!");
                                     return;
                                   }
-                                }
-                              }
-                              if(selectedCategoryModel == null)
-                                 addCategory();
-                              else
-                                updateCategory();
-                            }),
+                                  if(selectedCategoryModel == null){
+                                    if(_image == null) {
+                                      Get.snackbar("Error", "Image is required!");
+                                      return;
+                                    }
+                                  }else{
+                                    if(selectedImage == null) {
+                                      if(_image == null) {
+                                        Get.snackbar("Error", "Image is required!");
+                                        return;
+                                      }
+                                    }
+                                  }
+                                  if(selectedCategoryModel == null)
+                                    addCategory();
+                                  else
+                                    updateCategory();
+                                }),
+                              )),
+                              if(selectedCategoryModel != null) Expanded(child: Container(
+                                margin: EdgeInsets.only(right: 20, left: 4),
+                                child: utils.button(whiteColor, "Delete", checkAdminController.system.mainColor, checkAdminController.system.mainColor, 1.0, (){
+                                    deleteCategory();
+                                }),
+                              )),
+                            ],
                           ),
                         ],
                       ),
@@ -303,14 +315,14 @@ class _AddCategoryScreen extends State<AddCategoryScreen>{
         code: "$child",
     image: selectedImage,
     name: nameController.text.toString(),
-    secondName: nameTwoController.text.toString());
+    secondName: nameTwoController.text.toString(),isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
     DatabaseReference reference = database.reference();
-    reference.child(categoryRef).child("$child").set(
+    await reference.child(categoryRef).child("$child").set(
         categoryModel.toJson());
     EasyLoading.dismiss();
     Get.back();
@@ -318,7 +330,6 @@ class _AddCategoryScreen extends State<AddCategoryScreen>{
   }
 
   void updateCategory() async {
-    CategoryController categoryController = Get.find();
     EasyLoading.show(status: "Loading...");
     if (_image != null) {
       selectedImage = await uploadPic(_image);
@@ -328,18 +339,45 @@ class _AddCategoryScreen extends State<AddCategoryScreen>{
         code: "${selectedCategoryModel!.code}",
     image: selectedImage,
     name: nameController.text.toString(),
-    secondName: nameTwoController.text.toString());
+    secondName: nameTwoController.text.toString()
+        ,isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
     DatabaseReference reference = database.reference();
-    reference.child(categoryRef).child("${selectedCategoryModel!.code}").set(
+    await reference.child(categoryRef).child("${selectedCategoryModel!.code}").set(
         categoryModel.toJson());
     EasyLoading.dismiss();
     Get.back();
     Get.snackbar("Success", "Category Updated!");
+  }
+
+
+  void deleteCategory() async {
+    EasyLoading.show(status: "Loading...");
+    if (_image != null) {
+      selectedImage = await uploadPic(_image);
+    }
+
+    CategoryModel categoryModel = CategoryModel(
+        code: "${selectedCategoryModel!.code}",
+        image: selectedImage,
+        name: nameController.text.toString(),
+        secondName: nameTwoController.text.toString(),isEnable: false);
+
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    database.setPersistenceEnabled(true);
+    database.setPersistenceCacheSizeBytes(10000000);
+    DatabaseReference reference = database.reference();
+    await reference.child(categoryRef).child("${selectedCategoryModel!.code}").set(
+        categoryModel.toJson());
+    EasyLoading.dismiss();
+    Get.back();
+    Get.snackbar("Success", "Category deleted!");
+
   }
 
   void setData() {
@@ -349,7 +387,6 @@ class _AddCategoryScreen extends State<AddCategoryScreen>{
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if(selectedCategoryModel != null){
       nameController.text = selectedCategoryModel!.name;

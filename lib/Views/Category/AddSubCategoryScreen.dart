@@ -245,35 +245,45 @@ class _AddSubCategoryScreen extends State<AddSubCategoryScreen>{
                             child: utils.textField(whiteColor, CupertinoIcons.tag, checkAdminController.system.mainColor, null, null, blackColor, "Second Name", blackColor.withOpacity(0.4), checkAdminController.system.mainColor, 1.0, Get.width-40, false, nameTwoController),
                           ),
                           SizedBox(height: 20,),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
-                            child: utils.button(checkAdminController.system.mainColor, subCategoryModel == null ? "Add" : "Update", whiteColor, checkAdminController.system.mainColor, 1.0, (){
-                              if(nameController.text.isEmpty){
-                                Get.snackbar("Error", "Name is required!");
-                                return;
-                              }else if(nameTwoController.text.isEmpty){
-                                Get.snackbar("Error", "Second Name is required!");
-                                return;
-                              }
-                              if(subCategoryModel == null){
-                                if(_image == null) {
-                                  Get.snackbar("Error", "Image is required!");
-                                  return;
-                                }
-                              }else{
-                                if(selectedImage == null) {
-                                  if(_image == null) {
-                                    Get.snackbar("Error", "Image is required!");
+                          Row(
+                            children: [
+                              Expanded(child: Container(
+                                margin: EdgeInsets.only(left: 20, right: subCategoryModel == null ? 20 : 4),
+                                child: utils.button(checkAdminController.system.mainColor, subCategoryModel == null ? "Add" : "Update", whiteColor, checkAdminController.system.mainColor, 1.0, (){
+                                  if(nameController.text.isEmpty){
+                                    Get.snackbar("Error", "Name is required!");
+                                    return;
+                                  }else if(nameTwoController.text.isEmpty){
+                                    Get.snackbar("Error", "Second Name is required!");
                                     return;
                                   }
-                                }
-                              }
-                              if(subCategoryModel == null)
-                                addCategory();
-                              else
-                                updateCategory();
-                            }),
-                          ),
+                                  if(subCategoryModel == null){
+                                    if(_image == null) {
+                                      Get.snackbar("Error", "Image is required!");
+                                      return;
+                                    }
+                                  }else{
+                                    if(selectedImage == null) {
+                                      if(_image == null) {
+                                        Get.snackbar("Error", "Image is required!");
+                                        return;
+                                      }
+                                    }
+                                  }
+                                  if(subCategoryModel == null)
+                                    addCategory();
+                                  else
+                                    updateCategory();
+                                }),
+                              ),),
+                              if(subCategoryModel != null) Expanded(child: Container(
+                                margin: EdgeInsets.only(right: 20, left: 4),
+                                child: utils.button(whiteColor, "Delete", checkAdminController.system.mainColor, checkAdminController.system.mainColor, 1.0, (){
+                                    deleteCategory();
+                                }),
+                              ),),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -303,7 +313,7 @@ class _AddSubCategoryScreen extends State<AddSubCategoryScreen>{
         code: "$child",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     print(categoryModel.toJson());
     print("${subCategoryController.subCategories.length}");
@@ -313,7 +323,7 @@ class _AddSubCategoryScreen extends State<AddSubCategoryScreen>{
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
     DatabaseReference reference = database.reference();
-    reference.child(subCategoryRef).child("$child").set(
+    await reference.child(subCategoryRef).child("$child").set(
         categoryModel.toJson());
     EasyLoading.dismiss();
     Get.back();
@@ -332,14 +342,40 @@ class _AddSubCategoryScreen extends State<AddSubCategoryScreen>{
         code: "${subCategoryModel!.code}",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
     DatabaseReference reference = database.reference();
-    reference.child(subCategoryRef).child("${subCategoryModel!.code}").set(
+    await reference.child(subCategoryRef).child("${subCategoryModel!.code}").set(
+        categoryModel.toJson());
+    EasyLoading.dismiss();
+    Get.back();
+    Get.snackbar("Success", "Subcategory Updated!");
+  }
+
+  void deleteCategory() async {
+    CategoryController categoryController = Get.find();
+    EasyLoading.show(status: "Loading...");
+    if (_image != null) {
+      selectedImage = await uploadPic(_image);
+    }
+
+    SubCategoryModel categoryModel = SubCategoryModel(
+        type: categoryController.categories[categoryController.selectedCategory].code,
+        code: "${subCategoryModel!.code}",
+        image: selectedImage,
+        name: nameController.text.toString(),
+        secondName: nameTwoController.text.toString(),isEnable: false);
+
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    database.setPersistenceEnabled(true);
+    database.setPersistenceCacheSizeBytes(10000000);
+    DatabaseReference reference = database.reference();
+    await reference.child(subCategoryRef).child("${subCategoryModel!.code}").set(
         categoryModel.toJson());
     EasyLoading.dismiss();
     Get.back();

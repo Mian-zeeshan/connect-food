@@ -36,8 +36,10 @@ class BrandController extends GetxController{
       if(event.snapshot.exists){
         event.snapshot.value.forEach((key,value){
           BrandModel brandModel = BrandModel.fromJson(jsonDecode(jsonEncode(value)));
-          brands.add(brandModel);
-          filterBrands.add(brandModel);
+          if(brandModel.isEnable) {
+            brands.add(brandModel);
+            filterBrands.add(brandModel);
+          }
         });
       }
       update(["0"]);

@@ -317,7 +317,7 @@ class _OrderFragment extends State<OrderFragment> {
                               horizontal: 5),
                           onTap: (i) {
                             setState(() {
-                              selectedType = i;
+                              selectedType = checkAdminController.system.dineIn ? i : i+1;
                             });
                             // _onSortChange(i);
                           },

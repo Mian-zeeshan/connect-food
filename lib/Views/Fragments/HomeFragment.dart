@@ -274,7 +274,7 @@ class _HomeFragment extends State<HomeFragment>{
                           CategoryWidget5(categoryController.categories[i],null) :
                           CategoryWidget(categoryController.categories[i],null),
                         checkAdminController.system.categoryView == 0 ?
-                          CategoryWidget(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                          CategoryWidget(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png',isEnable: true),(){
                             if(checkAdminController.system.bottomNavigationChecks.isProducts) {
                               drawerCustomController.setDrawer("categories", 1);
                             }else{
@@ -282,7 +282,7 @@ class _HomeFragment extends State<HomeFragment>{
                             }
                           }) :
                           checkAdminController.system.categoryView == 1 ?
-                          CategoryWidget2(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                          CategoryWidget2(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png',isEnable: true),(){
                             if(checkAdminController.system.bottomNavigationChecks.isProducts) {
                               drawerCustomController.setDrawer("categories", 1);
                             }else{
@@ -290,7 +290,7 @@ class _HomeFragment extends State<HomeFragment>{
                             }
                           }) :
                           checkAdminController.system.categoryView == 2 ?
-                          CategoryWidget3(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                          CategoryWidget3(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png',isEnable: true),(){
                             if(checkAdminController.system.bottomNavigationChecks.isProducts) {
                               drawerCustomController.setDrawer("categories", 1);
                             }else{
@@ -298,7 +298,7 @@ class _HomeFragment extends State<HomeFragment>{
                             }
                           }) :
                           checkAdminController.system.categoryView == 3 ?
-                          CategoryWidget4(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                          CategoryWidget4(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png',isEnable: true),(){
                             if(checkAdminController.system.bottomNavigationChecks.isProducts) {
                               drawerCustomController.setDrawer("categories", 1);
                             }else{
@@ -306,14 +306,14 @@ class _HomeFragment extends State<HomeFragment>{
                             }
                           }) :
                           checkAdminController.system.categoryView == 4 ?
-                          CategoryWidget5(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                          CategoryWidget5(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png',isEnable: true),(){
                             if(checkAdminController.system.bottomNavigationChecks.isProducts) {
                               drawerCustomController.setDrawer("categories", 1);
                             }else{
                               Get.toNamed(homeFragmentRoute);
                             }
                           }) :
-                          CategoryWidget(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png'),(){
+                          CategoryWidget(CategoryModel(code: "-1" , name: "View All" , secondName: "", image: 'https://hamariweb.com/images/articles/articles/110218_01.png',isEnable: true),(){
                             if(checkAdminController.system.bottomNavigationChecks.isProducts) {
                               drawerCustomController.setDrawer("categories", 1);
                             }else{

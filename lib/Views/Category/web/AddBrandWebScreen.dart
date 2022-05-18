@@ -202,7 +202,7 @@ class _AddBrandWebScreen extends State<AddBrandWebScreen>{
         code: "$child",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     database = FirebaseDatabase.instance;
@@ -225,7 +225,7 @@ class _AddBrandWebScreen extends State<AddBrandWebScreen>{
         code: "${selectedBrandModel!.code}",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     database = FirebaseDatabase.instance;

@@ -37,7 +37,9 @@ class SubCategoryController extends GetxController{
           event.snapshot.value.forEach((key,value) {
             SubCategoryModel subCategoryModel = SubCategoryModel.fromJson(
                 jsonDecode(jsonEncode(value)));
-            subCategoriesAll.add(subCategoryModel);
+            if(subCategoryModel.isEnable) {
+              subCategoriesAll.add(subCategoryModel);
+            }
           });
           getSubCategories(categoryId);
         }

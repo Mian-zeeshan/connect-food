@@ -5,8 +5,9 @@ class SubCategoryModel {
   String type = "";
   String? image;
   bool isSync = false;
+  bool isEnable = true;
 
-  SubCategoryModel({required this.code, required this.name,required this.secondName,required this.image, required this.type});
+  SubCategoryModel({required this.code, required this.name,required this.secondName,required this.image, required this.type, required this.isEnable});
 
   SubCategoryModel.fromJson(Map<String, dynamic> json) {
     code = json['Code'];
@@ -14,6 +15,7 @@ class SubCategoryModel {
     secondName = json['secondName'];
     image = json['image'];
     type = json['Type'];
+    isEnable = json['isEnable']??true;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,6 +26,7 @@ class SubCategoryModel {
     data['image'] = this.image;
     data['Type'] = this.type;
     data['isSync'] = this.isSync;
+    data['isEnable'] = this.isEnable;
     return data;
   }
 }

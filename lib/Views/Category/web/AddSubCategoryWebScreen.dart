@@ -198,7 +198,7 @@ class _AddSubCategoryWebScreen extends State<AddSubCategoryWebScreen>{
         code: "$child",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     print(categoryModel.toJson());
     print("${subCategoryController.subCategories.length}");
@@ -227,7 +227,7 @@ class _AddSubCategoryWebScreen extends State<AddSubCategoryWebScreen>{
         code: "${subCategoryModel!.code}",
         image: selectedImage,
         name: nameController.text.toString(),
-        secondName: nameTwoController.text.toString());
+        secondName: nameTwoController.text.toString(),isEnable: true);
 
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     database = FirebaseDatabase.instance;

@@ -109,8 +109,8 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
 
     if(addProductModel.code != ""){
       nameController.text = addProductModel.name;
-      selectedCategoryItem = CategoryModel(code: addProductModel.type, image: "", name: addProductModel.typeName??"", secondName: addProductModel.typeName);
-      selectedSubCategoryItem = SubCategoryModel(type: addProductModel.type, code: addProductModel.style, image: "", name: addProductModel.styleName??"", secondName: addProductModel.styleName);
+      selectedCategoryItem = CategoryModel(code: addProductModel.type, image: "", name: addProductModel.typeName??"", secondName: addProductModel.typeName,isEnable: true);
+      selectedSubCategoryItem = SubCategoryModel(type: addProductModel.type, code: addProductModel.style, image: "", name: addProductModel.styleName??"", secondName: addProductModel.styleName,isEnable: true);
       priceController.text = addProductModel.salesRate.toString();
       wholeSalePriceController.text = addProductModel.wholeSale.toString();
       discPriceController.text = (addProductModel.discountVal??0).toString();
@@ -119,7 +119,7 @@ class _AddProductNewScreen extends State<AddProductNewScreen> {
       ingredientController.text = addProductModel.ingredients??"";
       unitController.text = addProductModel.mUnit;
       gstController.text = "${addProductModel.gSTTax??0}";
-      selectedBrand = BrandModel(code: addProductModel.brandCode??"", name: addProductModel.brandName??"Select Brand", image: "", secondName: addProductModel.brandName??"Select Brand");
+      selectedBrand = BrandModel(code: addProductModel.brandCode??"", name: addProductModel.brandName??"Select Brand", image: "", secondName: addProductModel.brandName??"Select Brand",isEnable: true);
       sDescriptionController.text = addProductModel.shortDescription??"";
       descriptionController.text = addProductModel.description??"";
       pDeliveryPriceController.text = addProductModel.deliveryPrice != 0 ? addProductModel.deliveryPrice.toString() : "";
