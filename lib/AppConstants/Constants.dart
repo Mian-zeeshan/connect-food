@@ -96,6 +96,9 @@ final chatRef = "ChatSupport";
 final chatItemRef = "Chat";
 final couponRef = "Coupons";
 final riderRef = "Riders";
+final notificationRef = "Notifications";
+
+var htmlString = "";
 
 
 //Json Database

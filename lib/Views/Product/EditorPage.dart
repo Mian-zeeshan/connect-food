@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -73,73 +74,11 @@ class _EditorPage extends State<EditorPage> {
             ),
           ),
           TextButton(onPressed: () async {
-            print(await controller.getText());
-          }, child: Text("GET HTML"))
+            htmlString = await controller.getText();
+            Get.back();
+          }, child: Text("ADD"))
         ],
       ),
     );
   }
-/*
-  String quillDeltaToHtml(Delta delta) {
-    final convertedValue = jsonEncode(delta.toJson());
-    final markdown = deltaToMarkdown(convertedValue);
-    final html = mark.markdownToHtml(markdown);
-
-    return html;
-  }
-
-  // ignore: unused_element
-  Future<MediaPickSetting?> _selectMediaPickSetting(BuildContext context) =>
-      showDialog<MediaPickSetting>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          contentPadding: EdgeInsets.zero,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextButton.icon(
-                icon: const Icon(Icons.collections),
-                label: const m.Text('Gallery'),
-                onPressed: () => Navigator.pop(ctx, MediaPickSetting.Gallery),
-              ),
-              TextButton.icon(
-                icon: const Icon(Icons.link),
-                label: const m.Text('Link'),
-                onPressed: () => Navigator.pop(ctx, MediaPickSetting.Link),
-              )
-            ],
-          ),
-        ),
-      );
-
-  Widget _buildMenuBar(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    const itemStyle = TextStyle(
-      color: Colors.white,
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-    );
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Divider(
-          thickness: 2,
-          color: Colors.white,
-          indent: size.width * 0.1,
-          endIndent: size.width * 0.1,
-        ),
-        ListTile(
-          title: const Center(child: m.Text('Read only demo', style: itemStyle)),
-          dense: true,
-          visualDensity: VisualDensity.compact,
-        ),
-        Divider(
-          thickness: 2,
-          color: Colors.white,
-          indent: size.width * 0.1,
-          endIndent: size.width * 0.1,
-        ),
-      ],
-    );
-  }*/
 }

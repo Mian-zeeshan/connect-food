@@ -85,9 +85,9 @@ class _WishListFragment extends State<WishListFragment> {
                               )),
                         Expanded(
                             child: Text(
-                          "Wishlist".tr,
-                          style: utils.headingStyle(whiteColor),
-                        )),
+                              "Wishlist".tr,
+                              style: utils.headingStyle(whiteColor),
+                            )),
                         if (userController.user != null)
                           GestureDetector(
                             onTap: () {
@@ -146,7 +146,8 @@ class _WishListFragment extends State<WishListFragment> {
                                             id: "0",
                                             builder: (cartController) {
                                               return Text(
-                                                "${cartController.myCart.totalItems}",
+                                                "${cartController.myCart
+                                                    .totalItems}",
                                                 style: utils.xSmallLabelStyle(
                                                     whiteColor),
                                               );
@@ -192,20 +193,27 @@ class _WishListFragment extends State<WishListFragment> {
                       ),
                       Expanded(
                           child: Text(
-                        "",
-                        style: utils.boldLabelStyle(blackColor),
-                      )),
+                            "",
+                            style: utils.boldLabelStyle(blackColor),
+                          )),
                       GestureDetector(
                           onTap: () {
                             isList = !isList;
                             setState(() {});
                           },
-                          child: Icon(
-                            isList
-                                ? CupertinoIcons.rectangle_grid_2x2
-                                : CupertinoIcons.list_bullet,
-                            color: blackColor.withOpacity(0.7),
-                            size: 24,
+                          child: Container(
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: checkAdminController.system.mainColor
+                            ),
+                            child: Icon(
+                              isList
+                                  ? CupertinoIcons.rectangle_grid_2x2
+                                  : CupertinoIcons.list_bullet,
+                              color: whiteColor.withOpacity(0.7),
+                              size: 24,
+                            ),
                           )),
                       SizedBox(
                         width: 12,
@@ -214,132 +222,95 @@ class _WishListFragment extends State<WishListFragment> {
                   ),
                   Expanded(
                       child: SingleChildScrollView(
-                    child: Container(
-                      padding:
+                        child: Container(
+                          padding:
                           EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 12,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 12,
+                              ),
+                              GetBuilder<FavoriteController>(
+                                  id: "0",
+                                  builder: (favController) {
+                                    return favController.myFav.products.length >
+                                        0
+                                        ? isList
+                                        ? Wrap(
+                                      alignment: WrapAlignment.spaceEvenly,
+                                      children: [
+                                        for (var i = 0;
+                                        i <
+                                            favController
+                                                .myFav.products.length;
+                                        i++)
+                                          checkAdminController
+                                              .system
+                                              .itemListStyle
+                                              .code ==
+                                              "001"
+                                              ? ItemListWidget(favController
+                                              .myFav.products[i])
+                                              : checkAdminController
+                                              .system
+                                              .itemGridStyle
+                                              .code ==
+                                              "002"
+                                              ? ItemListWidget2(favController
+                                              .myFav
+                                              .products[i])
+                                              : checkAdminController
+                                              .system
+                                              .itemListStyle
+                                              .code ==
+                                              "003"
+                                              ? ItemListWidget3(
+                                              favController.myFav.products[i])
+                                              : checkAdminController.system
+                                              .itemListStyle.code == "004"
+                                              ? ItemListWidget4(
+                                              favController.myFav.products[i])
+                                              : ItemListWidget(
+                                              favController.myFav.products[i])
+                                      ],
+                                    ) : GridView.builder(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      itemCount: favController.myFav.products.length,
+                                      gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          crossAxisCount: 2,
+                                          childAspectRatio: checkAdminController.system.itemGridStyle.code == "001" ? 2 / 2.225 : 2/3.5),
+                                      itemBuilder: (context, i) {
+                                        return checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(favController.myFav.products[i]) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(favController.myFav.products[i]) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(favController.myFav.products[i]): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(favController.myFav.products[i]) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(favController.myFav.products[i],null) : ItemWidget(favController.myFav.products[i]);
+                                      },
+                                    )
+                                        : Container(
+                                      child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Lottie.asset(
+                                                'Assets/lottie/searchempty.json'),
+                                            Text(
+                                              "No Wishlist Available",
+                                              style: utils.labelStyle(
+                                                  blackColor
+                                                      .withOpacity(0.5)),
+                                            ),
+                                          ]),
+                                    );
+                                  })
+                            ],
                           ),
-                          GetBuilder<FavoriteController>(
-                              id: "0",
-                              builder: (favController) {
-                                return favController.myFav.products.length > 0
-                                    ? Wrap(
-                                        alignment: WrapAlignment.spaceEvenly,
-                                        children: [
-                                          for (var i = 0;
-                                              i <
-                                                  favController
-                                                      .myFav.products.length;
-                                              i++)
-                                            isList
-                                                ? favController.myFav.products[i].name
-                                                        .toLowerCase()
-                                                        .contains(searchController.text
-                                                            .toLowerCase())
-                                                    ? checkAdminController
-                                                                .system
-                                                                .itemListStyle
-                                                                .code ==
-                                                            "001"
-                                                        ? ItemListWidget(favController
-                                                            .myFav.products[i])
-                                                        : checkAdminController
-                                                                    .system
-                                                                    .itemGridStyle
-                                                                    .code ==
-                                                                "002"
-                                                            ? ItemListWidget2(favController
-                                                                .myFav
-                                                                .products[i])
-                                                            : checkAdminController
-                                                                        .system
-                                                                        .itemListStyle
-                                                                        .code ==
-                                                                    "003"
-                                                                ? ItemListWidget3(favController.myFav.products[i])
-                                                                : checkAdminController.system.itemListStyle.code == "004"
-                                                                    ? ItemListWidget4(favController.myFav.products[i])
-                                                                    : ItemListWidget(favController.myFav.products[i])
-                                                    : Container()
-                                                : favController.myFav.products[i].name.toLowerCase().contains(searchController.text.toLowerCase())
-                                                    ? Container(
-                                                        width: checkAdminController
-                                                                    .system
-                                                                    .itemGridStyle
-                                                                    .code ==
-                                                                "001"
-                                                            ? Get.width * 0.45
-                                                            : Get.width * 0.4,
-                                                        child: AspectRatio(
-                                                          aspectRatio:
-                                                              checkAdminController
-                                                                          .system
-                                                                          .itemGridStyle
-                                                                          .code ==
-                                                                      "001"
-                                                                  ? 0.9
-                                                                  : 0.46,
-                                                          child: Container(
-                                                            child: checkAdminController
-                                                                        .system
-                                                                        .itemGridStyle
-                                                                        .code ==
-                                                                    "001"
-                                                                ? ItemWidget(
-                                                                    favController
-                                                                            .myFav
-                                                                            .products[
-                                                                        i])
-                                                                : checkAdminController
-                                                                            .system
-                                                                            .itemGridStyle
-                                                                            .code ==
-                                                                        "002"
-                                                                    ? ItemWidgetStyle2(
-                                                                        favController.myFav.products[
-                                                                            i])
-                                                                    : checkAdminController.system.itemGridStyle.code ==
-                                                                            "003"
-                                                                        ? ItemWidgetStyle3(favController
-                                                                            .myFav
-                                                                            .products[i])
-                                                                        : checkAdminController.system.itemGridStyle.code == "004"
-                                                                            ? ItemWidgetStyle4(favController.myFav.products[i])
-                                                                            : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(favController.myFav.products[i], Get.width * 0.4)
-                                                                :ItemWidget(favController.myFav.products[i]),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Container(),
-                                        ],
-                                      )
-                                    : Container(
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Lottie.asset(
-                                                  'Assets/lottie/searchempty.json'),
-                                              Text(
-                                                "No Wishlist Available",
-                                                style: utils.labelStyle(
-                                                    blackColor
-                                                        .withOpacity(0.5)),
-                                              ),
-                                            ]),
-                                      );
-                              })
-                        ],
-                      ),
-                    ),
-                  ))
+                        ),
+                      ))
                 ],
               ),
             ),

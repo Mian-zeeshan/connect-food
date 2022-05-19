@@ -76,11 +76,9 @@ class _HomeFragment extends State<HomeFragment>{
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        print("Extended");
-        if(_itemController.itemModelsAll.length % 10 == 0){
+          print("Extended");
           page++;
           _itemController.getAllProducts(page);
-        }
       }
     });
   }
@@ -1067,23 +1065,6 @@ class _HomeFragment extends State<HomeFragment>{
                 ],
               ),
               SizedBox(height: 16,),
-              /*Container(
-                width: Get.width,
-                child: GetBuilder<ItemController>(id: "0" , builder: (itemController){
-                  return itemController.itemModelsAll.isNotEmpty ? Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    alignment: WrapAlignment.spaceBetween,
-                    children: [
-                      for(var item in itemController.itemModelsAll)
-                        Container(
-                          child: checkAdminController.system.itemGridStyle.code == "001" ? ItemWidget(item) : checkAdminController.system.itemGridStyle.code == "002" ? ItemWidgetStyle2(item) : checkAdminController.system.itemGridStyle.code == "003" ? ItemWidgetStyle3(item): checkAdminController.system.itemGridStyle.code == "004" ? ItemWidgetStyle4(item) : checkAdminController.system.itemGridStyle.code == "005" ? ItemWidgetStyle5(item,null) : ItemWidget(item),
-                        )
-                    ],
-                  ) : Center(
-                    child: Text("You haven't review any Item Explore now."),
-                  );
-                },),
-              ),*/
               Container(
                 width: Get.width,
                 child: GetBuilder<ItemController>(id: "0" , builder: (itemController){

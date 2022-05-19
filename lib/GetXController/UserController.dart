@@ -11,12 +11,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'NotificationController.dart';
+
 class UserController extends GetxController{
   UserModel? user;
   UserModel? currentSeller;
   List<UserModel> retailers = [];
   List<UserModel> riders = [];
   List<UserModel> allRetailers = [];
+  List<UserModel> users = [];
   CheckAdminController checkAdminController = Get.find();
   var box = GetStorage();
   int type = 0;
@@ -37,10 +40,32 @@ class UserController extends GetxController{
       if(user!.type == 0){
         getRetailers();
         getRiders();
+        getAllUsers();
       }
       loadUerFromFirebase();
       Get.put(ChatController());
+      Get.put(NotificationController());
     }
+  }
+
+  void getAllUsers() {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    reference
+        .child(usersRef)
+        .onValue.listen((event) {
+      users = [];
+      if(event.snapshot.exists){
+        event.snapshot.value.forEach((key,value){
+          users.add(UserModel.fromJson(jsonDecode(jsonEncode(value))));
+        });
+      }
+    });
   }
 
   setType(type){

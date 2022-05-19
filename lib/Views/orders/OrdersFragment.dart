@@ -5,6 +5,8 @@ import 'package:connectsaleorder/GetXController/OrderController.dart';
 import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/Models/CartModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
+import 'package:connectsaleorder/Views/Blogs/BlogsScreen.dart';
+import 'package:connectsaleorder/Views/Notifications/NotificationScreen.dart';
 import 'package:connectsaleorder/Views/orders/OrderDetailScreen.dart';
 import 'package:cr_calendar/cr_calendar.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class OrderFragment extends StatefulWidget {
+class OrderFragment extends StatefulWidget{
   bool fromNav;
   bool hideBack = true;
   OrderFragment(this.fromNav , {this.hideBack = true});
@@ -23,7 +25,7 @@ class OrderFragment extends StatefulWidget {
   _OrderFragment createState() => _OrderFragment();
 }
 
-class _OrderFragment extends State<OrderFragment> {
+class _OrderFragment extends State<OrderFragment> with TickerProviderStateMixin{
   var utils = AppUtils();
   var _dropDownValue = "Last 7 days";
   var _dropDownValues = [
@@ -34,12 +36,17 @@ class _OrderFragment extends State<OrderFragment> {
     "Custom"
   ];
   var selectedType = 0;
+  var selectedTypeTop = 0;
   CartController cartController = Get.find();
   CheckAdminController checkAdminController = Get.find();
   UserController userController = Get.find();
+  late TabController topTabController;
+  late TabController bottomTabController;
 
   @override
   void initState() {
+    topTabController = TabController(length: 3, vsync: this);
+    bottomTabController = TabController(length: checkAdminController.system.dineIn ? 2 : 1, vsync: this);
     selectedType = checkAdminController.system.dineIn ? 0 : 1;
     super.initState();
   }
@@ -59,546 +66,584 @@ class _OrderFragment extends State<OrderFragment> {
             id: "0",
             builder: (orderController) {
               orderController.orders.sort((a,b) => b.createdAt.compareTo(a.createdAt));
-              return DefaultTabController(
-                length: checkAdminController.system.dineIn ? 2 : 1,
-                child: Container(
-                  color: whiteColor,
-                  width: Get.width,
-                  height: Get.height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if(!widget.fromNav) Container(
-                        padding: EdgeInsets.only(left: widget.hideBack ? 8 : 0 , right: 8, top: widget.hideBack ? 12 : 6, bottom: widget.hideBack ? 12 :6),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
-                            color: checkAdminController.system.mainColor
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            if(!widget.hideBack) IconButton(
-                                onPressed: (){
-                                  Get.back();
-                                },
-                                icon: Icon(CupertinoIcons.arrow_left, color: whiteColor, size: 24,)
-                            ),
-                            Expanded(child: Text("Orders".tr, style: utils.headingStyle(whiteColor),)),
-                            if(userController.user != null) GestureDetector(
-                              onTap : (){
-                                Get.toNamed(favoriteRoute);
-                              },
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: [
-                                    Icon(CupertinoIcons.heart , color: whiteColor,),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 8,),
-                            if(userController.user != null) GestureDetector(
-                              onTap : (){
-                                if(userController.user != null) {
-                                  setState(() {
-                                    Get.toNamed(cartRoute);
-                                  });
-                                }else{
-                                  utils.loginBottomSheet(context);
-                                }
-                              },
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: [
-                                    Icon(CupertinoIcons.shopping_cart , color: whiteColor,),
-                                    Positioned(
-                                        top: 0,
-                                        right: 0,
-                                        child: Container(
-                                          width: 18,
-                                          height: 18,
-                                          padding: EdgeInsets.all(2),
-                                          decoration: BoxDecoration(
-                                              color: redColor,
-                                              shape: BoxShape.circle
-                                          ),
-                                          child: Center(
-                                            child: GetBuilder<CartController>(id: "0", builder: (cartController){
-                                              return Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),);
-                                            },),
-                                          ),
-                                        )
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            if(userController.user == null) GestureDetector(
-                              onTap : (){
-                                utils.loginBottomSheet(context);
-                              },
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: [
-                                    Image.asset("Assets/Images/account.png" , color: whiteColor,),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+              return Container(
+                color: whiteColor,
+                width: Get.width,
+                height: Get.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if(!widget.fromNav) Container(
+                      padding: EdgeInsets.only(left: widget.hideBack ? 8 : 0 , right: 8, top: widget.hideBack ? 12 : 6, bottom: widget.hideBack ? 12 :6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12),),
+                          color: checkAdminController.system.mainColor
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: ()=> showFilterBottom(context,orderController),
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: checkAdminController.system.mainColor,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Center(
-                                  child: Icon(
-                                    CupertinoIcons.slider_horizontal_3,
-                                    color: whiteColor,
-                                    size: 26,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 140.w,
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: blackColor.withOpacity(0.6), width: 2),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: DropdownButtonFormField(
-                                hint: Text('Last 7 days'),
-                                // Not necessary for Option 1
-                                value: _dropDownValue,
-                                isExpanded: false,
-                                onChanged: (newValue) {
-                                  _dropDownValue = newValue as String;
-                                  if (_dropDownValue == "Today") {
-                                    var now = DateTime.now();
-                                    orderController.setDateTime(
-                                        DateTime(
-                                            now.year, now.month, now.day, 0, 0, 0)
-                                            .millisecondsSinceEpoch,
-                                        DateTime(now.year, now.month, now.day, 23, 59,
-                                            59)
-                                            .millisecondsSinceEpoch);
-                                    print(DateTime(
-                                        now.year, now.month, now.day, 0, 0, 0));
-                                    print(DateTime(
-                                        now.year, now.month, now.day, 23, 59, 59));
-                                  } else if (_dropDownValue == "Last 7 days") {
-                                    orderController.setDateTime(
-                                        DateTime.now()
-                                            .subtract(Duration(days: 7))
-                                            .millisecondsSinceEpoch,
-                                        DateTime.now().millisecondsSinceEpoch);
-                                  } else if (_dropDownValue == "This Month") {
-                                    var now = DateTime.now();
-                                    var from = DateTime(now.year, now.month, 1)
-                                        .millisecondsSinceEpoch;
-                                    var to = DateTime(
-                                        now.year, now.month + 1, 0, 23, 59, 59)
-                                        .millisecondsSinceEpoch;
-                                    orderController.setDateTime(from, to);
-                                  } else if (_dropDownValue == "Last Month") {
-                                    var now = DateTime.now();
-                                    var from = DateTime(now.year, now.month - 1, 1)
-                                        .millisecondsSinceEpoch;
-                                    var to =
-                                        DateTime(now.year, now.month, 0, 23, 59, 59)
-                                            .millisecondsSinceEpoch;
-                                    orderController.setDateTime(from, to);
-                                  } else {
-                                    print("Came");
-                                    showCalendarDialog(orderController);
-                                  }
-                                },
-                                decoration: InputDecoration.collapsed(hintText: ""),
-                                items: _dropDownValues.map((location) {
-                                  return DropdownMenuItem(
-                                    child: new Text(
-                                      location,
-                                      style: utils
-                                          .labelStyle(blackColor.withOpacity(0.8)),
-                                    ),
-                                    value: location,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if(!widget.hideBack) IconButton(
+                              onPressed: (){
+                                Get.back();
+                              },
+                              icon: Icon(CupertinoIcons.arrow_left, color: whiteColor, size: 24,)
+                          ),
+                          Expanded(child: Text("Orders".tr, style: utils.headingStyle(whiteColor),)),
+                          if(userController.user != null) GestureDetector(
+                            onTap : (){
+                              Get.toNamed(favoriteRoute);
+                            },
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 5,
-                                        height: 5,
+                                  Icon(CupertinoIcons.heart , color: whiteColor,),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8,),
+                          if(userController.user != null) GestureDetector(
+                            onTap : (){
+                              if(userController.user != null) {
+                                setState(() {
+                                  Get.toNamed(cartRoute);
+                                });
+                              }else{
+                                utils.loginBottomSheet(context);
+                              }
+                            },
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Icon(CupertinoIcons.shopping_cart , color: whiteColor,),
+                                  Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        width: 18,
+                                        height: 18,
+                                        padding: EdgeInsets.all(2),
                                         decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: blackColor),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                            "${DateFormat("yyyy-MM-dd").format(DateTime.fromMillisecondsSinceEpoch(orderController.fromDate))}",
-                                            style: utils.labelStyle(blackColor),
-                                          )),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 5,
-                                        height: 5,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: blackColor),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                            "${DateFormat("yyyy-MM-dd").format(DateTime.fromMillisecondsSinceEpoch(orderController.toDate))}",
-                                            style: utils.labelStyle(blackColor),
-                                          ))
-                                    ],
+                                            color: redColor,
+                                            shape: BoxShape.circle
+                                        ),
+                                        child: Center(
+                                          child: GetBuilder<CartController>(id: "0", builder: (cartController){
+                                            return Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),);
+                                          },),
+                                        ),
+                                      )
                                   )
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        ),
-                      ),
-                      TabBar(
-                          labelPadding: EdgeInsets
-                              .symmetric(
-                              horizontal: 5),
-                          onTap: (i) {
-                            setState(() {
-                              selectedType = checkAdminController.system.dineIn ? i : i+1;
-                            });
-                            // _onSortChange(i);
-                          },
-                          isScrollable: true,
-                          indicatorSize:
-                          TabBarIndicatorSize.label,
-                          indicator: BoxDecoration(
-                            borderRadius:
-                            BorderRadius.circular(5),
-                            color: Colors.transparent,
                           ),
-                          tabs: [
-                            if(checkAdminController.system.dineIn) utils.tabStyle(
-                                selectedType == 0,
-                                "Dine-In",
-                                checkAdminController.system.mainColor),
-                            utils.tabStyle(
-                                selectedType == 1,
-                                "Home Delivery",
-                                checkAdminController.system.mainColor),
-                          ]),
-                      Expanded(child: SingleChildScrollView(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 12,
-                              ),
-                              orderController.orders.length > 0
-                                  ? Wrap(
-                                alignment: WrapAlignment.spaceBetween,
+                          if(userController.user == null) GestureDetector(
+                            onTap : (){
+                              utils.loginBottomSheet(context);
+                            },
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
                                 children: [
-                                  for (var i = 0;
-                                  i < orderController.orders.length;
-                                  i++)
-                                    if(orderController.orders[i].orderType == selectedType)
-                                    GestureDetector(
-                                      onTap: (){
-                                        if(orderController.orders[i].status != -1) {
-                                          orderController.listenOrdersTrack(
-                                              orderController.orders[i]);
-                                          Get.toNamed(trackOrderRoute);
-                                        }else{
-                                          Get.snackbar("Opps!", "Your order is cancelled and can not track.");
-                                        }
-                                      },
-                                      child: Container(
-                                        width:  Get.width,
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 6, horizontal: 8),
-                                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(12),
-                                            color: whiteColor,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 2,
-                                                  spreadRadius: 2,
-                                                  offset: Offset(0, 2),
-                                                  color: grayColor.withOpacity(0.7))
-                                            ]),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.all(12),
+                                  Image.asset("Assets/Images/account.png" , color: whiteColor,),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 12,),
+                    TabBar(
+                        controller: topTabController,
+                        labelPadding: EdgeInsets
+                            .symmetric(
+                            horizontal: 5),
+                        onTap: (i) {
+                          setState(() {
+                            selectedTypeTop = i;
+                          });
+                          // _onSortChange(i);
+                        },
+                        isScrollable: true,
+                        indicatorSize:
+                        TabBarIndicatorSize.label,
+                        indicator: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(5),
+                          color: Colors.transparent,
+                        ),
+                        tabs: [
+                          utils.tabStyle(
+                              selectedTypeTop == 0,
+                              "Orders",
+                              checkAdminController.system.mainColor, icon: CupertinoIcons.bag),
+                          utils.tabStyle(
+                              selectedTypeTop == 1,
+                              "Blogs",
+                              checkAdminController.system.mainColor, icon: CupertinoIcons.doc_plaintext),
+                          utils.tabStyle(
+                              selectedTypeTop == 2,
+                              "Notifications",
+                              checkAdminController.system.mainColor, icon: CupertinoIcons.bell),
+                        ]),
+                    if(selectedTypeTop == 0) Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: ()=> showFilterBottom(context,orderController),
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: checkAdminController.system.mainColor,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                child: Icon(
+                                  CupertinoIcons.slider_horizontal_3,
+                                  color: whiteColor,
+                                  size: 26,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            width: 140.w,
+                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: blackColor.withOpacity(0.6), width: 2),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: DropdownButtonFormField(
+                              hint: Text('Last 7 days'),
+                              // Not necessary for Option 1
+                              value: _dropDownValue,
+                              isExpanded: false,
+                              onChanged: (newValue) {
+                                _dropDownValue = newValue as String;
+                                if (_dropDownValue == "Today") {
+                                  var now = DateTime.now();
+                                  orderController.setDateTime(
+                                      DateTime(
+                                          now.year, now.month, now.day, 0, 0, 0)
+                                          .millisecondsSinceEpoch,
+                                      DateTime(now.year, now.month, now.day, 23, 59,
+                                          59)
+                                          .millisecondsSinceEpoch);
+                                  print(DateTime(
+                                      now.year, now.month, now.day, 0, 0, 0));
+                                  print(DateTime(
+                                      now.year, now.month, now.day, 23, 59, 59));
+                                } else if (_dropDownValue == "Last 7 days") {
+                                  orderController.setDateTime(
+                                      DateTime.now()
+                                          .subtract(Duration(days: 7))
+                                          .millisecondsSinceEpoch,
+                                      DateTime.now().millisecondsSinceEpoch);
+                                } else if (_dropDownValue == "This Month") {
+                                  var now = DateTime.now();
+                                  var from = DateTime(now.year, now.month, 1)
+                                      .millisecondsSinceEpoch;
+                                  var to = DateTime(
+                                      now.year, now.month + 1, 0, 23, 59, 59)
+                                      .millisecondsSinceEpoch;
+                                  orderController.setDateTime(from, to);
+                                } else if (_dropDownValue == "Last Month") {
+                                  var now = DateTime.now();
+                                  var from = DateTime(now.year, now.month - 1, 1)
+                                      .millisecondsSinceEpoch;
+                                  var to =
+                                      DateTime(now.year, now.month, 0, 23, 59, 59)
+                                          .millisecondsSinceEpoch;
+                                  orderController.setDateTime(from, to);
+                                } else {
+                                  print("Came");
+                                  showCalendarDialog(orderController);
+                                }
+                              },
+                              decoration: InputDecoration.collapsed(hintText: ""),
+                              items: _dropDownValues.map((location) {
+                                return DropdownMenuItem(
+                                  child: new Text(
+                                    location,
+                                    style: utils
+                                        .labelStyle(blackColor.withOpacity(0.8)),
+                                  ),
+                                  value: location,
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 5,
+                                      height: 5,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: blackColor),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                          "${DateFormat("yyyy-MM-dd").format(DateTime.fromMillisecondsSinceEpoch(orderController.fromDate))}",
+                                          style: utils.labelStyle(blackColor),
+                                        )),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 5,
+                                      height: 5,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: blackColor),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                          "${DateFormat("yyyy-MM-dd").format(DateTime.fromMillisecondsSinceEpoch(orderController.toDate))}",
+                                          style: utils.labelStyle(blackColor),
+                                        ))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                    if(selectedTypeTop == 0) TabBar(
+                      controller: bottomTabController,
+                        labelPadding: EdgeInsets
+                            .symmetric(
+                            horizontal: 5),
+                        onTap: (i) {
+                          setState(() {
+                            selectedType = checkAdminController.system.dineIn ? i : i+1;
+                          });
+                          // _onSortChange(i);
+                        },
+                        isScrollable: true,
+                        indicatorSize:
+                        TabBarIndicatorSize.label,
+                        indicator: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(5),
+                          color: Colors.transparent,
+                        ),
+                        tabs: [
+                          if(checkAdminController.system.dineIn) utils.tabStyle(
+                              selectedType == 0,
+                              "Dine-In",
+                              checkAdminController.system.mainColor),
+                          utils.tabStyle(
+                              selectedType == 1,
+                              "Home Delivery",
+                              checkAdminController.system.mainColor),
+                        ]),
+                    if(selectedTypeTop == 0) Expanded(child: SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 12,
+                            ),
+                            orderController.orders.length > 0
+                                ? Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              children: [
+                                for (var i = 0;
+                                i < orderController.orders.length;
+                                i++)
+                                  if(orderController.orders[i].orderType == selectedType)
+                                  GestureDetector(
+                                    onTap: (){
+                                      if(orderController.orders[i].status != -1) {
+                                        orderController.listenOrdersTrack(
+                                            orderController.orders[i]);
+                                        Get.toNamed(trackOrderRoute);
+                                      }else{
+                                        Get.snackbar("Opps!", "Your order is cancelled and can not track.");
+                                      }
+                                    },
+                                    child: Container(
+                                      width:  Get.width,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 6, horizontal: 8),
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          color: whiteColor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 2,
+                                                spreadRadius: 2,
+                                                offset: Offset(0, 2),
+                                                color: grayColor.withOpacity(0.7))
+                                          ]),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                    width: 80,
+                                                    height: 80,
+                                                    clipBehavior:
+                                                    Clip.antiAliasWithSaveLayer,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(
+                                                            12)),
+                                                    child: Stack(
+                                                      children: [
+                                                        Image.network(
+                                                          orderController
+                                                              .orders[i]
+                                                              .products[0]
+                                                              .images.length > 0
+                                                              ? orderController
+                                                              .orders[i]
+                                                              .products[0]
+                                                              .images[0]
+                                                              : "https://5.imimg.com/data5/SELLER/Default/2020/9/XP/HK/UQ/113167197/grocery-items-500x500.jpg",
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        Container(
+                                                          width: 80,
+                                                          height: 80,
+                                                          clipBehavior: Clip
+                                                              .antiAliasWithSaveLayer,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                              color: blackColor
+                                                                  .withOpacity(0.5)),
+                                                          child: Center(
+                                                            child: Text(
+                                                              "+${orderController.orders[i].products.length} more",
+                                                              style: utils
+                                                                  .boldLabelStyle(
+                                                                  whiteColor),
+                                                              textAlign:
+                                                              TextAlign.center,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          "Order ID : ${orderController.orders[i].cartId}",
+                                                          style: utils.boldLabelStyle(
+                                                              blackColor
+                                                                  .withOpacity(0.7)),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Text(
+                                                          "${DateFormat("dd MMM yyyy hh:mm aa").format(DateTime.fromMillisecondsSinceEpoch(orderController.orders[i].createdAt))}",
+                                                          style: utils.smallLabelStyle(
+                                                              blackColor
+                                                                  .withOpacity(0.5)),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Text(
+                                                          "Total Amount: ${utils.getFormattedPrice(orderController.orders[i].discountedBill.round())}",
+                                                          style: utils.smallLabelStyle(
+                                                              blackColor
+                                                                  .withOpacity(0.5)),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Expanded(child: Text(
+                                                              "Total Items: ${orderController.orders[i].products.length}",
+                                                              style: utils.smallLabelStyle(
+                                                                  blackColor
+                                                                      .withOpacity(0.5)),
+                                                            ),),
+                                                            SizedBox(width: 8,),
+                                                            Container(
+                                                              padding: EdgeInsets.symmetric(horizontal: 12,vertical: 6),
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(8),
+                                                                  color: orderController.orders[i].status == -1 ? Colors.red.withOpacity(0.3) : orderController.orders[i].status == 0 ? Colors.blue.withOpacity(0.3) : orderController.orders[i].status == 1 ? Colors.greenAccent.withOpacity(0.3) : orderController.orders[i].status == 2 ? Colors.amber.withOpacity(0.3) : Colors.green.withOpacity(0.3)
+                                                              ),
+                                                              child: Text(utils.getOrderStatus(orderController.orders[i].status), style: utils.xSmallLabelStyle(orderController.orders[i].status == -1 ? Colors.red : orderController.orders[i].status == 0 ? Colors.blue : orderController.orders[i].status == 1 ? Colors.greenAccent : orderController.orders[i].status == 2 ? Colors.amber : Colors.green),),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: Get.width,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 12, vertical: 6),
+                                            decoration:
+                                            BoxDecoration(color: checkAdminController.system.mainColor),
+                                            child: IntrinsicHeight(
                                               child: Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                MainAxisAlignment.center,
                                                 crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                                 children: [
-                                                  Container(
-                                                      width: 80,
-                                                      height: 80,
-                                                      clipBehavior:
-                                                      Clip.antiAliasWithSaveLayer,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                          BorderRadius.circular(
-                                                              12)),
-                                                      child: Stack(
-                                                        children: [
-                                                          Image.network(
+                                                  Icon(
+                                                    CupertinoIcons.bag_badge_plus,
+                                                    color: whiteColor,
+                                                    size: 20,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 12,
+                                                  ),
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        cartController.retriveOrder(
                                                             orderController
-                                                                .orders[i]
-                                                                .products[0]
-                                                                .images.length > 0
-                                                                ? orderController
-                                                                .orders[i]
-                                                                .products[0]
-                                                                .images[0]
-                                                                : "https://5.imimg.com/data5/SELLER/Default/2020/9/XP/HK/UQ/113167197/grocery-items-500x500.jpg",
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                          Container(
-                                                            width: 80,
-                                                            height: 80,
-                                                            clipBehavior: Clip
-                                                                .antiAliasWithSaveLayer,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                BorderRadius
-                                                                    .circular(12),
-                                                                color: blackColor
-                                                                    .withOpacity(0.5)),
-                                                            child: Center(
-                                                              child: Text(
-                                                                "+${orderController.orders[i].products.length} more",
-                                                                style: utils
-                                                                    .boldLabelStyle(
-                                                                    whiteColor),
-                                                                textAlign:
-                                                                TextAlign.center,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                                .orders[i]);
+                                                        Get.snackbar("Success", "");
+                                                      },
+                                                      child: Text(
+                                                        "Reorder",
+                                                        style: utils.boldLabelStyle(
+                                                            whiteColor),
                                                       )),
                                                   SizedBox(
-                                                    width: 10,
+                                                    width: 12,
                                                   ),
-                                                  Expanded(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text(
-                                                            "Order ID : ${orderController.orders[i].cartId}",
-                                                            style: utils.boldLabelStyle(
-                                                                blackColor
-                                                                    .withOpacity(0.7)),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Text(
-                                                            "${DateFormat("dd MMM yyyy hh:mm aa").format(DateTime.fromMillisecondsSinceEpoch(orderController.orders[i].createdAt))}",
-                                                            style: utils.smallLabelStyle(
-                                                                blackColor
-                                                                    .withOpacity(0.5)),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Text(
-                                                            "Total Amount: ${utils.getFormattedPrice(orderController.orders[i].discountedBill.round())}",
-                                                            style: utils.smallLabelStyle(
-                                                                blackColor
-                                                                    .withOpacity(0.5)),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment: MainAxisAlignment.start,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Expanded(child: Text(
-                                                                "Total Items: ${orderController.orders[i].products.length}",
-                                                                style: utils.smallLabelStyle(
-                                                                    blackColor
-                                                                        .withOpacity(0.5)),
-                                                              ),),
-                                                              SizedBox(width: 8,),
-                                                              Container(
-                                                                padding: EdgeInsets.symmetric(horizontal: 12,vertical: 6),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(8),
-                                                                    color: orderController.orders[i].status == -1 ? Colors.red.withOpacity(0.3) : orderController.orders[i].status == 0 ? Colors.blue.withOpacity(0.3) : orderController.orders[i].status == 1 ? Colors.greenAccent.withOpacity(0.3) : orderController.orders[i].status == 2 ? Colors.amber.withOpacity(0.3) : Colors.green.withOpacity(0.3)
-                                                                ),
-                                                                child: Text(utils.getOrderStatus(orderController.orders[i].status), style: utils.xSmallLabelStyle(orderController.orders[i].status == -1 ? Colors.red : orderController.orders[i].status == 0 ? Colors.blue : orderController.orders[i].status == 1 ? Colors.greenAccent : orderController.orders[i].status == 2 ? Colors.amber : Colors.green),),
-                                                              )
-                                                            ],
-                                                          )
-                                                        ],
+                                                  Container(
+                                                    width: 1,
+                                                    color: whiteColor,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 12,
+                                                  ),
+                                                  Icon(
+                                                    CupertinoIcons.eye,
+                                                    color: whiteColor,
+                                                    size: 20,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 12,
+                                                  ),
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        Get.to(() => OrderDetailScreen(orderController
+                                                            .orders[i], fromBottom: false,));
+                                                        /*showOrderDetailBottom(
+                                                            context,
+                                                            orderController
+                                                                .orders[i]);*/
+                                                      },
+                                                      child: Text(
+                                                        "View Order",
+                                                        style: utils.boldLabelStyle(
+                                                            whiteColor),
                                                       )),
+                                                  SizedBox(
+                                                    width: 12,
+                                                  ),
                                                 ],
                                               ),
                                             ),
-                                            Container(
-                                              width: Get.width,
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 12, vertical: 6),
-                                              decoration:
-                                              BoxDecoration(color: checkAdminController.system.mainColor),
-                                              child: IntrinsicHeight(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      CupertinoIcons.bag_badge_plus,
-                                                      color: whiteColor,
-                                                      size: 20,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                          cartController.retriveOrder(
-                                                              orderController
-                                                                  .orders[i]);
-                                                          Get.snackbar("Success", "");
-                                                        },
-                                                        child: Text(
-                                                          "Reorder",
-                                                          style: utils.boldLabelStyle(
-                                                              whiteColor),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    Container(
-                                                      width: 1,
-                                                      color: whiteColor,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    Icon(
-                                                      CupertinoIcons.eye,
-                                                      color: whiteColor,
-                                                      size: 20,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                          Get.to(() => OrderDetailScreen(orderController
-                                                              .orders[i], fromBottom: false,));
-                                                          /*showOrderDetailBottom(
-                                                              context,
-                                                              orderController
-                                                                  .orders[i]);*/
-                                                        },
-                                                        child: Text(
-                                                          "View Order",
-                                                          style: utils.boldLabelStyle(
-                                                              whiteColor),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                          )
+                                        ],
                                       ),
-                                    )
-                                ],
-                              )
-                                  : Container(
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Lottie.asset('Assets/lottie/searchempty.json'),
-                                      Text(
-                                        "No Order Available",
-                                        style: utils
-                                            .labelStyle(blackColor.withOpacity(0.5)),
-                                      ),
-                                    ]),
-                              )
-                            ],
-                          ),
+                                    ),
+                                  )
+                              ],
+                            )
+                                : Container(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Lottie.asset('Assets/lottie/searchempty.json'),
+                                    Text(
+                                      "No Order Available",
+                                      style: utils
+                                          .labelStyle(blackColor.withOpacity(0.5)),
+                                    ),
+                                  ]),
+                            )
+                          ],
                         ),
-                      ))
-                    ],
-                  ),
+                      ),
+                    )),
+                    if(selectedTypeTop == 1) Expanded(
+                      child: BlogsScreen(),
+                    ),
+                    if(selectedTypeTop == 2) Expanded(
+                      child: NotificationScreen(),
+                    )
+                  ],
                 ),
               );
             }),

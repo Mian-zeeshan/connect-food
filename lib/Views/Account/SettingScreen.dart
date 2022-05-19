@@ -5,7 +5,9 @@ import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/GetXController/locale_controller.dart';
 import 'package:connectsaleorder/Models/SystemSettingModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
+import 'package:connectsaleorder/Views/Blogs/AddBlogScreen.dart';
 import 'package:connectsaleorder/Views/Coupon/ManageCouponPage.dart';
+import 'package:connectsaleorder/Views/Notifications/SendNotificationScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -793,6 +795,104 @@ class _SettingScreen extends State<SettingScreen> {
                                             Expanded(
                                                 child: Text(
                                               "System Configuration",
+                                              style:
+                                                  utils.labelStyle(blackColor),
+                                            )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(()=> SendNotificationScreen());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.bell,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Send Notification",
+                                              style:
+                                                  utils.labelStyle(blackColor),
+                                            )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(()=> AddBlogScreen());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.doc_plaintext,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Add Blog",
                                               style:
                                                   utils.labelStyle(blackColor),
                                             )),

@@ -560,7 +560,7 @@ class AppUtils{
     );
   }
 
-  Widget tabStyle(index, String name, color) {
+  Widget tabStyle(index, String name, color,{icon}) {
     return Visibility(
       child: Container(
         decoration: BoxDecoration(
@@ -572,9 +572,14 @@ class AppUtils{
                     ? color
                     : Colors.transparent)),
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            if(icon != null) Icon(icon, color: index
+                ? whiteColor
+                : blackColor.withOpacity(0.5), size: 20,),
+            if(icon != null) SizedBox(width: 8,),
             Text(name,
                 style: labelStyle(index
                     ? whiteColor
