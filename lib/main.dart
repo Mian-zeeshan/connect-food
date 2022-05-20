@@ -1,6 +1,7 @@
 import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:connectsaleorder/GetXController/BannerController.dart';
+import 'package:connectsaleorder/GetXController/BlogController.dart';
 import 'package:connectsaleorder/GetXController/BrandController.dart';
 import 'package:connectsaleorder/GetXController/CategoryController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
@@ -119,9 +120,9 @@ void main() async {
   }else{
     await Firebase.initializeApp();
   }
-  // FirebaseApp app = await _configureAbnApp();
-  // auth = await FirebaseAuth.instanceFor(app: app);
-  // storage = FirebaseStorage.instanceFor(app: app);
+  FirebaseApp app = await _configureAbnApp();
+  auth = await FirebaseAuth.instanceFor(app: app);
+  storage = FirebaseStorage.instanceFor(app: app);
   await GetStorage.init();
   Get.put(LocaleController());
   Get.put(ItemController());
@@ -129,6 +130,7 @@ void main() async {
   Get.put(BrandController());
   Get.put(DrawerCustomController());
   Get.put(BannerController());
+  Get.put(BlogController());
   CheckAdminController checkAdminController = Get.put(CheckAdminController());
 
   SystemChrome.setPreferredOrientations([
@@ -219,21 +221,21 @@ void main() async {
 
 //Mithas
 //Package Command "flutter pub run change_app_package_name:main com.connect.mithas"
-// _configureAbnApp() async {
-//   FirebaseOptions abnOptions = FirebaseOptions(
-//       databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
-//       apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
-//       messagingSenderId: "739510084525",
-//       projectId: "mithas-fa138",
-//       appId: "1:739510084525:android:0a7dca33de0996e833b724",
-//       storageBucket: "gs://mithas-fa138.appspot.com",
-//   );
-//   FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
-//   database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
-//   databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
-//   appName = "Mithas";
-//   return app;
-// }
+_configureAbnApp() async {
+  FirebaseOptions abnOptions = FirebaseOptions(
+      databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
+      apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
+      messagingSenderId: "739510084525",
+      projectId: "mithas-fa138",
+      appId: "1:739510084525:android:0a7dca33de0996e833b724",
+      storageBucket: "gs://mithas-fa138.appspot.com",
+  );
+  FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
+  database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
+  databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
+  appName = "Mithas";
+  return app;
+}
 
 //Fryway
 //Package Command "flutter pub run change_app_package_name:main com.connect.fryway"

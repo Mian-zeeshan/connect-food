@@ -42,8 +42,10 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../GetXController/BlogController.dart';
 import '../../Models/CategoryModel.dart';
 import '../../Utils/ItemWidgetStyle5.dart';
+import '../../Widgets/Blogs/BlogWidget.dart';
 import '../Product/ProductDetailScreen.dart';
 
 class HomeFragment extends StatefulWidget{
@@ -749,6 +751,18 @@ class _HomeFragment extends State<HomeFragment>{
                 ) : Container();
               }),
               SizedBox(height: 12,),
+              GetBuilder<BlogController>(id: "0", builder: (blogController){
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if(blogController.blogs.length > 0) SizedBox(height: 12,),
+                    if(blogController.blogs.length > 0) Text("Blogs", style: utils.boldLabelStyle(blackColor),),
+                    if(blogController.blogs.length > 0) SizedBox(height: 4,),
+                    blogController.blogs.length > 0 ? BlogWidget(blogController.blogs[0], false) : Container()
+                  ],
+                );
+              },),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

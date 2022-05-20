@@ -124,24 +124,23 @@ class _OrderFragment extends State<OrderFragment> with TickerProviderStateMixin{
                                 alignment: Alignment.bottomCenter,
                                 children: [
                                   Icon(CupertinoIcons.shopping_cart , color: whiteColor,),
-                                  Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: Container(
-                                        width: 18,
-                                        height: 18,
-                                        padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: redColor,
-                                            shape: BoxShape.circle
-                                        ),
-                                        child: Center(
-                                          child: GetBuilder<CartController>(id: "0", builder: (cartController){
-                                            return Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),);
-                                          },),
-                                        ),
-                                      )
-                                  )
+                                  GetBuilder<CartController>(id: "0", builder: (cartController){
+                                    return cartController.myCart.totalItems > 0 ? Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: Container(
+                                          width: 18,
+                                          height: 18,
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              color: redColor,
+                                              shape: BoxShape.circle
+                                          ),
+                                          child: Center(
+                                              child: Text("${cartController.myCart.totalItems}" , style: utils.xSmallLabelStyle(whiteColor),)
+                                          ),
+                                        )
+                                    ) : Container();}),
                                 ],
                               ),
                             ),

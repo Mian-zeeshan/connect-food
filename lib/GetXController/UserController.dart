@@ -5,6 +5,7 @@ import 'package:connectsaleorder/GetXController/ChatController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
 import 'package:connectsaleorder/Models/AddressModel.dart';
 import 'package:connectsaleorder/Models/RetailerModel.dart';
+import 'package:connectsaleorder/Models/RiderModel.dart';
 import 'package:connectsaleorder/Models/UserModel.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -17,7 +18,7 @@ class UserController extends GetxController{
   UserModel? user;
   UserModel? currentSeller;
   List<UserModel> retailers = [];
-  List<UserModel> riders = [];
+  List<RiderModel> riders = [];
   List<UserModel> allRetailers = [];
   List<UserModel> users = [];
   CheckAdminController checkAdminController = Get.find();
@@ -284,7 +285,7 @@ class UserController extends GetxController{
       riders = [];
       if(event.snapshot.exists){
         event.snapshot.value.forEach((key,value){
-          riders.add(UserModel.fromJson(jsonDecode(jsonEncode(value))));
+          riders.add(RiderModel.fromJson(jsonDecode(jsonEncode(value))));
         });
       }
     });

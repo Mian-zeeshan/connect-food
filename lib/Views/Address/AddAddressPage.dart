@@ -503,8 +503,8 @@ class _AddAddressPage extends State<AddAddressPage>{
                                     city: selectedCity!.name,
                                     country: selectedCountry!.name,
                                     address: addressController.text.toString(),
-                                    lat: type == 1 ? _place!.latitude : selectedAddress!.lat,
-                                    lng: type == 1 ? _place!.longitude: selectedAddress!.lng);
+                                    lat: type == 0 ? _place!.latitude : selectedAddress!.lat,
+                                    lng: type == 0 ? _place!.longitude: selectedAddress!.lng);
                                 if(type != 2) {
                                   addAddress(aModel);
                                 }else{

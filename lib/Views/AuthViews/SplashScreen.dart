@@ -153,7 +153,7 @@ class _SplashScreen extends State<SplashScreen>{
                 duration: Duration(seconds: 30),
                 rotationDisabled: Rotation.deg(z: 0),
                 rotationEnabled: Rotation.deg(z: 7200),
-                child: Image.asset("Assets/Images/mo_logo.jpg", width: 80, height: 80,)
+                child: Image.asset("Assets/Images/mi_logo.jpeg", width: 80, height: 80,)
             )
         );
       //await box.remove(allCarts);
@@ -194,7 +194,7 @@ class _SplashScreen extends State<SplashScreen>{
                   duration: Duration(milliseconds: 1200),
                   values: [Size(Get.width * 0.1, 1000),Size(Get.width * 0.2, 1000),  Size(Get.width * 0.4, 1500),  Size(Get.width * 0.6, 1500), Size(Get.width * 0.8, 1500), Size(Get.width, 1500), Size(Get.width * 0.7, 2000)],
                   curve: Curves.linear,
-                  child: Image.asset("Assets/Images/mo_logo.jpg", width: Get.width * 0.6,),
+                  child: Image.asset("Assets/Images/mi_logo.jpeg", width: Get.width * 0.6,),
                 ),
               ),
             ),

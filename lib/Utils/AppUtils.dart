@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../Models/RiderModel.dart';
+
 class AppUtils{
   xLHeadingStyle(color){
     return TextStyle(
@@ -591,7 +593,7 @@ class AppUtils{
     );
   }
 
-  showRiders(BuildContext context, UserModel rider, CartModel cartModel) {
+  showRiders(BuildContext context, RiderModel rider, CartModel cartModel) {
     OrderController orderController = Get.find();
     return GestureDetector(
       onTap: (){

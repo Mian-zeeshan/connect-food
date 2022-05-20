@@ -8,6 +8,8 @@ import 'package:connectsaleorder/Utils/AppUtils.dart';
 import 'package:connectsaleorder/Views/Blogs/AddBlogScreen.dart';
 import 'package:connectsaleorder/Views/Coupon/ManageCouponPage.dart';
 import 'package:connectsaleorder/Views/Notifications/SendNotificationScreen.dart';
+import 'package:connectsaleorder/Views/Rider/RegisterRiderScreen.dart';
+import 'package:connectsaleorder/Views/Rider/RiderScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -991,6 +993,104 @@ class _SettingScreen extends State<SettingScreen> {
                                             Expanded(
                                                 child: Text(
                                               "Retailers",
+                                              style:
+                                                  utils.labelStyle(blackColor),
+                                            )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(()=> RegisterRiderScreen());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.person,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Register Rider",
+                                              style:
+                                                  utils.labelStyle(blackColor),
+                                            )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(()=> RiderScreen());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.person,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Riders",
                                               style:
                                                   utils.labelStyle(blackColor),
                                             )),

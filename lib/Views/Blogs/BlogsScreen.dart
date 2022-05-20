@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectsaleorder/AppConstants/Constants.dart';
+import 'package:connectsaleorder/GetXController/BlogController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +49,14 @@ class _BlogsScreen extends State<BlogsScreen>{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BlogWidget(false),
+              GetBuilder<BlogController>(id: "0", builder: (blogController){
+                return Column(
+                  children: [
+                    for(var  i = 0; i < blogController.blogs.length; i++)
+                      BlogWidget(blogController.blogs[i], false)
+                  ],
+                );
+              },),
               SizedBox(height: 12,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
