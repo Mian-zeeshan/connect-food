@@ -18,6 +18,7 @@ class _AddressPage extends State<AddressesScreen>{
   var utils = AppUtils();
   CheckAdminController adminController = Get.find();
   UserController _userController = Get.find();
+  var type = Get.arguments??1;
 
   @override
   void initState() {
@@ -117,8 +118,10 @@ class _AddressPage extends State<AddressesScreen>{
                               physics: ScrollPhysics(),
                               itemBuilder: (context, i) {
                                 return AddressItem(userController.user!.addressList[i],i,0,(){
-                                  userController.setSelected(i);
-                                  Navigator.pop(context);
+                                  if(type == 0) {
+                                    userController.setSelected(i);
+                                    Navigator.pop(context);
+                                  }
                                 });
                               },
                               separatorBuilder: (BuildContext context, int index) {

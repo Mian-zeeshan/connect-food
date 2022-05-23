@@ -19,6 +19,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:timelines/timelines.dart';
 
 import '../Address/BranchList.dart';
+import '../orders/AddonsScreen.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -1337,6 +1338,56 @@ class _SettingScreen extends State<SettingScreen> {
                                             Expanded(
                                                 child: Text(
                                               "Manage Brand",
+                                              style:
+                                                  utils.labelStyle(blackColor),
+                                            )),
+                                            Icon(
+                                              CupertinoIcons.forward,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      color: checkAdminController
+                                          .system.mainColor
+                                          .withOpacity(0.3),
+                                    ),
+                                  if (userController.user!.type == 0 &&
+                                      checkAdminController.isAdmin == "1")
+                                    GestureDetector(
+                                      onTap: () async {
+                                        await Get.to(()=> AddonsScreen());
+                                        EasyLoading.dismiss();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.plus_circled,
+                                              color: blackColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(
+                                              width: 12,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Add Addons",
                                               style:
                                                   utils.labelStyle(blackColor),
                                             )),

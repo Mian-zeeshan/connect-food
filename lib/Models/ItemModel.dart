@@ -35,7 +35,7 @@ class ItemModel {
   List<Specs> specs = [];
   List<PColors> colors = [];
   List<PSizes> sizes = [];
-  List<ProductAdons> addons = [];
+  List<String> addons = [];
   PColors? selectedColors;
   PSizes? selectedSizes;
   List<ProductAdons> selectedAddons = [];
@@ -222,10 +222,7 @@ class ItemModel {
     }
 
     if (json['addons'] != null) {
-      addons = [];
-      json['addons'].forEach((v) {
-        addons.add(new ProductAdons.fromJson(v));
-      });
+      addons = json['addons'].cast<String>();
     }
 
     if (json['selectedAddons'] != null) {
@@ -293,7 +290,7 @@ class ItemModel {
     data['specs'] = this.specs.map((v) => v.toJson()).toList();
     data['colors'] = this.colors.map((v) => v.toJson()).toList();
     data['sizes'] = this.sizes.map((v) => v.toJson()).toList();
-    data['addons'] = this.addons.map((v) => v.toJson()).toList();
+    data['addons'] = this.addons;
     data['selectedAddons'] = this.selectedAddons.map((v) => v.toJson()).toList();
     data['deliveryPrice'] = this.deliveryPrice;
     data['deliveryApplyItem'] = this.deliveryApplyItem;
@@ -409,13 +406,17 @@ class PColors {
 }
 
 class ProductAdons {
+  String key = "";
+  String? image;
   String adonDescription =  "";
   String adonPrice = "";
   int quantity = 1;
 
-  ProductAdons({required this.adonDescription, required this.adonPrice});
+  ProductAdons({required this.key, this.image, required this.adonDescription, required this.adonPrice});
 
   ProductAdons.fromJson(Map<String, dynamic> json) {
+    key = json['key']??"";
+    image = json['image'];
     adonDescription = json['adon_description'];
     adonPrice = json['adon_price'];
     if(json["quantity"] != null)
@@ -424,6 +425,8 @@ class ProductAdons {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['key'] = this.key;
+    data['image'] = this.image;
     data['adon_description'] = this.adonDescription;
     data['adon_price'] = this.adonPrice;
     data['quantity'] = this.quantity;

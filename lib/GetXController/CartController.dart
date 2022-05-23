@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:connectsaleorder/AppConstants/Constants.dart';
+import 'package:connectsaleorder/GetXController/ItemController.dart';
 import 'package:connectsaleorder/GetXController/UserController.dart';
 import 'package:connectsaleorder/Models/CartModel.dart';
 import 'package:connectsaleorder/Models/CartModelList.dart';
@@ -210,6 +211,7 @@ class CartController extends GetxController{
   }
 
   void getLatestItems() {
+    ItemController itemController = Get.find();
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
     
     if(!GetPlatform.isWeb) {
@@ -245,7 +247,11 @@ class CartController extends GetxController{
             itemModel.discountedPrice = discountedPrice;
             itemModel.discountedPriceW = discountedPriceW;
             itemModel.selectedQuantity = myCart.products[i].selectedQuantity;
-            myCart.products[i] = itemModel;
+            List<String> selectedA = [];
+            for(var a in itemModel.selectedAddons){
+              selectedA.add(a.key);
+            }
+            itemModel.selectedAddons = myCart.products[i].selectedAddons = itemController.getAddonsById(selectedA);
           });
         }
         update(["0"]);

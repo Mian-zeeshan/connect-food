@@ -285,7 +285,7 @@ class MyApp extends StatelessWidget {
           designSize: GetPlatform.isWeb ? Size(1600, 900) : Size(360, 690),
           minTextAdapt: true,
           splitScreenMode: true,
-      builder: () => GetMaterialApp(
+      builder: (context,_) => GetMaterialApp(
         transitionDuration: Duration(microseconds: 300),
         translations: WorldLanguage(),
         localizationsDelegates: const [

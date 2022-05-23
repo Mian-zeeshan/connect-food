@@ -8,7 +8,8 @@ class NotificationApis extends GetConnect{
       "to": to,
       "data":{
         "title" : title,
-        "content" : content
+        "content" : content,
+        "body" : content,
       },
       "notification": {
         "body": title,

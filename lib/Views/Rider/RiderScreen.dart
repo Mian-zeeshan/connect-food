@@ -97,13 +97,6 @@ class _RiderScreen extends State<RiderScreen> {
                                           i++)
                                             InkWell(
                                               onTap: () {
-                                                userController
-                                                    .getCurrentRetailer(
-                                                    userController
-                                                        .riders[i]
-                                                        .uid);
-                                                Get.toNamed(
-                                                    retailerDetailRoute);
                                               },
                                               child: Container(
                                                 width: Get.width,

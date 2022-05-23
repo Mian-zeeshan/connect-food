@@ -307,10 +307,17 @@ class _SendNotificationScreen extends State<SendNotificationScreen>{
         NotificationApis notificationApis = NotificationApis();
 
         notificationApis.sendNotification(token, title, message);
-
+        sendNotificationAll(title, message);
         addNotification(uid,title,message);
       }
     });
+  }
+
+  sendNotificationAll(title, message) async {
+    NotificationApis notificationApis = NotificationApis();
+
+    notificationApis.sendNotification("$socialNotifications", title, message);
+
   }
 
   void addNotification(uid, title, message) async {

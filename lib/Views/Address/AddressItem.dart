@@ -68,7 +68,7 @@ class AddressItem extends StatelessWidget{
                                       MaterialPageRoute(builder: (context) =>
                                           AddAddressPage(1, addressModel)));
                                 }else{
-                                  Get.toNamed(addressesRoute);
+                                  Get.toNamed(addressesRoute, arguments: 0);
                                 }
                               },
                               child: Container(

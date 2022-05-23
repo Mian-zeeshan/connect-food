@@ -21,6 +21,7 @@ class AddToCartBottom extends StatefulWidget{
 class _AddToCartBottom extends State<AddToCartBottom>{
   var utils = AppUtils();
   CheckAdminController checkAdminController = Get.find();
+  ItemController iController = Get.find();
   ChatController chatController = Get.find();
   UserController userController = Get.find();
   CartController cartController = Get.find();
@@ -28,9 +29,11 @@ class _AddToCartBottom extends State<AddToCartBottom>{
   var selectedColor = 0;
   var selectedSize = 0;
   List<ProductAdons> selectedAddOns = [];
+  List<ProductAdons> addons = [];
 
   @override
   void initState() {
+    addons = iController.getAddonsById(widget.itemModel.addons);
     super.initState();
   }
 
@@ -95,7 +98,7 @@ class _AddToCartBottom extends State<AddToCartBottom>{
               ],
             )
           ),
-          if(widget.itemModel.addons.length > 0) Container(
+          if(addons.length > 0) Container(
             width: Get.width,
             constraints: BoxConstraints(
               maxHeight: Get.height * 0.5,
@@ -113,7 +116,7 @@ class _AddToCartBottom extends State<AddToCartBottom>{
                     width: Get.width,
                     child: Text("Addons" , style: utils.labelStyle(blackColor),),
                   ),
-                  for(var i = 0 ; i  < widget.itemModel.addons.length; i++)
+                  for(var i = 0 ; i  < addons.length; i++)
                     Container(
                       width: Get.width,
                       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -125,12 +128,12 @@ class _AddToCartBottom extends State<AddToCartBottom>{
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(child: Text("${widget.itemModel.addons[i].adonDescription}",style: utils.boldSmallLabelStyle(blackColor))),
+                              Expanded(child: Text("${addons[i].adonDescription}",style: utils.boldSmallLabelStyle(blackColor))),
                               SizedBox(width: 12,),
-                              Text(utils.getFormattedPrice(widget.itemModel.addons[i].adonPrice), style: utils.smallLabelStyle(blackColor),),
+                              Text(utils.getFormattedPrice(addons[i].adonPrice), style: utils.smallLabelStyle(blackColor),),
                               SizedBox(width: 12,),
                               IconButton(onPressed: (){
-                                addToAddons(widget.itemModel.addons[i]);
+                                addToAddons(addons[i]);
                               }, icon: Icon(CupertinoIcons.add_circled, color: checkAdminController.system.mainColor, size: 20,))
                             ],
                           ),

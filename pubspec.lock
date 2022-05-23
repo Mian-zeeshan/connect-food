@@ -493,7 +493,7 @@ packages:
       name: flutter_screenutil
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
+    version: "5.5.3+1"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -521,7 +521,7 @@ packages:
       name: flutter_swipe_action_cell
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.5"
+    version: "2.2.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -587,7 +587,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.8"
+    version: "4.6.5"
   get_storage:
     dependency: "direct main"
     description:
@@ -762,7 +762,7 @@ packages:
       name: modal_bottom_sheet
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   nested:
     dependency: transitive
     description:

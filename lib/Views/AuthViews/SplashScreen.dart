@@ -67,6 +67,7 @@ class _SplashScreen extends State<SplashScreen>{
   }
 
   registerNotification() async {
+    FirebaseMessaging.instance.subscribeToTopic(socialNotifications);
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     var initializationSettingsAndroid = AndroidInitializationSettings('logo');

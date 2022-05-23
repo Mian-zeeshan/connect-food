@@ -1,20 +1,10 @@
 import 'package:connectsaleorder/AppConstants/Constants.dart';
 import 'package:connectsaleorder/GetXController/BrandController.dart';
-import 'package:connectsaleorder/GetXController/CartController.dart';
-import 'package:connectsaleorder/GetXController/CategoryController.dart';
 import 'package:connectsaleorder/GetXController/CheckAdminController.dart';
-import 'package:connectsaleorder/GetXController/FavoriteController.dart';
-import 'package:connectsaleorder/GetXController/ItemController.dart';
-import 'package:connectsaleorder/GetXController/SubCategoryController.dart';
-import 'package:connectsaleorder/GetXController/UserController.dart';
-import 'package:connectsaleorder/Models/CustomerModel.dart';
 import 'package:connectsaleorder/Utils/AppUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ManageBrandScreen extends StatefulWidget{
   @override

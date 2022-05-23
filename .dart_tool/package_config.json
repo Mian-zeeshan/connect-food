@@ -423,7 +423,7 @@
     },
     {
       "name": "flutter_screenutil",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_screenutil-5.2.0",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_screenutil-5.5.3+1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -447,7 +447,7 @@
     },
     {
       "name": "flutter_swipe_action_cell",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_swipe_action_cell-2.1.5",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_swipe_action_cell-2.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -507,9 +507,9 @@
     },
     {
       "name": "get",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/get-4.3.8",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/get-4.6.5",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.15"
     },
     {
       "name": "get_storage",
@@ -657,7 +657,7 @@
     },
     {
       "name": "modal_bottom_sheet",
-      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/modal_bottom_sheet-2.0.0",
+      "rootUri": "file:///Users/arslan/Library/flutter/.pub-cache/hosted/pub.dartlang.org/modal_bottom_sheet-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1112,7 +1112,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-05-19T07:54:26.866015Z",
+  "generated": "2022-05-23T06:19:36.694864Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }

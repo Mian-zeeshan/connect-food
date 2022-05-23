@@ -7,10 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 
 class EditProfileScreen extends StatefulWidget{
@@ -71,7 +69,7 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                 Container(
                   width: Get.width < 550 ? Get.size.width/2 : Get.width/3 ,
                   padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Image.asset("Assets/Images/logo.png"),
+                  child: Image.asset("Assets/Images/mi_logo.jpeg"),
                 ),
                 SizedBox(height: 20,),
                 Expanded(

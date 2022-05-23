@@ -98,6 +98,7 @@ final couponRef = "Coupons";
 final riderRef = "Riders";
 final notificationRef = "Notifications";
 final blogRef = "Blogs";
+final addonRef = "Addons";
 
 var htmlString = "";
 
@@ -112,6 +113,7 @@ final english = "en_US";
 final arabic = "ar_AR";
 final language = "language";
 final isAdminGlobal = "isAdminGlobal";
+final socialNotifications = "SocialNotifications";
 
 
 //Firebase

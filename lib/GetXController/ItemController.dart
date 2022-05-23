@@ -19,6 +19,7 @@ class ItemController extends GetxController{
   List<ItemModel> itemModelsFilter = [];
   List<ItemModel> itemModelsAll = [];
   List<ReviewModel> reviews = [];
+  List<ProductAdons> addons = [];
 
   List<ItemModel> itemModelsNewArrival = [];
   List<ItemModel> itemModelsTopDeals = [];
@@ -45,6 +46,7 @@ class ItemController extends GetxController{
     getTopDeals();
     getCurrency();
     getRecentItems();
+    getAddons();
     getAllProducts(1);
   }
 
@@ -52,6 +54,32 @@ class ItemController extends GetxController{
     isList = !isList;
     update(["0"]);
     notifyChildrens();
+  }
+
+  getAddons() async {
+    FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
+
+    if(!GetPlatform.isWeb) {
+      database.setPersistenceEnabled(true);
+      database.setPersistenceCacheSizeBytes(10000000);
+    }
+    DatabaseReference reference = database.reference();
+    reference
+        .child(addonRef)
+        .onValue
+        .listen((event) {
+      addons = [];
+      if (event.snapshot.exists) {
+        event.snapshot.value.forEach((key,value) {
+          var addon = ProductAdons.fromJson(
+              jsonDecode(jsonEncode(value)));
+          addons.add(addon);
+        });
+      }
+
+      update(["0"]);
+      notifyChildrens();
+    });
   }
 
   getNewArrivals(){
@@ -102,6 +130,7 @@ class ItemController extends GetxController{
       notifyChildrens();
     });
   }
+
   getTrendingProducts(){
     FirebaseDatabase database = FirebaseDatabase(databaseURL: databaseUrl);
 
@@ -704,5 +733,22 @@ class ItemController extends GetxController{
         .child(itemRef)
         .child(itemModel.code)
         .update({"status" : itemModel.status});
+  }
+
+  List<ProductAdons> getAddonsById(List<String> ad) {
+    List<ProductAdons> rAddons = [];
+    print("${ad.toString()}");
+    for(var a in ad){
+      print("${a}");
+      for(var i = 0; i < addons.length; i++){
+        print("${addons[i].adonDescription}");
+        if(a == addons[i].key){
+          print("added");
+          rAddons.add(addons[i]);
+          break;
+        }
+      }
+    }
+    return rAddons;
   }
 }

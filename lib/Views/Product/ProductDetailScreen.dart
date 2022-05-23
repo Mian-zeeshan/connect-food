@@ -57,10 +57,10 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
   ScrollController _scrollController = ScrollController();
   double opacity = 0;
   var isRetailer = false;
+  List<ProductAdons> addons = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     itemController.getRelatedProducts(itemModel.code);
     isRetailer = userController.user != null ? userController.user!.isRetailer? userController.user!.retailerModel!.approved ? true : false :false : false;
@@ -141,6 +141,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                 width: Get.width,
                 height: Get.height,
                 child: GetBuilder<ItemController>(id: "0",builder: (itemController){
+                  addons = itemController.getAddonsById(itemModel.addons);
                   return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -418,14 +419,14 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                         ],
                                       ),
                                     ),
-                                if(itemModel.addons.length > 0) SizedBox(height: 10,),
-                                if(itemModel.addons.length > 0) Text(
+                                if(addons.length > 0) SizedBox(height: 10,),
+                                if(addons.length > 0) Text(
                                     "Addons",
                                     style: utils.boldLabelStyle(blackColor)
                                 ),
-                                if(itemModel.addons.length > 0) SizedBox(height: 4,),
-                                if(itemModel.addons.length > 0)
-                                  for(var  i = 0 ; i < itemModel.addons.length; i++)
+                                if(addons.length > 0) SizedBox(height: 4,),
+                                if(addons.length > 0)
+                                  for(var  i = 0 ; i < addons.length; i++)
                                     Container(
                                       padding: EdgeInsets.symmetric(vertical: 2),
                                       child: Column(
@@ -435,14 +436,14 @@ class _ProductDetailScreen extends State<ProductDetailScreen>{
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                Expanded(child: Text("${itemModel.addons[i].adonDescription}" , style: utils.xBoldSmallLabelStyle(blackColor),)),
+                                                Expanded(child: Text("${addons[i].adonDescription}" , style: utils.xBoldSmallLabelStyle(blackColor),)),
                                                 SizedBox(width: 6,),
                                                 Container(
                                                   width: 0.5,
                                                   color: grayColor,
                                                 ),
                                                 SizedBox(width: 6,),
-                                                Expanded(child: Text("${utils.getFormattedPrice(itemModel.addons[i].adonPrice)}" , style: utils.xSmallLabelStyle(blackColor),)),
+                                                Expanded(child: Text("${utils.getFormattedPrice(addons[i].adonPrice)}" , style: utils.xSmallLabelStyle(blackColor),)),
                                               ],
                                             ),
                                           ),
