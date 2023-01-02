@@ -35,9 +35,9 @@ class CustomerModel {
     address = json['address'];
     type = json['type'];
     if(json["lat"] != null)
-      lat = json['lat'];
+      lat = json['lat'].toDouble();
     if(json["lng"] != null)
-      lng = json['lng'];
+      lng = json['lng'].toDouble();
   }
 
   Map<String, dynamic> toJson() {

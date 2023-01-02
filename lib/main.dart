@@ -84,10 +84,10 @@ void main() async {
       'resource://drawable/logo',
       [
         NotificationChannel(
-            channelGroupKey: 'Mandi Online',
-            channelKey: 'Mandi Online',
-            channelName: 'Mandi Online notifications',
-            channelDescription: 'Notification channel for Mandi Online',
+            channelGroupKey: 'MyBagPack',
+            channelKey: 'MyBagPack',
+            channelName: 'MyBagPack notifications',
+            channelDescription: 'Notification channel for MyBagPack',
             defaultColor: Color(0xFFEFEFEF),
             ledColor: Colors.white)
       ],
@@ -120,9 +120,9 @@ void main() async {
   }else{
     await Firebase.initializeApp();
   }
-  FirebaseApp app = await _configureAbnApp();
-  auth = await FirebaseAuth.instanceFor(app: app);
-  storage = FirebaseStorage.instanceFor(app: app);
+  // FirebaseApp app = await _configureAbnApp();
+  // auth = await FirebaseAuth.instanceFor(app: app);
+  // storage = FirebaseStorage.instanceFor(app: app);
   await GetStorage.init();
   Get.put(LocaleController());
   Get.put(ItemController());
@@ -161,7 +161,7 @@ void main() async {
             duration: Duration(seconds: 30),
             rotationDisabled: Rotation.deg(z: 0),
             rotationEnabled: Rotation.deg(z: 7200),
-            child: Image.asset("Assets/Images/logom.png", width: 80, height: 80,)
+            child: Image.asset("Assets/Images/city_logo.png", width: 80, height: 80,)
         )
     );
   runApp(MyApp());
@@ -219,23 +219,23 @@ void main() async {
 //   return app;
 // }
 
-//Mithas
-//Package Command "flutter pub run change_app_package_name:main com.connect.mithas"
-_configureAbnApp() async {
-  FirebaseOptions abnOptions = FirebaseOptions(
-      databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/",
-      apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
-      messagingSenderId: "739510084525",
-      projectId: "mithas-fa138",
-      appId: "1:739510084525:android:0a7dca33de0996e833b724",
-      storageBucket: "gs://mithas-fa138.appspot.com",
-  );
-  FirebaseApp app = await Firebase.initializeApp(name: "https://mithas-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
-  database = FirebaseDatabase(databaseURL: "https://mithas-fa138-default-rtdb.firebaseio.com/");
-  databaseUrl = "https://mithas-fa138-default-rtdb.firebaseio.com/";
-  appName = "Mithas";
-  return app;
-}
+//MyBagPack
+//Package Command "flutter pub run change_app_package_name:main com.connect.MyBagPack"
+// _configureAbnApp() async {
+//   FirebaseOptions abnOptions = FirebaseOptions(
+//       databaseURL: "https://MyBagPack-fa138-default-rtdb.firebaseio.com/",
+//       apiKey: "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU",
+//       messagingSenderId: "739510084525",
+//       projectId: "MyBagPack-fa138",
+//       appId: "1:739510084525:android:0a7dca33de0996e833b724",
+//       storageBucket: "gs://MyBagPack-fa138.appspot.com",
+//   );
+//   FirebaseApp app = await Firebase.initializeApp(name: "https://MyBagPack-fa138-default-rtdb.firebaseio.com/", options: abnOptions);
+//   database = FirebaseDatabase(databaseURL: "https://MyBagPack-fa138-default-rtdb.firebaseio.com/");
+//   databaseUrl = "https://MyBagPack-fa138-default-rtdb.firebaseio.com/";
+//   appName = "MyBagPack";
+//   return app;
+// }
 
 //Fryway
 //Package Command "flutter pub run change_app_package_name:main com.connect.fryway"
@@ -246,7 +246,7 @@ _configureAbnApp() async {
 //       messagingSenderId: "1003574277643",
 //       projectId: "fryway-868ee",
 //       appId: "1:1003574277643:android:1002ee2e1b1ed138ee390e",
-//       storageBucket: "gs://mithas-fa138.appspot.com",
+//       storageBucket: "gs://MyBagPack-fa138.appspot.com",
 //   );
 //   FirebaseApp app = await Firebase.initializeApp(name: "https://fryway-868ee-default-rtdb.firebaseio.com/", options: abnOptions);
 //   database = FirebaseDatabase(databaseURL: "https://fryway-868ee-default-rtdb.firebaseio.com/");

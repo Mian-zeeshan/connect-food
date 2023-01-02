@@ -625,7 +625,7 @@ class _SettingScreen extends State<SettingScreen> {
                             if (selectedIndex == 1)
                               Column(
                                 children: [
-                                  if (userController.user!.type == 0)
+                                  /*if (userController.user!.type == 0)
                                     Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 12, vertical: 8),
@@ -662,7 +662,7 @@ class _SettingScreen extends State<SettingScreen> {
                                           )
                                         ],
                                       ),
-                                    ),
+                                    ),*/
                                   if (userController.user!.type == 0)
                                     Container(
                                       width: Get.width,

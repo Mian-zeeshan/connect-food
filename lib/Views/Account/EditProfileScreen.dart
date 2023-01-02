@@ -69,7 +69,7 @@ class _EditProfileScreen extends State<EditProfileScreen>{
                 Container(
                   width: Get.width < 550 ? Get.size.width/2 : Get.width/3 ,
                   padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Image.asset("Assets/Images/mi_logo.jpeg"),
+                  child: Image.asset("Assets/Images/city_logo.png"),
                 ),
                 SizedBox(height: 20,),
                 Expanded(

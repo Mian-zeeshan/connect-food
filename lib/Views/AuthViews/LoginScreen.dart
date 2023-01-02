@@ -70,7 +70,7 @@ class _LoginScreen extends State<LoginScreen>{
                   padding: EdgeInsets.symmetric(vertical: 4),
                   child: CachedNetworkImage(
                     imageUrl: checkAdminController.system.companyLogo,
-                    placeholder: (context, url) => Image.asset("Assets/Images/mi_logo.jpeg"),
+                    placeholder: (context, url) => Image.asset("Assets/Images/city_logo.png"),
                     errorWidget: (context, url, error) => Icon(
                       Icons.image_not_supported_rounded,
                       size: 25,

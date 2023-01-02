@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "739510084525",
-    "firebase_url": "https://mithas-fa138-default-rtdb.firebaseio.com",
-    "project_id": "mithas-fa138",
-    "storage_bucket": "mithas-fa138.appspot.com"
+    "project_number": "205724777237",
+    "project_id": "mybagpack-68e63",
+    "storage_bucket": "mybagpack-68e63.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:739510084525:android:0a7dca33de0996e833b724",
+        "mobilesdk_app_id": "1:205724777237:android:baf4389765f4c3e616871c",
         "android_client_info": {
-          "package_name": "com.connect.mithas"
+          "package_name": "com.connect.mybagpack"
         }
       },
       "oauth_client": [
         {
-          "client_id": "739510084525-0b9goflakeqtus39iip41s0vpbtjea0a.apps.googleusercontent.com",
+          "client_id": "205724777237-8pj0ji1t6g9cjj0grpjsi0ac92unlqha.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6n_GorpjXCsnez_V0kQhTGVc_yY0rplU"
+          "current_key": "AIzaSyDkXltT4RFot-OE2prFdwD6qIuNHdKNB2s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "739510084525-0b9goflakeqtus39iip41s0vpbtjea0a.apps.googleusercontent.com",
+              "client_id": "205724777237-8pj0ji1t6g9cjj0grpjsi0ac92unlqha.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

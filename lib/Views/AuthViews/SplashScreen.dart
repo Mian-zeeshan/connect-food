@@ -19,8 +19,8 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.notification != null) {
-    final title = message.notification!.title??"Mithas";
-    final body = message.notification!.body??"Congratulation! thanks for using Mithas.";
+    final title = message.notification!.title??"School";
+    final body = message.notification!.body??"Congratulation! thanks for using School.";
     //showNotification(title: title, body: body);
   }
   print('Handling a background message ${message.messageId}');
@@ -28,7 +28,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 void showNotification({required String title, required String body}) {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails('Mithas', 'Mithas notifications',
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails('School', 'School notifications',
       icon: 'logo', importance: Importance.max, priority: Priority.max, ticker: 'ticker', playSound: true);
 
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
@@ -97,8 +97,8 @@ class _SplashScreen extends State<SplashScreen>{
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(
-                'Mithas',
-                'Mithas notifications',
+                'School',
+                'School notifications',
                 icon: 'logo',
               ),
             ));
@@ -154,7 +154,7 @@ class _SplashScreen extends State<SplashScreen>{
                 duration: Duration(seconds: 30),
                 rotationDisabled: Rotation.deg(z: 0),
                 rotationEnabled: Rotation.deg(z: 7200),
-                child: Image.asset("Assets/Images/mi_logo.jpeg", width: 80, height: 80,)
+                child: Image.asset("Assets/Images/city_logo.png", width: 80, height: 80,)
             )
         );
       //await box.remove(allCarts);
@@ -195,7 +195,7 @@ class _SplashScreen extends State<SplashScreen>{
                   duration: Duration(milliseconds: 1200),
                   values: [Size(Get.width * 0.1, 1000),Size(Get.width * 0.2, 1000),  Size(Get.width * 0.4, 1500),  Size(Get.width * 0.6, 1500), Size(Get.width * 0.8, 1500), Size(Get.width, 1500), Size(Get.width * 0.7, 2000)],
                   curve: Curves.linear,
-                  child: Image.asset("Assets/Images/mi_logo.jpeg", width: Get.width * 0.6,),
+                  child: Image.asset("Assets/Images/city_logo.png", width: Get.width * 0.6,),
                 ),
               ),
             ),

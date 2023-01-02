@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.connect.mithas">
+    package="com.connect.mybagpack">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -31,7 +31,7 @@
     </queries>
 
     <application
-        android:label="Mithas"
+        android:label="My Bag Pack"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/launcher_icon">
 

@@ -1,4 +1,4 @@
-package com.connect.mithas
+package com.connect.mybagpack
 
 import io.flutter.embedding.android.FlutterActivity
 
