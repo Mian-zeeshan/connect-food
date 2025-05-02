@@ -29,57 +29,57 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  get: ^4.6.0
+  cupertino_icons: ^1.0.8
+  get: ^4.7.2
   animated_widgets: ^1.1.0
-  get_storage: ^2.0.3
-  flutter_easyloading: ^3.0.3
-  flutter_zoom_drawer: ^2.1.1
-  modal_bottom_sheet: ^2.0.1
-  firebase_core: ^1.5.0
-  firebase_auth: ^3.2.0
-  intl: ^0.17.0
-  printing: ^5.8.0
-  firebase_database: ^8.1.0
-  firebase_storage: ^10.1.0
-  cr_calendar: ^0.0.8
-  image_picker: ^0.8.5
-  dots_indicator: ^2.0.0
-  carousel_slider: ^4.0.0
-  flutter_rating_bar: ^4.0.0
-  lottie: ^1.2.1
+  get_storage: ^2.1.1
+  flutter_easyloading: ^3.0.5
+  flutter_zoom_drawer: ^3.2.0
+  modal_bottom_sheet: ^3.0.0
+  firebase_core: ^3.13.0
+  firebase_auth: ^5.5.3
+  intl: ^0.20.0
+  printing: ^5.14.2
+  firebase_database: ^11.3.5
+  firebase_storage: ^12.4.5
+  cr_calendar: ^1.2.1
+  image_picker: ^1.1.2
+  dots_indicator: ^4.0.1
+  carousel_slider: ^5.0.0
+  flutter_rating_bar: ^4.0.1
+  lottie: ^3.3.1
   timelines: ^0.1.0
-  flutter_swipe_action_cell: ^2.2.0
-  swipe_image_gallery: ^0.0.4
-  persistent_bottom_nav_bar: ^4.0.2
-  font_awesome_flutter: ^9.2.0
-  flutter_colorpicker: ^1.0.3
+  flutter_swipe_action_cell: ^3.1.5
+  swipe_image_gallery: ^0.10.2
+  persistent_bottom_nav_bar: ^6.2.1
+  font_awesome_flutter: ^10.8.0
+  flutter_colorpicker: ^1.1.0
   bubble: ^1.2.1
-  chat_bubbles: ^1.1.0
+  chat_bubbles: ^1.7.0
   auto_size_text: ^3.0.0
-  cached_network_image: ^3.2.0
-  flutter_spinkit: ^5.1.0
-  firebase_core_web: ^1.1.0
-  file_picker: ^4.3.3
-  im_stepper: ^0.1.3
-  flutter_screenutil: ^5.5.3+1
+  cached_network_image: ^3.4.1
+  flutter_spinkit: ^5.2.1
+  firebase_core_web: ^2.22.0
+  file_picker: ^10.1.2
+  im_stepper: ^1.0.1+1
+  flutter_screenutil: ^5.9.3
   google_places_picker: ^3.0.2
-  google_maps_flutter: ^2.1.1
-  geolocator: ^8.0.0
+  google_maps_flutter: ^2.12.1
+  geolocator: ^14.0.0
   pull_to_refresh: ^2.0.0
-  shimmer: ^2.0.0
-  watcher: ^1.0.0
+  shimmer: ^3.0.0
+  watcher: ^1.1.1
   dotup_flutter_active_window: ^0.1.1
-  url_launcher: ^6.0.20
-  coupon_uikit: ^0.0.1
-  platform: ^3.1.0
-  image_crop: ^0.4.0
-  firebase_messaging: ^11.2.5
-  awesome_notifications: ^0.6.21
-  flutter_local_notifications: ^9.4.0
-  html_editor_enhanced: ^2.4.0+1
-  flutter_staggered_grid_view: ^0.6.1
-  flutter_html: ^2.2.1
+  url_launcher: ^6.3.1
+  coupon_uikit: ^0.2.1
+  platform: ^3.1.6
+  image_crop: ^0.4.1
+  firebase_messaging: ^15.2.5
+  awesome_notifications: ^0.10.1
+  flutter_local_notifications: ^19.1.0
+  html_editor_enhanced: ^2.6.0
+  flutter_staggered_grid_view: ^0.7.0
+  flutter_html: ^3.0.0
 
 
 
